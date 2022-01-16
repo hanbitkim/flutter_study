@@ -1,3 +1,4 @@
+import 'package:artitecture/src/core/resources/result_wrapper.dart';
 import 'package:artitecture/src/data/source/remote/firebase_auth_api.dart';
 import 'package:artitecture/src/domain/repository/auth_repository.dart';
 
@@ -12,8 +13,12 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<void> signIn() {
-    // TODO: implement signIn
-    throw UnimplementedError();
+  Future<ResultWrapper> signUp(String email, String password) {
+    return firebaseAuthApi.signUp(email, password);
+  }
+
+  @override
+  Future<ResultWrapper> signIn(String email, String password) {
+    return firebaseAuthApi.signIn(email, password);
   }
 }

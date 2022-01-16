@@ -1,4 +1,7 @@
+import 'package:artitecture/src/core/resources/result_wrapper.dart';
+
 abstract class AuthRepository {
   Future<bool> isSignIn();
-  Future<void> signIn();
+  Future<ResultWrapper> signUp(String email, String password);
+  Future<ResultWrapper> signIn(String email, String password);
 }
