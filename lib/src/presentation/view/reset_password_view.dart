@@ -9,17 +9,17 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class LoginPage extends HookWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class ResetPasswordPage extends HookWidget {
+  const ResetPasswordPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final AuthController _authController = injector();
     final _emailController = useTextEditingController();
-    final _passwordController = useTextEditingController();
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
     return Scaffold(
+      appBar: AppBar(title: const Text("Reset password")),
       body: SafeArea(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -41,16 +41,6 @@ class LoginPage extends HookWidget {
                           return null;
                         },
                       ),
-                      TextFormField(
-                        controller: _passwordController,
-                        decoration: const InputDecoration(labelText: "Enter your password"),
-                        validator: (String? value) {
-                          if (value == null || value.isEmpty) {
-                            return "Please input password";
-                          }
-                          return null;
-                        },
-                      ),
                     ],
                   )),
               const SizedBox(
@@ -63,7 +53,7 @@ class LoginPage extends HookWidget {
                           color: primaryColor,
                         )
                       : const Text(
-                          'Log in',
+                          'Send an email to reset password',
                         )),
                   width: double.infinity,
                   alignment: Alignment.center,
@@ -78,58 +68,9 @@ class LoginPage extends HookWidget {
                 onTap: () {
                   FocusScope.of(context).unfocus();
                   if (_formKey.currentState?.validate() == true) {
-                    _authController.signIn(_emailController.text, _passwordController.text);
+                    _authController.sendResetPasswordEmail(_emailController.text);
                   }
                 },
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    child: const Text(
-                      'Forget password?',
-                    ),
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                  ),
-                  GestureDetector(
-                    onTap: () => Get.toNamed(findPasswordRoute),
-                    child: Container(
-                      child: const Text(
-                        ' Find password.',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    child: const Text(
-                      'Don\'t have an account?',
-                    ),
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                  ),
-                  GestureDetector(
-                    onTap: () => Get.toNamed(signUpRoute),
-                    child: Container(
-                      child: const Text(
-                        ' Signup.',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                    ),
-                  ),
-                ],
               ),
             ],
           ),

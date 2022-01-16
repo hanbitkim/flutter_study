@@ -19,10 +19,10 @@ class FirebaseAuthApi {
           email: email,
           password: password
       );
-      Logger().d("userCredential = ${userCredential.toString()}");
+      Logger().d("signUp success = ${userCredential.toString()}");
       return const Success(null);
     } on FirebaseAuthException catch (e) {
-      Logger().d("FirebaseAuthException = ${e.code}");
+      Logger().d("signUp exception = ${e.code}");
       if (e.code == 'weak-password') {
         return Failure(DataError(weekPasswordError, e.code));
       } else if (e.code == 'email-already-in-use') {
@@ -38,14 +38,27 @@ class FirebaseAuthApi {
           email: email,
           password: password
       );
-      Logger().d("userCredential = ${userCredential.toString()}");
+      Logger().d("signIn success = ${userCredential.toString()}");
       return const Success(null);
     } on FirebaseAuthException catch (e) {
-      Logger().d("FirebaseAuthException = ${e.code}");
+      Logger().d("signIn exception = ${e.code}");
       if (e.code == 'user-not-found') {
         return Failure(DataError(userNotFoundError, e.code));
       } else if (e.code == 'wrong-password') {
         return Failure(DataError(wrongPasswordError, e.code));
+      }
+      return Failure(DataError(error, e.code));
+    }
+  }
+
+  Future<ResultWrapper> resetPassword(String email) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      return const Success(null);
+    } on FirebaseAuthException catch (e) {
+      Logger().d("resetPassword exception = ${e.code}");
+      if (e.code == 'user-not-found') {
+        return Failure(DataError(userNotFoundError, e.code));
       }
       return Failure(DataError(error, e.code));
     }

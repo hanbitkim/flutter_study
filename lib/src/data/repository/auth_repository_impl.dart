@@ -21,4 +21,9 @@ class AuthRepositoryImpl extends AuthRepository {
   Future<ResultWrapper> signIn(String email, String password) {
     return firebaseAuthApi.signIn(email, password);
   }
+
+  @override
+  Future<ResultWrapper> resetPassword(String email) {
+    return firebaseAuthApi.resetPassword(email);
+  }
 }
