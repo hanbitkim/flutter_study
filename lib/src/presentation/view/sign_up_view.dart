@@ -2,6 +2,7 @@ import 'package:artitecture/src/core/utils/colors.dart';
 import 'package:artitecture/src/injector.dart';
 import 'package:artitecture/src/presentation/controller/auth_controller.dart';
 import 'package:artitecture/src/presentation/widget/text_field_input.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -15,6 +16,8 @@ class SignUpPage extends HookWidget {
     final AuthController _authController = injector();
     final _emailController = useTextEditingController();
     final _passwordController = useTextEditingController();
+    final _passwordConfirmController = useTextEditingController();
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
     return Scaffold(
       appBar: AppBar(
@@ -26,24 +29,47 @@ class SignUpPage extends HookWidget {
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Flexible(
-                child: Container(),
-                flex: 2,
-              ),
-              TextFieldInput(
-                hintText: 'Enter your email',
-                textInputType: TextInputType.emailAddress,
-                textEditingController: _emailController,
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              TextFieldInput(
-                hintText: 'Enter your password',
-                textInputType: TextInputType.text,
-                textEditingController: _passwordController,
-                isPass: true,
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: _emailController,
+                      decoration: const InputDecoration(labelText: "Enter your email"),
+                      validator: (String? value) {
+                        if (!EmailValidator.validate(value ?? "")) {
+                          return "Please input correct email";
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      controller: _passwordController,
+                      decoration: const InputDecoration(labelText: "Enter your password"),
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return "Please input password";
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      controller: _passwordConfirmController,
+                      decoration: const InputDecoration(labelText: "Enter your password again"),
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return "Please input password";
+                        }
+                        if (value != _passwordController.text) {
+                          return "Please input same password";
+                        }
+                        return null;
+                      },
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(
                 height: 24,
@@ -52,8 +78,9 @@ class SignUpPage extends HookWidget {
                 child: Container(
                   child: Obx(() => _authController.isSigning.value
                       ? const CircularProgressIndicator(color: primaryColor)
-                      : const Text('Sign up',)
-                  ),
+                      : const Text(
+                          'Sign up',
+                        )),
                   width: double.infinity,
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 12),
@@ -65,16 +92,11 @@ class SignUpPage extends HookWidget {
                   ),
                 ),
                 onTap: () {
-                  FocusScope.of(context).unfocus();
-                  _authController.signUp(_emailController.text, _passwordController.text);
+                  if (_formKey.currentState?.validate() == true) {
+                    FocusScope.of(context).unfocus();
+                    _authController.signUp(_emailController.text, _passwordController.text);
+                  }
                 },
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              Flexible(
-                child: Container(),
-                flex: 2,
               ),
             ],
           ),

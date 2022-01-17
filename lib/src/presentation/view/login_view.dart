@@ -76,8 +76,8 @@ class LoginPage extends HookWidget {
                   ),
                 ),
                 onTap: () {
-                  FocusScope.of(context).unfocus();
                   if (_formKey.currentState?.validate() == true) {
+                    FocusScope.of(context).unfocus();
                     _authController.signIn(_emailController.text, _passwordController.text);
                   }
                 },
