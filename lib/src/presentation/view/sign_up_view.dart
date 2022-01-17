@@ -93,7 +93,7 @@ class SignUpPage extends HookWidget {
                 ),
                 onTap: () {
                   if (_formKey.currentState?.validate() == true) {
-                    FocusScope.of(context).unfocus();
+                    FocusManager.instance.primaryFocus?.unfocus();
                     _authController.signUp(_emailController.text, _passwordController.text);
                   }
                 },

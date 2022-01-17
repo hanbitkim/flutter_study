@@ -77,7 +77,7 @@ class LoginPage extends HookWidget {
                 ),
                 onTap: () {
                   if (_formKey.currentState?.validate() == true) {
-                    FocusScope.of(context).unfocus();
+                    FocusManager.instance.primaryFocus?.unfocus();
                     _authController.signIn(_emailController.text, _passwordController.text);
                   }
                 },
@@ -95,7 +95,10 @@ class LoginPage extends HookWidget {
                     padding: const EdgeInsets.symmetric(vertical: 8),
                   ),
                   GestureDetector(
-                    onTap: () => Get.toNamed(findPasswordRoute),
+                    onTap: () {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                      Get.toNamed(findPasswordRoute);
+                    },
                     child: Container(
                       child: const Text(
                         ' Find password.',
@@ -118,7 +121,10 @@ class LoginPage extends HookWidget {
                     padding: const EdgeInsets.symmetric(vertical: 8),
                   ),
                   GestureDetector(
-                    onTap: () => Get.toNamed(signUpRoute),
+                    onTap: () {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                      Get.toNamed(signUpRoute);
+                    },
                     child: Container(
                       child: const Text(
                         ' Signup.',

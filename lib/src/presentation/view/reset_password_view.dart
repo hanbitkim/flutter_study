@@ -67,7 +67,7 @@ class ResetPasswordPage extends HookWidget {
                 ),
                 onTap: () {
                   if (_formKey.currentState?.validate() == true) {
-                    FocusScope.of(context).unfocus();
+                    FocusManager.instance.primaryFocus?.unfocus();
                     _authController.sendResetPasswordEmail(_emailController.text);
                   }
                 },
