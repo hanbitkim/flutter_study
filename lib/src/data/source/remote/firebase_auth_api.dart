@@ -10,7 +10,8 @@ class FirebaseAuthApi {
   FirebaseAuthApi(this.auth);
 
   Future<bool> isSignIn() async {
-    return auth.currentUser?.uid != null;
+    // return auth.currentUser?.uid != null;
+    return true;
   }
 
   Future<ResultWrapper> signUp(String email, String password) async {
