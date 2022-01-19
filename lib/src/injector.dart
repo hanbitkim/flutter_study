@@ -1,6 +1,7 @@
 import 'package:artitecture/src/data/repository/auth_repository_impl.dart';
 import 'package:artitecture/src/data/source/remote/firebase_auth_api.dart';
 import 'package:artitecture/src/domain/repository/auth_repository.dart';
+import 'package:artitecture/src/domain/usecase/google_sign_in_usecase.dart';
 import 'package:artitecture/src/domain/usecase/is_sign_in_usecase.dart';
 import 'package:artitecture/src/domain/usecase/reset_password_usecase.dart';
 import 'package:artitecture/src/domain/usecase/sign_in_usecase.dart';
@@ -33,9 +34,10 @@ Future<void> initializeDependencies() async {
   injector.registerLazySingleton<SignUpUseCase>(() => SignUpUseCase(injector()));
   injector.registerLazySingleton<SignInUseCase>(() => SignInUseCase(injector()));
   injector.registerLazySingleton<ResetPasswordUseCase>(() => ResetPasswordUseCase(injector()));
+  injector.registerLazySingleton<GoogleSignInUseCase>(() => GoogleSignInUseCase(injector()));
 
   // Controllers
-  injector.registerFactory<AuthController>(() => AuthController(injector(), injector(), injector(), injector()));
+  injector.registerFactory<AuthController>(() => AuthController(injector(), injector(), injector(), injector(), injector()));
   // injector.registerFactory<AuthController>(() {
   //   final autoController = AuthController(injector(), injector());
   //   Get.put(autoController);

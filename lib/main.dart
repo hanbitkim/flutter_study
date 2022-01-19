@@ -3,7 +3,7 @@ import 'package:artitecture/src/core/utils/constants.dart';
 import 'package:artitecture/src/injector.dart';
 import 'package:artitecture/src/presentation/controller/auth_controller.dart';
 import 'package:artitecture/src/presentation/route.dart';
-import 'package:artitecture/src/presentation/view/auth/login_view.dart';
+import 'package:artitecture/src/presentation/view/auth/sign_in_view.dart';
 import 'package:artitecture/src/presentation/view/main/main_view.dart';
 import 'package:artitecture/src/presentation/view/splash_view.dart';
 import 'package:flutter/material.dart';

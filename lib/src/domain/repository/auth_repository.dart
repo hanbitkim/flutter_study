@@ -5,4 +5,5 @@ abstract class AuthRepository {
   Future<ResultWrapper> signUp(String email, String password);
   Future<ResultWrapper> signIn(String email, String password);
   Future<ResultWrapper> resetPassword(String email);
+  Future<ResultWrapper> googleSignIn();
 }

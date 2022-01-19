@@ -2,6 +2,7 @@ import 'package:artitecture/src/core/resources/data_error.dart';
 import 'package:artitecture/src/core/resources/error_code.dart';
 import 'package:artitecture/src/core/resources/result_wrapper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
 
 class FirebaseAuthApi {
@@ -10,8 +11,8 @@ class FirebaseAuthApi {
   FirebaseAuthApi(this.auth);
 
   Future<bool> isSignIn() async {
-    // return auth.currentUser?.uid != null;
-    return true;
+    return auth.currentUser?.uid != null;
+    // return true;
   }
 
   Future<ResultWrapper> signUp(String email, String password) async {
@@ -55,6 +56,29 @@ class FirebaseAuthApi {
   Future<ResultWrapper> resetPassword(String email) async {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      return const Success(null);
+    } on FirebaseAuthException catch (e) {
+      Logger().d("resetPassword exception = ${e.code}");
+      if (e.code == 'user-not-found') {
+        return Failure(DataError(userNotFoundError, e.code));
+      }
+      return Failure(DataError(error, e.code));
+    }
+  }
+
+  Future<ResultWrapper> googleSignIn() async {
+    try {
+      final GoogleSignIn googleSignIn = GoogleSignIn();
+      final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
+      if (googleSignInAccount == null) {
+        return Failure(DataError(error, "failed to get google account"));
+      }
+      final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+      await FirebaseAuth.instance.signInWithCredential(credential);
       return const Success(null);
     } on FirebaseAuthException catch (e) {
       Logger().d("resetPassword exception = ${e.code}");

@@ -1,6 +1,7 @@
 import 'package:artitecture/src/core/resources/result_wrapper.dart';
 import 'package:artitecture/src/data/source/remote/firebase_auth_api.dart';
 import 'package:artitecture/src/domain/repository/auth_repository.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
   final FirebaseAuthApi firebaseAuthApi;
@@ -25,5 +26,10 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<ResultWrapper> resetPassword(String email) {
     return firebaseAuthApi.resetPassword(email);
+  }
+
+  @override
+  Future<ResultWrapper> googleSignIn() {
+    return firebaseAuthApi.googleSignIn();
   }
 }

@@ -63,7 +63,7 @@ class LoginPage extends HookWidget {
                           color: primaryColor,
                         )
                       : const Text(
-                          'Log in',
+                          'Email login',
                         )),
                   width: double.infinity,
                   alignment: Alignment.center,
@@ -80,6 +80,29 @@ class LoginPage extends HookWidget {
                     FocusManager.instance.primaryFocus?.unfocus();
                     _authController.signIn(_emailController.text, _passwordController.text);
                   }
+                },
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              InkWell(
+                child: Container(
+                  child: const Text(
+                    'Google login',
+                  ),
+                  width: double.infinity,
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  decoration: const ShapeDecoration(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(4)),
+                    ),
+                    color: blueColor,
+                  ),
+                ),
+                onTap: () {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                  _authController.signInWithGoogle();
                 },
               ),
               const SizedBox(

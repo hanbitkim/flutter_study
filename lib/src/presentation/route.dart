@@ -1,5 +1,5 @@
 import 'package:artitecture/src/presentation/view/auth/reset_password_view.dart';
-import 'package:artitecture/src/presentation/view/auth/login_view.dart';
+import 'package:artitecture/src/presentation/view/auth/sign_in_view.dart';
 import 'package:artitecture/src/presentation/view/main/main_view.dart';
 import 'package:artitecture/src/presentation/view/auth/sign_up_view.dart';
 import 'package:get/get.dart';

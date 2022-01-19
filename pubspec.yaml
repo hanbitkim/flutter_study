@@ -37,17 +37,15 @@ dependencies:
   dio: ^4.0.0
   json_annotation: ^4.1.0
   floor: ^1.2.0
-  equatable: ^2.0.3
+  freezed: ^1.0.0
   get: ^4.6.1
   flutter_svg: ^1.0.1
   email_validator: ^2.0.1
-
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   firebase_core: ^1.11.0
   firebase_auth: ^3.3.5
+  firebase_dynamic_links: ^4.0.4
+  google_sign_in: ^5.2.3
 
 dev_dependencies:
   flutter_test:
@@ -55,7 +53,7 @@ dev_dependencies:
 
   retrofit_generator: ^2.0.1+1
   build_runner: ^2.0.1
-  json_serializable: ^5.0.0
+  json_serializable: ^6.1.4
   floor_generator: ^1.2.0
 
   # The "flutter_lints" package below contains a set of recommended lints to

@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "58529973806",
+    "project_id": "animal-arch-test",
+    "storage_bucket": "animal-arch-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:58529973806:android:d98c1f65b99fc6adf981bf",
+        "android_client_info": {
+          "package_name": "com.example.artitecture"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "58529973806-dtgobmf48nqcp19njudukakcrg6vgaj2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.artitecture",
+            "certificate_hash": "c9dd27fdff23caa909b1d11cb77c0a9284435e27"
+          }
+        },
+        {
+          "client_id": "58529973806-9ctuq6bjg6t3h1s085cfe8croicuecsm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5DWsxD5mE4XmLqjI4_zKSvI_-KGbr0dI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "58529973806-9ctuq6bjg6t3h1s085cfe8croicuecsm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "58529973806-itcjefi7fhht2or6ft6elgejiuvkgagt.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.animal.test"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
