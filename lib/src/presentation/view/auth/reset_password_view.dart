@@ -14,8 +14,8 @@ class ResetPasswordPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AuthController _authController = injector();
-    final _emailController = useTextEditingController();
+    final AuthController _authController = Get.put(injector());
+    final TextEditingController _emailController = useTextEditingController();
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
     return Scaffold(

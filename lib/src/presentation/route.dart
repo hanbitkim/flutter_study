@@ -12,7 +12,7 @@ const String findPasswordRoute = "/findPassword";
 class AppRoutes {
   static List<GetPage> get routes {
     return [
-      GetPage(name: loginRoute, page: () => const LoginPage()),
+      GetPage(name: loginRoute, page: () => const SignInPage()),
       GetPage(name: signUpRoute, page: () => const SignUpPage()),
       GetPage(name: findPasswordRoute, page: () => const ResetPasswordPage()),
       GetPage(name: mainRoute, page: () => const MainPage())

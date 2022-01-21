@@ -1,7 +1,9 @@
+import 'package:artitecture/src/core/resources/data_error.dart';
+import 'package:artitecture/src/core/resources/error_code.dart';
 import 'package:artitecture/src/core/resources/result_wrapper.dart';
 import 'package:artitecture/src/data/source/remote/firebase_auth_api.dart';
 import 'package:artitecture/src/domain/repository/auth_repository.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
   final FirebaseAuthApi firebaseAuthApi;
@@ -29,7 +31,13 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<ResultWrapper> googleSignIn() {
-    return firebaseAuthApi.googleSignIn();
+  Future<ResultWrapper> googleSignIn() async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
+    if (googleSignInAccount == null) {
+      return Failure(DataError(error, "failed to get google account"));
+    }
+    final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
+    return firebaseAuthApi.googleSignIn(googleSignInAuthentication.accessToken, googleSignInAuthentication.idToken);
   }
 }

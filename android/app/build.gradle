@@ -44,6 +44,7 @@ android {
         targetSdkVersion flutterTargetSdkVersion.toInteger()
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {

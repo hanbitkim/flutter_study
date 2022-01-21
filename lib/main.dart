@@ -34,7 +34,7 @@ class MyApp extends HookWidget {
             if (snapshot.data == true) {
               return const MainPage();
             } else {
-              return const LoginPage();
+              return const SignInPage();
             }
           } else {
             return const SplashView();

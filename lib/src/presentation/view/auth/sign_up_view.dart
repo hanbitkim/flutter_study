@@ -1,11 +1,9 @@
 import 'package:artitecture/src/core/utils/colors.dart';
 import 'package:artitecture/src/injector.dart';
 import 'package:artitecture/src/presentation/controller/auth_controller.dart';
-import 'package:artitecture/src/presentation/widget/text_field_input.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class SignUpPage extends HookWidget {
@@ -13,10 +11,10 @@ class SignUpPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AuthController _authController = injector();
-    final _emailController = useTextEditingController();
-    final _passwordController = useTextEditingController();
-    final _passwordConfirmController = useTextEditingController();
+    final AuthController _authController = Get.put(injector());
+    final TextEditingController _emailController = useTextEditingController();
+    final TextEditingController _passwordController = useTextEditingController();
+    final TextEditingController _passwordConfirmController = useTextEditingController();
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
     return Scaffold(
