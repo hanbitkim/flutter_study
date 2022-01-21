@@ -15,7 +15,7 @@ import io.flutter.plugins.GeneratedPluginRegistrant
 class MainActivity: FlutterActivity() {
     private val channel = "poc.deeplink.flutter.dev/channel"
     private val events = "poc.deeplink.flutter.dev/events"
-    private val linkMethod = "initialLink"
+    private val linkMethod = "getDeepLink"
     private var linkUrl: String? = null
     private var linksReceiver: BroadcastReceiver? = null
 
