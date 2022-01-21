@@ -1,23 +1,25 @@
 import 'package:artitecture/src/presentation/deep_link_parser.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 
 class MainController extends GetxController {
-  final platform = const MethodChannel('poc.deeplink.flutter.dev/channel');
+  final deepLinkMethod = const MethodChannel('poc.deeplink.flutter.dev/channel');
+  final deepLinkEvent = const EventChannel('poc.deeplink.flutter.dev/events');
 
   @override
   void onInit() {
     getDeepLink().then((value) {
-      Logger().d("deepLink = $value");
       DeepLinkParser.parse(value);
+    });
+    deepLinkEvent.receiveBroadcastStream().listen((event) {
+      DeepLinkParser.parse(event);
     });
     super.onInit();
   }
 
   Future<String?> getDeepLink() async {
     try {
-      return platform.invokeMethod<String>('getDeepLink');
+      return deepLinkMethod.invokeMethod<String>('getDeepLink');
     } on PlatformException catch (e) {
       return "failed to get initialLink = ${e.message}";
     }

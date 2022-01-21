@@ -1,8 +1,10 @@
 import 'package:artitecture/src/presentation/route.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 class DeepLinkParser {
   static void parse(String? deepLinkUrl) {
+    Logger().d("deepLink = $deepLinkUrl");
     if (deepLinkUrl != null) {
       var uri = Uri.parse(deepLinkUrl);
       // if (uri.host == "findpassword") {
