@@ -5,21 +5,19 @@ import 'package:artitecture/src/presentation/view/main/tab_one.dart';
 import 'package:artitecture/src/presentation/view/main/tab_three.dart';
 import 'package:artitecture/src/presentation/view/main/tab_two.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 
-class MainPage extends HookWidget {
+class MainPage extends StatelessWidget {
   const MainPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final MainController _mainController = Get.put(injector());
-    final selectedTabIndex = useState(0);
     final List<Widget> _children = [const TabOne(), const TabTwo(), const TabThree()];
 
-    return Scaffold(
+    return Obx(() => Scaffold(
       body: Center(
-        child: _children[selectedTabIndex.value]
+        child: _children[_mainController.tabIndex.value]
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -36,10 +34,10 @@ class MainPage extends HookWidget {
             label: 'Chats',
           ),
         ],
-        onTap: (int index) => selectedTabIndex.value = index,
-        currentIndex: selectedTabIndex.value,
+        onTap: (int index) => _mainController.selectTab(index),
+        currentIndex: _mainController.tabIndex.value,
         backgroundColor: primaryColor,
       ),
-    );
+    ));
   }
 }

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 class MainController extends GetxController {
   final deepLinkMethod = const MethodChannel('poc.deeplink.flutter.dev/channel');
   final deepLinkEvent = const EventChannel('poc.deeplink.flutter.dev/events');
+  final tabIndex = RxInt(0);
 
   @override
   void onInit() {
@@ -23,5 +24,9 @@ class MainController extends GetxController {
     } on PlatformException catch (e) {
       return "failed to get initialLink = ${e.message}";
     }
+  }
+
+  void selectTab(int index) {
+    tabIndex.value = index;
   }
 }
