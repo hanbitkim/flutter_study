@@ -1,5 +1,6 @@
 import 'package:artitecture/src/domain/usecase/is_sign_in_usecase.dart';
-import 'package:artitecture/src/presentation/deep_link_parser.dart';
+import 'package:artitecture/src/presentation/deep_link_manager.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -22,6 +23,7 @@ class AppController extends GetxController {
   @override
   void onInit() {
     _initNotification();
+    _initDynamicLink();
     super.onInit();
   }
 
@@ -90,13 +92,28 @@ class AppController extends GetxController {
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage rm) {
       Logger().d("background remoteMessage = ${rm.data.toString()}");
-      DeepLinkParser.parse(rm.data["deepLink"]);
+      DeepLinkManager.handleUrl(rm.data["deepLink"]);
     });
 
     RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
     if (initialMessage != null) {
       Logger().d("initial remoteMessage = ${initialMessage.data.toString()}");
-      DeepLinkParser.parse(initialMessage.data["deepLink"]);
+      DeepLinkManager.handleUrl(initialMessage.data["deepLink"]);
+    }
+  }
+
+  void _initDynamicLink() async {
+    FirebaseDynamicLinks.instance.onLink.listen((PendingDynamicLinkData event) {
+      Logger().d("dynamicLink = ${event.link}");
+        DeepLinkManager.handleUri(event.link);
+    }).onError((error) {
+      Logger().d("dynamicLink error = ${error.toString()}");
+    });
+
+    final PendingDynamicLinkData? data = await FirebaseDynamicLinks.instance.getInitialLink();
+    final Uri? deepLink = data?.link;
+    if (deepLink != null) {
+      DeepLinkManager.handleUri(deepLink);
     }
   }
 }

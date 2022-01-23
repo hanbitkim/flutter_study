@@ -1,4 +1,4 @@
-import 'package:artitecture/src/presentation/deep_link_parser.dart';
+import 'package:artitecture/src/presentation/deep_link_manager.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
@@ -12,10 +12,10 @@ class MainController extends GetxController {
   @override
   void onInit() {
     getDeepLink().then((value) {
-      DeepLinkParser.parse(value);
+      DeepLinkManager.handleUrl(value);
     });
     deepLinkEvent.receiveBroadcastStream().listen((event) {
-      DeepLinkParser.parse(event);
+      DeepLinkManager.handleUrl(event);
     });
     super.onInit();
   }
