@@ -57,7 +57,7 @@ class SignInPage extends HookWidget {
               ),
               InkWell(
                 child: Container(
-                  child: Obx(() => _authController.isLogging.value
+                  child: Obx(() => _authController.isLoading.value
                       ? const CircularProgressIndicator(
                           color: primaryColor,
                         )

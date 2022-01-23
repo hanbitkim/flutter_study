@@ -1,12 +1,9 @@
 import 'package:artitecture/src/core/utils/colors.dart';
 import 'package:artitecture/src/injector.dart';
-import 'package:artitecture/src/presentation/controller/auth_controller.dart';
-import 'package:artitecture/src/presentation/route.dart';
-import 'package:artitecture/src/presentation/widget/text_field_input.dart';
+import 'package:artitecture/src/presentation/controller/reset_password_controller.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class ResetPasswordPage extends HookWidget {
@@ -14,7 +11,7 @@ class ResetPasswordPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AuthController _authController = Get.put(injector());
+    final ResetPasswordController _resetPasswordController = Get.put(injector());
     final TextEditingController _emailController = useTextEditingController();
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -48,13 +45,9 @@ class ResetPasswordPage extends HookWidget {
               ),
               InkWell(
                 child: Container(
-                  child: Obx(() => _authController.isLogging.value
-                      ? const CircularProgressIndicator(
-                          color: primaryColor,
-                        )
-                      : const Text(
-                          'Send an email to reset password',
-                        )),
+                  child: const Text(
+                    'Send an email to reset password',
+                  ),
                   width: double.infinity,
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 12),
@@ -68,7 +61,7 @@ class ResetPasswordPage extends HookWidget {
                 onTap: () {
                   if (_formKey.currentState?.validate() == true) {
                     FocusManager.instance.primaryFocus?.unfocus();
-                    _authController.sendResetPasswordEmail(_emailController.text);
+                    _resetPasswordController.sendResetPasswordEmail(_emailController.text);
                   }
                 },
               ),

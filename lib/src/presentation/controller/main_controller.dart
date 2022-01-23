@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class MainController extends GetxController {
+  static MainController get to => Get.find();
+
   final deepLinkMethod = const MethodChannel('poc.deeplink.flutter.dev/channel');
   final deepLinkEvent = const EventChannel('poc.deeplink.flutter.dev/events');
   final tabIndex = RxInt(0);
