@@ -1,3 +1,4 @@
+import 'package:artitecture/src/domain/usecase/secession_usecase.dart';
 import 'package:artitecture/src/domain/usecase/sign_out_usecase.dart';
 import 'package:artitecture/src/presentation/route.dart';
 import 'package:get/get.dart';
@@ -6,11 +7,25 @@ class MyPageController extends GetxController {
   static MyPageController get to => Get.find();
 
   final SignOutUseCase _signOutUseCase;
+  final SecessionUseCase _secessionUseCase;
 
-  MyPageController(this._signOutUseCase);
+  MyPageController(this._signOutUseCase, this._secessionUseCase);
 
   void signOut() async {
-    await _signOutUseCase();
-    Get.offNamed(loginRoute);
+    var response = await _signOutUseCase();
+    if (response) {
+      Get.offNamed(loginRoute);
+    } else {
+      Get.snackbar("에러가 발생했습니다", "네트워크 상태를 확인 후 다시 시도해주세요");
+    }
+  }
+
+  void secession() async {
+    var response = await _secessionUseCase();
+    if (response.isSuccess()) {
+      Get.offNamed(loginRoute);
+    } else {
+      Get.snackbar("에러가 발생했습니다", "네트워크 상태를 확인 후 다시 시도해주세요");
+    }
   }
 }

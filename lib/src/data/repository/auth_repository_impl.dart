@@ -42,7 +42,12 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<void> signOut() async {
-    firebaseAuthApi.signOut();
+  Future<bool> signOut() async {
+    return firebaseAuthApi.signOut();
+  }
+
+  @override
+  Future<ResultWrapper> secession() {
+    return firebaseAuthApi.secession();
   }
 }

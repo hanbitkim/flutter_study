@@ -82,11 +82,23 @@ class FirebaseAuthApi {
     }
   }
 
-  void signOut() async {
+  Future<bool> signOut() async {
     try {
-      return await FirebaseAuth.instance.signOut();
+      await FirebaseAuth.instance.signOut();
+      return true;
     } on FirebaseAuthException catch (e) {
       Logger().d("signOut exception = ${e.code}");
+      return false;
+    }
+  }
+
+  Future<ResultWrapper> secession() async {
+    try {
+      await FirebaseAuth.instance.currentUser?.delete();
+      return const Success(null);
+    } on FirebaseAuthException catch (e) {
+      Logger().d("signOut exception = ${e.code}");
+      return Failure(DataError(error, e.code));
     }
   }
 }

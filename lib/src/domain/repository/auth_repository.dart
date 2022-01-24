@@ -6,5 +6,6 @@ abstract class AuthRepository {
   Future<ResultWrapper> signIn(String email, String password);
   Future<ResultWrapper> resetPassword(String email);
   Future<ResultWrapper> googleSignIn();
-  Future<void> signOut();
+  Future<bool> signOut();
+  Future<ResultWrapper> secession();
 }
