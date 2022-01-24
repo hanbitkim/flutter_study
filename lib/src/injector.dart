@@ -5,10 +5,12 @@ import 'package:artitecture/src/domain/usecase/google_sign_in_usecase.dart';
 import 'package:artitecture/src/domain/usecase/is_sign_in_usecase.dart';
 import 'package:artitecture/src/domain/usecase/reset_password_usecase.dart';
 import 'package:artitecture/src/domain/usecase/sign_in_usecase.dart';
+import 'package:artitecture/src/domain/usecase/sign_out_usecase.dart';
 import 'package:artitecture/src/domain/usecase/sign_up_usecase.dart';
 import 'package:artitecture/src/presentation/controller/app_controller.dart';
 import 'package:artitecture/src/presentation/controller/auth_controller.dart';
 import 'package:artitecture/src/presentation/controller/main_controller.dart';
+import 'package:artitecture/src/presentation/controller/mypage_controller.dart';
 import 'package:artitecture/src/presentation/controller/reset_password_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -37,12 +39,14 @@ Future<void> initializeDependencies() async {
   injector.registerLazySingleton<SignInUseCase>(() => SignInUseCase(injector()));
   injector.registerLazySingleton<ResetPasswordUseCase>(() => ResetPasswordUseCase(injector()));
   injector.registerLazySingleton<GoogleSignInUseCase>(() => GoogleSignInUseCase(injector()));
+  injector.registerLazySingleton<SignOutUseCase>(() => SignOutUseCase(injector()));
 
   // Controllers
   injector.registerFactory<AppController>(() => AppController(injector()));
   injector.registerFactory<AuthController>(() => AuthController(injector(), injector(), injector()));
   injector.registerFactory<ResetPasswordController>(() => ResetPasswordController(injector()));
   injector.registerFactory<MainController>(() => MainController());
+  injector.registerFactory<MyPageController>(() => MyPageController(injector()));
 
   // injector.registerFactory<AuthController>(() {
   //   final autoController = AuthController(injector(), injector());

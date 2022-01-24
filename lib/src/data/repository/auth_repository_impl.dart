@@ -40,4 +40,9 @@ class AuthRepositoryImpl extends AuthRepository {
     final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
     return firebaseAuthApi.googleSignIn(googleSignInAuthentication.accessToken, googleSignInAuthentication.idToken);
   }
+
+  @override
+  Future<void> signOut() async {
+    firebaseAuthApi.signOut();
+  }
 }

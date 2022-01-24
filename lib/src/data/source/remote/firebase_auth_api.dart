@@ -81,4 +81,12 @@ class FirebaseAuthApi {
       return Failure(DataError(error, e.code));
     }
   }
+
+  void signOut() async {
+    try {
+      return await FirebaseAuth.instance.signOut();
+    } on FirebaseAuthException catch (e) {
+      Logger().d("signOut exception = ${e.code}");
+    }
+  }
 }

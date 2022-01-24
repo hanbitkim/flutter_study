@@ -1,8 +1,6 @@
-import 'package:artitecture/src/core/utils/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
-class TabTwo extends HookWidget {
+class TabTwo extends StatelessWidget {
   const TabTwo({Key? key}) : super(key: key);
 
   @override
