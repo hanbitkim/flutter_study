@@ -1,6 +1,10 @@
 import 'package:artitecture/src/core/resources/data_error.dart';
 import 'package:artitecture/src/core/resources/error_code.dart';
 import 'package:artitecture/src/core/resources/result_wrapper.dart';
+import 'package:artitecture/src/core/utils/constants.dart';
+import 'package:artitecture/src/core/utils/platforms.dart';
+import 'package:artitecture/src/domain/entity/response/app_version.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:logger/logger.dart';
 
@@ -11,7 +15,6 @@ class FirebaseAuthApi {
 
   Future<bool> isSignIn() async {
     return auth.currentUser?.uid != null;
-    // return true;
   }
 
   Future<ResultWrapper> signUp(String email, String password) async {
@@ -98,6 +101,16 @@ class FirebaseAuthApi {
       return const Success(null);
     } on FirebaseAuthException catch (e) {
       Logger().d("signOut exception = ${e.code}");
+      return Failure(DataError(error, e.code));
+    }
+  }
+
+  Future<ResultWrapper<AppVersion>> getAppVersion() async {
+    try {
+      var document = await FirebaseFirestore.instance.collection(kAppVersionCollectionKey).doc(PlatformUtil.getPlatformName()).get();
+      return Success(AppVersion.fromDocument(document));
+    } on FirebaseAuthException catch (e) {
+      Logger().d("getAppVersion exception = ${e.code}");
       return Failure(DataError(error, e.code));
     }
   }

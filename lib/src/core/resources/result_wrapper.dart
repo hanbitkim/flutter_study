@@ -9,6 +9,13 @@ abstract class ResultWrapper<T> {
   bool isSuccess() {
     return this is Success;
   }
+
+  T getData() {
+    if (isSuccess()) {
+      return data!;
+    }
+    throw UnsupportedError("getData is not supported when is not succeed");
+  }
 }
 
 class Success<T> extends ResultWrapper<T> {

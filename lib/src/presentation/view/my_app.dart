@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         home: FutureBuilder<bool>(
             future: _appController.isSignIn(),
             builder: (context, snapshot) {
-              if (snapshot.hasData || snapshot.hasError) {
+              if (snapshot.hasError || snapshot.hasData) {
                 if (snapshot.data == true) {
                   return const MainPage();
                 } else {

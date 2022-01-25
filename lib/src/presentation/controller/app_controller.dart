@@ -1,11 +1,13 @@
+import 'package:artitecture/src/domain/usecase/check_app_version_usecase.dart';
 import 'package:artitecture/src/domain/usecase/is_sign_in_usecase.dart';
 import 'package:artitecture/src/presentation/deep_link_manager.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:package_info/package_info.dart';
+import 'package:version/version.dart';
 
 class AppController extends GetxController {
   static const notificationChannelId = "notification_channel_id";
@@ -14,11 +16,12 @@ class AppController extends GetxController {
 
   static AppController get to => Get.find();
 
-  final IsSignInUseCase isSignInUseCase;
+  final CheckAppVersionUseCase _checkAppVersionUseCase;
+  final IsSignInUseCase _isSignInUseCase;
 
   final Rxn<RemoteMessage> message = Rxn<RemoteMessage>();
 
-  AppController(this.isSignInUseCase);
+  AppController(this._checkAppVersionUseCase, this._isSignInUseCase);
 
   @override
   void onInit() {
@@ -27,8 +30,21 @@ class AppController extends GetxController {
     super.onInit();
   }
 
-  Future<bool> isSignIn() {
-    return isSignInUseCase();
+  Future<bool> isSignIn() async {
+    var response = await _checkAppVersionUseCase();
+    if (response.isSuccess()) {
+      var version = await PackageInfo.fromPlatform();
+      Logger().d("appVersion = ${response.getData()}, currentVersion = ${version.version}");
+      var currentVersion = Version.parse(version.version);
+      if (currentVersion < Version.parse(response.getData().requiredVersion)) {
+
+        return false;
+      }
+      if (currentVersion < Version.parse(response.getData().latestVersion)) {
+
+      }
+    }
+    return _isSignInUseCase();
   }
 
   void _initNotification() async {

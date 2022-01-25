@@ -1,6 +1,9 @@
+import 'package:artitecture/src/data/repository/app_repository_impl.dart';
 import 'package:artitecture/src/data/repository/auth_repository_impl.dart';
 import 'package:artitecture/src/data/source/remote/firebase_auth_api.dart';
+import 'package:artitecture/src/domain/repository/app_repository.dart';
 import 'package:artitecture/src/domain/repository/auth_repository.dart';
+import 'package:artitecture/src/domain/usecase/check_app_version_usecase.dart';
 import 'package:artitecture/src/domain/usecase/google_sign_in_usecase.dart';
 import 'package:artitecture/src/domain/usecase/is_sign_in_usecase.dart';
 import 'package:artitecture/src/domain/usecase/reset_password_usecase.dart';
@@ -33,6 +36,7 @@ Future<void> initializeDependencies() async {
 
   // Repositories
   injector.registerSingleton<AuthRepository>(AuthRepositoryImpl(injector()));
+  injector.registerSingleton<AppRepository>(AppRepositoryImpl(injector()));
 
   // UseCases
   injector.registerLazySingleton<IsSignInUseCase>(() => IsSignInUseCase(injector()));
@@ -42,9 +46,10 @@ Future<void> initializeDependencies() async {
   injector.registerLazySingleton<GoogleSignInUseCase>(() => GoogleSignInUseCase(injector()));
   injector.registerLazySingleton<SignOutUseCase>(() => SignOutUseCase(injector()));
   injector.registerLazySingleton<SecessionUseCase>(() => SecessionUseCase(injector()));
+  injector.registerLazySingleton<CheckAppVersionUseCase>(() => CheckAppVersionUseCase(injector()));
 
   // Controllers
-  injector.registerFactory<AppController>(() => AppController(injector()));
+  injector.registerFactory<AppController>(() => AppController(injector(), injector()));
   injector.registerFactory<AuthController>(() => AuthController(injector(), injector(), injector()));
   injector.registerFactory<ResetPasswordController>(() => ResetPasswordController(injector()));
   injector.registerFactory<MainController>(() => MainController());
