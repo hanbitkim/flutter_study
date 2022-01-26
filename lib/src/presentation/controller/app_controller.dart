@@ -44,12 +44,12 @@ class AppController extends GetxController {
       Logger().d("appVersion = ${response.getData()}, currentVersion = ${version.version}");
       var currentVersion = Version.parse(version.version);
       if (currentVersion < Version.parse(response.getData().requiredVersion)) {
-        await _showRequiredUpdateDialog();
+        await _showRequiredUpdateDialog(response.getData().requiredChanges);
       }
       var ignoreVersion = await _secureStorage.read(kIgnoreAppVersion);
       var latestVersion = Version.parse(response.getData().latestVersion);
       if (currentVersion < latestVersion && (ignoreVersion == null || Version.parse(ignoreVersion) < latestVersion)) {
-        await _showLatestUpdateDialog(response.getData().latestVersion);
+        await _showLatestUpdateDialog(response.getData().latestChanges, response.getData().latestVersion);
       }
     }
     return _isSignInUseCase();
@@ -141,11 +141,11 @@ class AppController extends GetxController {
     }
   }
 
-  Future<void> _showRequiredUpdateDialog() async {
+  Future<void> _showRequiredUpdateDialog(String message) async {
     await Get.dialog(
         AlertDialog(
           title: const Text('필수 업데이트가 있습니다'),
-          content: const Text('업데이트 후 이용하실 수 있습니다'),
+          content: Text(message),
           actions: <Widget>[
             TextButton(
               onPressed: () {
@@ -164,11 +164,11 @@ class AppController extends GetxController {
     );
   }
 
-  Future<void> _showLatestUpdateDialog(String version) async {
+  Future<void> _showLatestUpdateDialog(String message, String version) async {
     await Get.dialog(
         AlertDialog(
           title: const Text('업데이트가 있습니다'),
-          content: const Text('최신 버전으로 업데이트 할 수 있습니다'),
+          content: Text(message),
           actions: <Widget>[
             TextButton(
               onPressed: () {
