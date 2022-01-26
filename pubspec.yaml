@@ -53,6 +53,8 @@ dependencies:
   version: ^2.0.0
   package_info: ^2.0.2
   freezed_annotation: ^1.1.0
+  io: ^1.0.3
+  launch_review: ^3.0.1
 
 dev_dependencies:
   flutter_test:

@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:artitecture/src/domain/usecase/check_app_version_usecase.dart';
 import 'package:artitecture/src/domain/usecase/is_sign_in_usecase.dart';
 import 'package:artitecture/src/presentation/deep_link_manager.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:launch_review/launch_review.dart';
 import 'package:logger/logger.dart';
 import 'package:package_info/package_info.dart';
 import 'package:version/version.dart';
@@ -37,11 +41,10 @@ class AppController extends GetxController {
       Logger().d("appVersion = ${response.getData()}, currentVersion = ${version.version}");
       var currentVersion = Version.parse(version.version);
       if (currentVersion < Version.parse(response.getData().requiredVersion)) {
-
-        return false;
+        await _showRequiredUpdateDialog();
       }
       if (currentVersion < Version.parse(response.getData().latestVersion)) {
-
+        await _showLatestUpdateDialog();
       }
     }
     return _isSignInUseCase();
@@ -131,5 +134,51 @@ class AppController extends GetxController {
     if (deepLink != null) {
       DeepLinkManager.handleUri(deepLink);
     }
+  }
+
+  Future<void> _showRequiredUpdateDialog() async {
+    await Get.dialog(
+        AlertDialog(
+          title: const Text('필수 업데이트가 있습니다'),
+          content: const Text('업데이트 후 이용하실 수 있습니다'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                LaunchReview.launch();
+                exit(0);
+              },
+              child: const Text('업데이트'),
+            ),
+            TextButton(
+              onPressed: () => exit(0),
+              child: const Text('취소'),
+            ),
+          ],
+        ),
+        barrierDismissible: false
+    );
+  }
+
+  Future<void> _showLatestUpdateDialog() async {
+    await Get.dialog(
+        AlertDialog(
+          title: const Text('업데이트가 있습니다'),
+          content: const Text('최신 버전으로 업데이트 할 수 있습니다'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Get.back();
+                LaunchReview.launch();
+              },
+              child: const Text('업데이트'),
+            ),
+            TextButton(
+              onPressed: () => Get.back(),
+              child: const Text('취소'),
+            ),
+          ],
+        ),
+        barrierDismissible: true
+    );
   }
 }

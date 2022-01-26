@@ -7,9 +7,10 @@ import 'package:artitecture/src/presentation/view/auth/sign_in_view.dart';
 import 'package:artitecture/src/presentation/view/main/main_view.dart';
 import 'package:artitecture/src/presentation/view/splash_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 
-class MyApp extends StatelessWidget {
+class MyApp extends HookWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
