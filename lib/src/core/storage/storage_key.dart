@@ -1,0 +1,1 @@
+const String kIgnoreAppVersion = 'ignore_app_version';

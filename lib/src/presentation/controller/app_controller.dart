@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:artitecture/src/core/storage/secure_storage.dart';
+import 'package:artitecture/src/core/storage/storage_key.dart';
 import 'package:artitecture/src/domain/usecase/check_app_version_usecase.dart';
 import 'package:artitecture/src/domain/usecase/is_sign_in_usecase.dart';
 import 'package:artitecture/src/presentation/deep_link_manager.dart';
@@ -22,10 +24,11 @@ class AppController extends GetxController {
 
   final CheckAppVersionUseCase _checkAppVersionUseCase;
   final IsSignInUseCase _isSignInUseCase;
+  final SecureStorage _secureStorage;
 
   final Rxn<RemoteMessage> message = Rxn<RemoteMessage>();
 
-  AppController(this._checkAppVersionUseCase, this._isSignInUseCase);
+  AppController(this._checkAppVersionUseCase, this._isSignInUseCase, this._secureStorage);
 
   @override
   void onInit() {
@@ -43,8 +46,10 @@ class AppController extends GetxController {
       if (currentVersion < Version.parse(response.getData().requiredVersion)) {
         await _showRequiredUpdateDialog();
       }
-      if (currentVersion < Version.parse(response.getData().latestVersion)) {
-        await _showLatestUpdateDialog();
+      var ignoreVersion = await _secureStorage.read(kIgnoreAppVersion);
+      var latestVersion = Version.parse(response.getData().latestVersion);
+      if (currentVersion < latestVersion && (ignoreVersion == null || Version.parse(ignoreVersion) < latestVersion)) {
+        await _showLatestUpdateDialog(response.getData().latestVersion);
       }
     }
     return _isSignInUseCase();
@@ -159,7 +164,7 @@ class AppController extends GetxController {
     );
   }
 
-  Future<void> _showLatestUpdateDialog() async {
+  Future<void> _showLatestUpdateDialog(String version) async {
     await Get.dialog(
         AlertDialog(
           title: const Text('업데이트가 있습니다'),
@@ -173,8 +178,15 @@ class AppController extends GetxController {
               child: const Text('업데이트'),
             ),
             TextButton(
+              onPressed: () async {
+                Get.back();
+                await _secureStorage.write(kIgnoreAppVersion, version);
+              },
+              child: const Text('다시 보지 않기'),
+            ),
+            TextButton(
               onPressed: () => Get.back(),
-              child: const Text('취소'),
+              child: const Text('다음에'),
             ),
           ],
         ),

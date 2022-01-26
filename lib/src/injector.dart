@@ -1,3 +1,4 @@
+import 'package:artitecture/src/core/storage/secure_storage.dart';
 import 'package:artitecture/src/data/repository/app_repository_impl.dart';
 import 'package:artitecture/src/data/repository/auth_repository_impl.dart';
 import 'package:artitecture/src/data/source/remote/firebase_auth_api.dart';
@@ -31,6 +32,9 @@ Future<void> initializeDependencies() async {
   );
   injector.registerLazySingleton(() => FirebaseAuth.instance);
 
+  // Storage
+  injector.registerSingleton(SecureStorage());
+
   // Sources
   injector.registerSingleton(FirebaseAuthApi(injector()));
 
@@ -49,7 +53,7 @@ Future<void> initializeDependencies() async {
   injector.registerLazySingleton<CheckAppVersionUseCase>(() => CheckAppVersionUseCase(injector()));
 
   // Controllers
-  injector.registerFactory<AppController>(() => AppController(injector(), injector()));
+  injector.registerFactory<AppController>(() => AppController(injector(), injector(), injector()));
   injector.registerFactory<AuthController>(() => AuthController(injector(), injector(), injector()));
   injector.registerFactory<ResetPasswordController>(() => ResetPasswordController(injector()));
   injector.registerFactory<MainController>(() => MainController());
