@@ -7,7 +7,7 @@ class SplashView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Column(
       children: [
         Expanded(child: Container(color: primaryColor))
       ],
