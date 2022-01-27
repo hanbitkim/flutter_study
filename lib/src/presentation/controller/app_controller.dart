@@ -5,6 +5,7 @@ import 'package:artitecture/src/core/storage/secure_storage.dart';
 import 'package:artitecture/src/core/storage/storage_key.dart';
 import 'package:artitecture/src/domain/usecase/check_app_version_usecase.dart';
 import 'package:artitecture/src/domain/usecase/is_sign_in_usecase.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:launch_review/launch_review.dart';
 import 'package:logger/logger.dart';
@@ -39,9 +40,9 @@ class AppController extends GetxController {
         final update = await completer.future;
         if (update) {
           LaunchReview.launch();
-          exit(0);
+          SystemNavigator.pop();
         } else {
-          exit(0);
+          SystemNavigator.pop();
         }
       }
       var ignoreVersion = await _secureStorage.read(kIgnoreAppVersion);
