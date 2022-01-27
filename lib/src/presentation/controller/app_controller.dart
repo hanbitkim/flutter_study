@@ -53,7 +53,7 @@ class AppController extends GetxController {
         if (update) {
           LaunchReview.launch();
         } else {
-          // await _secureStorage.write(kIgnoreAppVersion, response.getData().latestVersion);
+          await _secureStorage.write(kIgnoreAppVersion, response.getData().latestVersion);
         }
       }
     }
