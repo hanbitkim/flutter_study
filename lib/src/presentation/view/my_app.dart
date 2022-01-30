@@ -41,15 +41,13 @@ class MyApp extends HookWidget {
       });
       return subscription.cancel;
     }, [_appController]);
-    
-    final isSignInFuture = useMemoized(() => _appController.isSignIn());
 
     return GetMaterialApp(
         title: kMaterialAppTitle,
         theme: Apptheme.light,
         getPages: AppRoutes.routes,
         home: FutureBuilder<bool>(
-            future: isSignInFuture,
+            future: _appController.isInitialized,
             builder: (context, snapshot) {
               if (snapshot.hasError || snapshot.hasData) {
                 if (snapshot.data == true) {

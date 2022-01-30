@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:artitecture/src/core/storage/secure_storage.dart';
 import 'package:artitecture/src/core/storage/storage_key.dart';
@@ -26,9 +25,11 @@ class AppController extends GetxController {
   final PublishSubject<Completer<bool?>> _showRecommendUpdateDialog = PublishSubject();
   PublishSubject<Completer<bool?>> get showRecommendUpdateDialog => _showRecommendUpdateDialog;
 
+  late final Future<bool> isInitialized = initialize();
+
   AppController(this._checkAppVersionUseCase, this._isSignInUseCase, this._secureStorage);
 
-  Future<bool> isSignIn() async {
+  Future<bool> initialize() async {
     var response = await _checkAppVersionUseCase();
     if (response.isSuccess()) {
       var version = await PackageInfo.fromPlatform();
