@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:artitecture/src/core/storage/secure_storage.dart';
 import 'package:artitecture/src/core/storage/storage_key.dart';
 import 'package:artitecture/src/domain/usecase/check_app_version_usecase.dart';
+import 'package:artitecture/src/domain/usecase/get_user_usecase.dart';
 import 'package:artitecture/src/domain/usecase/is_sign_in_usecase.dart';
+import 'package:artitecture/src/presentation/route.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:launch_review/launch_review.dart';
@@ -16,7 +18,8 @@ class AppController extends GetxController {
   static AppController get to => Get.find();
 
   final CheckAppVersionUseCase _checkAppVersionUseCase;
-  final IsSignInUseCase _isSignInUseCase;
+  final IsSignedUseCase _isSignedUseCase;
+  final GetUserUseCase _getUserUseCase;
   final SecureStorage _secureStorage;
 
   final PublishSubject<Completer<bool?>> _showRequiredUpdateDialog = PublishSubject();
@@ -25,11 +28,11 @@ class AppController extends GetxController {
   final PublishSubject<Completer<bool?>> _showRecommendUpdateDialog = PublishSubject();
   PublishSubject<Completer<bool?>> get showRecommendUpdateDialog => _showRecommendUpdateDialog;
 
-  late final Future<bool> isInitialized = initialize();
+  late final Future<String> isInitialized = initialize();
 
-  AppController(this._checkAppVersionUseCase, this._isSignInUseCase, this._secureStorage);
+  AppController(this._checkAppVersionUseCase, this._isSignedUseCase, this._secureStorage, this._getUserUseCase);
 
-  Future<bool> initialize() async {
+  Future<String> initialize() async {
     var response = await _checkAppVersionUseCase();
     if (response.isSuccess()) {
       var version = await PackageInfo.fromPlatform();
@@ -59,6 +62,20 @@ class AppController extends GetxController {
         }
       }
     }
-    return _isSignInUseCase();
+    final isSigned = await _isSignedUseCase();
+    if (isSigned) {
+      final user = await _getUserUseCase();
+      if (user.isSuccess()) {
+        if (user.getData()?.isApproved == true) {
+          return mainRoute;
+        } else {
+          return editProfileRoute;
+        }
+      } else {
+        return signInRoute;
+      }
+    } else {
+      return signInRoute;
+    }
   }
 }

@@ -5,6 +5,7 @@ import 'package:artitecture/src/data/source/remote/firebase_auth_api.dart';
 import 'package:artitecture/src/domain/repository/app_repository.dart';
 import 'package:artitecture/src/domain/repository/auth_repository.dart';
 import 'package:artitecture/src/domain/usecase/check_app_version_usecase.dart';
+import 'package:artitecture/src/domain/usecase/get_user_usecase.dart';
 import 'package:artitecture/src/domain/usecase/google_sign_in_usecase.dart';
 import 'package:artitecture/src/domain/usecase/is_sign_in_usecase.dart';
 import 'package:artitecture/src/domain/usecase/reset_password_usecase.dart';
@@ -17,7 +18,6 @@ import 'package:artitecture/src/presentation/controller/auth_controller.dart';
 import 'package:artitecture/src/presentation/controller/main_controller.dart';
 import 'package:artitecture/src/presentation/controller/mypage_controller.dart';
 import 'package:artitecture/src/presentation/controller/reset_password_controller.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
 
@@ -30,30 +30,30 @@ Future<void> initializeDependencies() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  injector.registerLazySingleton(() => FirebaseAuth.instance);
 
   // Storage
   injector.registerSingleton(SecureStorage());
 
   // Sources
-  injector.registerSingleton(FirebaseAuthApi(injector()));
+  injector.registerSingleton(FirebaseAuthApi());
 
   // Repositories
   injector.registerSingleton<AuthRepository>(AuthRepositoryImpl(injector()));
   injector.registerSingleton<AppRepository>(AppRepositoryImpl(injector()));
 
   // UseCases
-  injector.registerLazySingleton<IsSignInUseCase>(() => IsSignInUseCase(injector()));
+  injector.registerLazySingleton<IsSignedUseCase>(() => IsSignedUseCase(injector()));
   injector.registerLazySingleton<SignUpUseCase>(() => SignUpUseCase(injector()));
   injector.registerLazySingleton<SignInUseCase>(() => SignInUseCase(injector()));
   injector.registerLazySingleton<ResetPasswordUseCase>(() => ResetPasswordUseCase(injector()));
   injector.registerLazySingleton<GoogleSignInUseCase>(() => GoogleSignInUseCase(injector()));
+  injector.registerLazySingleton<GetUserUseCase>(() => GetUserUseCase(injector()));
   injector.registerLazySingleton<SignOutUseCase>(() => SignOutUseCase(injector()));
   injector.registerLazySingleton<SecessionUseCase>(() => SecessionUseCase(injector()));
   injector.registerLazySingleton<CheckAppVersionUseCase>(() => CheckAppVersionUseCase(injector()));
 
   // Controllers
-  injector.registerFactory<AppController>(() => AppController(injector(), injector(), injector()));
+  injector.registerFactory<AppController>(() => AppController(injector(), injector(), injector(), injector()));
   injector.registerFactory<AuthController>(() => AuthController(injector(), injector(), injector()));
   injector.registerFactory<ResetPasswordController>(() => ResetPasswordController(injector()));
   injector.registerFactory<MainController>(() => MainController());

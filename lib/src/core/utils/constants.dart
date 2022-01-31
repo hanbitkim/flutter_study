@@ -10,7 +10,3 @@ const String kDatabaseName = 'app_database.db';
 
 // Firestore
 const String kAppVersionCollectionKey = "app_version";
-const String kRequiredVersionKey = "required_version";
-const String kRequiredChangesKey = "required_changes";
-const String kLatestVersionKey = "latest_version";
-const String kLatestChangesKey = "latest_changes";

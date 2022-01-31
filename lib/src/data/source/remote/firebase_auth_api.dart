@@ -3,29 +3,47 @@ import 'package:artitecture/src/core/resources/error_code.dart';
 import 'package:artitecture/src/core/resources/result_wrapper.dart';
 import 'package:artitecture/src/core/utils/constants.dart';
 import 'package:artitecture/src/core/utils/platforms.dart';
+import 'package:artitecture/src/data/source/extension/app_version_extension.dart';
+import 'package:artitecture/src/data/source/extension/user_extension.dart';
 import 'package:artitecture/src/domain/entity/response/app_version.dart';
+import 'package:artitecture/src/domain/entity/response/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as Auth;
 import 'package:logger/logger.dart';
 
 class FirebaseAuthApi {
-  final FirebaseAuth auth;
+  final Auth.FirebaseAuth auth = Auth.FirebaseAuth.instance;
+  final FirebaseFirestore fireStore = FirebaseFirestore.instance;
 
-  FirebaseAuthApi(this.auth);
-
-  Future<bool> isSignIn() async {
+  Future<bool> isSigned() async {
     return auth.currentUser?.uid != null;
+  }
+
+  Future<ResultWrapper<User?>> getUser() async {
+    try {
+      final userDocument = await fireStore.collection('user').doc(auth.currentUser?.uid).get();
+      final user = userDocument.toUser();
+      Logger().d("user = $user");
+      return Success(user);
+    } on FirebaseException catch (e) {
+      Logger().d("getUser exception = ${e.code}");
+      return Failure(DataError(error, e.code));
+    }
   }
 
   Future<ResultWrapper> signUp(String email, String password) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      Auth.UserCredential userCredential = await auth.createUserWithEmailAndPassword(
           email: email,
           password: password
       );
       Logger().d("signUp success = ${userCredential.toString()}");
+      await fireStore.collection('user').doc(userCredential.user?.uid).set({
+        "email": userCredential.user?.email,
+        "profile_url": userCredential.user?.photoURL
+      });
       return const Success(null);
-    } on FirebaseAuthException catch (e) {
+    } on Auth.FirebaseAuthException catch (e) {
       Logger().d("signUp exception = ${e.code}");
       if (e.code == 'weak-password') {
         return Failure(DataError(weekPasswordError, e.code));
@@ -38,13 +56,13 @@ class FirebaseAuthApi {
 
   Future<ResultWrapper> signIn(String email, String password) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      Auth.UserCredential userCredential = await auth.signInWithEmailAndPassword(
           email: email,
           password: password
       );
       Logger().d("signIn success = ${userCredential.toString()}");
       return const Success(null);
-    } on FirebaseAuthException catch (e) {
+    } on Auth.FirebaseAuthException catch (e) {
       Logger().d("signIn exception = ${e.code}");
       if (e.code == 'user-not-found') {
         return Failure(DataError(userNotFoundError, e.code));
@@ -57,9 +75,9 @@ class FirebaseAuthApi {
 
   Future<ResultWrapper> resetPassword(String email) async {
     try {
-      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      await auth.sendPasswordResetEmail(email: email);
       return const Success(null);
-    } on FirebaseAuthException catch (e) {
+    } on Auth.FirebaseAuthException catch (e) {
       Logger().d("resetPassword exception = ${e.code}");
       if (e.code == 'user-not-found') {
         return Failure(DataError(userNotFoundError, e.code));
@@ -70,13 +88,13 @@ class FirebaseAuthApi {
 
   Future<ResultWrapper> googleSignIn(String? accessToken, String? idToken) async {
     try {
-      final AuthCredential credential = GoogleAuthProvider.credential(
+      final Auth.AuthCredential credential = Auth.GoogleAuthProvider.credential(
         accessToken: accessToken,
         idToken: idToken,
       );
-      await FirebaseAuth.instance.signInWithCredential(credential);
+      await auth.signInWithCredential(credential);
       return const Success(null);
-    } on FirebaseAuthException catch (e) {
+    } on Auth.FirebaseAuthException catch (e) {
       Logger().d("resetPassword exception = ${e.code}");
       if (e.code == 'user-not-found') {
         return Failure(DataError(userNotFoundError, e.code));
@@ -87,9 +105,9 @@ class FirebaseAuthApi {
 
   Future<bool> signOut() async {
     try {
-      await FirebaseAuth.instance.signOut();
+      await auth.signOut();
       return true;
-    } on FirebaseAuthException catch (e) {
+    } on Auth.FirebaseAuthException catch (e) {
       Logger().d("signOut exception = ${e.code}");
       return false;
     }
@@ -97,9 +115,9 @@ class FirebaseAuthApi {
 
   Future<ResultWrapper> secession() async {
     try {
-      await FirebaseAuth.instance.currentUser?.delete();
+      await auth.currentUser?.delete();
       return const Success(null);
-    } on FirebaseAuthException catch (e) {
+    } on Auth.FirebaseAuthException catch (e) {
       Logger().d("signOut exception = ${e.code}");
       return Failure(DataError(error, e.code));
     }
@@ -108,8 +126,8 @@ class FirebaseAuthApi {
   Future<ResultWrapper<AppVersion>> getAppVersion() async {
     try {
       var document = await FirebaseFirestore.instance.collection(kAppVersionCollectionKey).doc(PlatformUtil.getPlatformName()).get();
-      return Success(AppVersion.fromDocument(document));
-    } on FirebaseAuthException catch (e) {
+      return Success(document.toAppVersion());
+    } on Auth.FirebaseAuthException catch (e) {
       Logger().d("getAppVersion exception = ${e.code}");
       return Failure(DataError(error, e.code));
     }

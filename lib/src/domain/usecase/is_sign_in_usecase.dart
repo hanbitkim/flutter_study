@@ -1,11 +1,11 @@
 import 'package:artitecture/src/domain/repository/auth_repository.dart';
 
-class IsSignInUseCase {
+class IsSignedUseCase {
   final AuthRepository authRepository;
 
-  IsSignInUseCase(this.authRepository);
+  IsSignedUseCase(this.authRepository);
 
   Future<bool> call() async {
-    return authRepository.isSignIn();
+    return authRepository.isSigned();
   }
 }

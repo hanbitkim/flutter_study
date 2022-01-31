@@ -2,6 +2,7 @@ import 'package:artitecture/src/core/resources/data_error.dart';
 import 'package:artitecture/src/core/resources/error_code.dart';
 import 'package:artitecture/src/core/resources/result_wrapper.dart';
 import 'package:artitecture/src/data/source/remote/firebase_auth_api.dart';
+import 'package:artitecture/src/domain/entity/response/user.dart';
 import 'package:artitecture/src/domain/repository/auth_repository.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -11,8 +12,8 @@ class AuthRepositoryImpl extends AuthRepository {
   AuthRepositoryImpl(this.firebaseAuthApi);
 
   @override
-  Future<bool> isSignIn() {
-    return firebaseAuthApi.isSignIn();
+  Future<bool> isSigned() {
+    return firebaseAuthApi.isSigned();
   }
 
   @override
@@ -39,6 +40,11 @@ class AuthRepositoryImpl extends AuthRepository {
     }
     final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
     return firebaseAuthApi.googleSignIn(googleSignInAuthentication.accessToken, googleSignInAuthentication.idToken);
+  }
+
+  @override
+  Future<ResultWrapper<User?>> getUser() {
+    return firebaseAuthApi.getUser();
   }
 
   @override

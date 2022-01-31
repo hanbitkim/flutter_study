@@ -4,7 +4,6 @@ import 'package:artitecture/src/injector.dart';
 import 'package:artitecture/src/presentation/controller/app_controller.dart';
 import 'package:artitecture/src/presentation/route.dart';
 import 'package:artitecture/src/presentation/view/auth/sign_in_view.dart';
-import 'package:artitecture/src/presentation/view/main/main_view.dart';
 import 'package:artitecture/src/presentation/view/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -49,9 +48,9 @@ class MyApp extends HookWidget {
         getPages: AppRoutes.routes,
         home: snapshot.hasData == false
             ? const SplashView()
-            : snapshot.data == true
-            ? const MainPage()
-            : const SignInPage()
+            : snapshot.hasError
+            ? const SignInPage()
+            : AppRoutes.getPage(snapshot.data)
     );
   }
 
