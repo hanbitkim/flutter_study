@@ -17,6 +17,7 @@ class MyApp extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final AppController _appController = Get.put(injector());
+    final snapshot = useFuture(_appController.isInitialized);
 
     useEffect(() {
       final subscription = _appController.showRequiredUpdateDialog.listen((completer) {
@@ -46,20 +47,11 @@ class MyApp extends HookWidget {
         title: kMaterialAppTitle,
         theme: Apptheme.light,
         getPages: AppRoutes.routes,
-        home: FutureBuilder<bool>(
-            future: _appController.isInitialized,
-            builder: (context, snapshot) {
-              if (snapshot.hasError || snapshot.hasData) {
-                if (snapshot.data == true) {
-                  return const MainPage();
-                } else {
-                  return const SignInPage();
-                }
-              } else {
-                return const SplashView();
-              }
-            }
-        )
+        home: snapshot.hasData == false
+            ? const SplashView()
+            : snapshot.data == true
+            ? const MainPage()
+            : const SignInPage()
     );
   }
 
