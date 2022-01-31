@@ -55,7 +55,7 @@ Future<void> initializeDependencies() async {
 
   // Controllers
   injector.registerFactory<AppController>(() => AppController(injector(), injector(), injector(), injector()));
-  injector.registerFactory<AuthController>(() => AuthController(injector(), injector(), injector()));
+  injector.registerFactory<AuthController>(() => AuthController(injector(), injector(), injector(), injector()));
   injector.registerFactory<ResetPasswordController>(() => ResetPasswordController(injector()));
   injector.registerFactory<EditProfileController>(() => EditProfileController());
   injector.registerFactory<MainController>(() => MainController());
