@@ -39,27 +39,6 @@ class NickNameStep extends HookWidget {
           InkWell(
             child: Container(
               child: const Text(
-                '닉네임 확인',
-              ),
-              width: double.infinity,
-              alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              decoration: const ShapeDecoration(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(4)),
-                ),
-              ),
-            ),
-            onTap: () {
-              if (_formKey.currentState?.validate() == true) {
-                FocusManager.instance.primaryFocus?.unfocus();
-                EditProfileController.to.checkNickname();
-              }
-            },
-          ),
-          InkWell(
-            child: Container(
-              child: const Text(
                 '완료',
               ),
               width: double.infinity,

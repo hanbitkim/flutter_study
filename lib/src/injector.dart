@@ -13,6 +13,7 @@ import 'package:artitecture/src/domain/usecase/secession_usecase.dart';
 import 'package:artitecture/src/domain/usecase/sign_in_usecase.dart';
 import 'package:artitecture/src/domain/usecase/sign_out_usecase.dart';
 import 'package:artitecture/src/domain/usecase/sign_up_usecase.dart';
+import 'package:artitecture/src/domain/usecase/update_profile_usecase.dart';
 import 'package:artitecture/src/presentation/controller/app_controller.dart';
 import 'package:artitecture/src/presentation/controller/auth_controller.dart';
 import 'package:artitecture/src/presentation/controller/edit_profile_controller.dart';
@@ -49,6 +50,7 @@ Future<void> initializeDependencies() async {
   injector.registerLazySingleton<ResetPasswordUseCase>(() => ResetPasswordUseCase(injector()));
   injector.registerLazySingleton<GoogleSignInUseCase>(() => GoogleSignInUseCase(injector()));
   injector.registerLazySingleton<GetUserUseCase>(() => GetUserUseCase(injector()));
+  injector.registerLazySingleton<UpdateProfileUseCase>(() => UpdateProfileUseCase(injector()));
   injector.registerLazySingleton<SignOutUseCase>(() => SignOutUseCase(injector()));
   injector.registerLazySingleton<SecessionUseCase>(() => SecessionUseCase(injector()));
   injector.registerLazySingleton<CheckAppVersionUseCase>(() => CheckAppVersionUseCase(injector()));
@@ -57,7 +59,7 @@ Future<void> initializeDependencies() async {
   injector.registerFactory<AppController>(() => AppController(injector(), injector(), injector(), injector()));
   injector.registerFactory<AuthController>(() => AuthController(injector(), injector(), injector(), injector()));
   injector.registerFactory<ResetPasswordController>(() => ResetPasswordController(injector()));
-  injector.registerFactory<EditProfileController>(() => EditProfileController());
+  injector.registerFactory<EditProfileController>(() => EditProfileController(injector()));
   injector.registerFactory<MainController>(() => MainController());
   injector.registerFactory<MyPageController>(() => MyPageController(injector(), injector()));
 

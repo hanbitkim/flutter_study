@@ -43,7 +43,7 @@ class FirebaseAuthApi {
         "profile_url": userCredential.user?.photoURL
       });
       return const Success(null);
-    } on Auth.FirebaseAuthException catch (e) {
+    } on FirebaseException catch (e) {
       Logger().d("signUp exception = ${e.code}");
       if (e.code == 'weak-password') {
         return Failure(DataError(weekPasswordError, e.code));
@@ -99,6 +99,23 @@ class FirebaseAuthApi {
       if (e.code == 'user-not-found') {
         return Failure(DataError(userNotFoundError, e.code));
       }
+      return Failure(DataError(error, e.code));
+    }
+  }
+
+  Future<ResultWrapper> updateProfile(String nickname) async {
+    try {
+      final checkNickname = await fireStore.collection('user').where('nickname', isEqualTo: nickname).get();
+      if (checkNickname.docs.isNotEmpty) {
+        return Failure(DataError(nicknameAlreadyInUseError, 'nickname is already in use'));
+      }
+      await fireStore.collection('user').doc(auth.currentUser?.uid).set({
+        "nickname": nickname,
+        "is_approved": true
+      }, SetOptions(merge: true));
+      return const Success(null);
+    } on FirebaseException catch (e) {
+      Logger().d("updateProfile exception = ${e.code}");
       return Failure(DataError(error, e.code));
     }
   }

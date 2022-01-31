@@ -18,12 +18,12 @@ class _$UserTearOff {
   const _$UserTearOff();
 
   _User call(
-      {required String? name,
+      {required String? nickname,
       required String? email,
       required String? profileUrl,
       required bool? isApproved}) {
     return _User(
-      name: name,
+      nickname: nickname,
       email: email,
       profileUrl: profileUrl,
       isApproved: isApproved,
@@ -36,7 +36,7 @@ const $User = _$UserTearOff();
 
 /// @nodoc
 mixin _$User {
-  String? get name => throw _privateConstructorUsedError;
+  String? get nickname => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   String? get profileUrl => throw _privateConstructorUsedError;
   bool? get isApproved => throw _privateConstructorUsedError;
@@ -50,7 +50,7 @@ abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res>;
   $Res call(
-      {String? name, String? email, String? profileUrl, bool? isApproved});
+      {String? nickname, String? email, String? profileUrl, bool? isApproved});
 }
 
 /// @nodoc
@@ -63,15 +63,15 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? name = freezed,
+    Object? nickname = freezed,
     Object? email = freezed,
     Object? profileUrl = freezed,
     Object? isApproved = freezed,
   }) {
     return _then(_value.copyWith(
-      name: name == freezed
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      nickname: nickname == freezed
+          ? _value.nickname
+          : nickname // ignore: cast_nullable_to_non_nullable
               as String?,
       email: email == freezed
           ? _value.email
@@ -95,7 +95,7 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       __$UserCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String? name, String? email, String? profileUrl, bool? isApproved});
+      {String? nickname, String? email, String? profileUrl, bool? isApproved});
 }
 
 /// @nodoc
@@ -109,15 +109,15 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? name = freezed,
+    Object? nickname = freezed,
     Object? email = freezed,
     Object? profileUrl = freezed,
     Object? isApproved = freezed,
   }) {
     return _then(_User(
-      name: name == freezed
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      nickname: nickname == freezed
+          ? _value.nickname
+          : nickname // ignore: cast_nullable_to_non_nullable
               as String?,
       email: email == freezed
           ? _value.email
@@ -139,13 +139,13 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
 
 class _$_User implements _User {
   _$_User(
-      {required this.name,
+      {required this.nickname,
       required this.email,
       required this.profileUrl,
       required this.isApproved});
 
   @override
-  final String? name;
+  final String? nickname;
   @override
   final String? email;
   @override
@@ -155,7 +155,7 @@ class _$_User implements _User {
 
   @override
   String toString() {
-    return 'User(name: $name, email: $email, profileUrl: $profileUrl, isApproved: $isApproved)';
+    return 'User(nickname: $nickname, email: $email, profileUrl: $profileUrl, isApproved: $isApproved)';
   }
 
   @override
@@ -163,7 +163,7 @@ class _$_User implements _User {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _User &&
-            const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality().equals(other.nickname, nickname) &&
             const DeepCollectionEquality().equals(other.email, email) &&
             const DeepCollectionEquality()
                 .equals(other.profileUrl, profileUrl) &&
@@ -174,7 +174,7 @@ class _$_User implements _User {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(nickname),
       const DeepCollectionEquality().hash(email),
       const DeepCollectionEquality().hash(profileUrl),
       const DeepCollectionEquality().hash(isApproved));
@@ -187,13 +187,13 @@ class _$_User implements _User {
 
 abstract class _User implements User {
   factory _User(
-      {required String? name,
+      {required String? nickname,
       required String? email,
       required String? profileUrl,
       required bool? isApproved}) = _$_User;
 
   @override
-  String? get name;
+  String? get nickname;
   @override
   String? get email;
   @override

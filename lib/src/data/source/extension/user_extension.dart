@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 extension UserExtension on DocumentSnapshot {
   User toUser() {
     return User(
-      name: getSafety('name'),
+      nickname: getSafety('nickname'),
       email: getSafety('email'),
       profileUrl: getSafety('profile_url'),
       isApproved: getSafety('is_approved')

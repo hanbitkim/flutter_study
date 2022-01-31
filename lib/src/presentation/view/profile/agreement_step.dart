@@ -20,16 +20,16 @@ class AgreementStep extends HookWidget {
                   },
                 ),
               ),
-            const Text(
-              '약관에 동의합니다',
-              overflow: TextOverflow.ellipsis,
-            )
-          ],
-        ),
-        ElevatedButton(
+              const Text(
+                '약관에 동의합니다',
+                overflow: TextOverflow.ellipsis,
+              )
+            ],
+          ),
+          ElevatedButton(
             onPressed: EditProfileController.to.isAgreementChecked.value ? () => EditProfileController.to.next() : null,
             child: const Text('다음'))
-      ]),
+        ]),
     );
   }
 }
