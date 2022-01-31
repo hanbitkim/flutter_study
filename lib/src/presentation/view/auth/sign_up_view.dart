@@ -45,6 +45,7 @@ class SignUpPage extends HookWidget {
                     ),
                     TextFormField(
                       controller: _passwordController,
+                      obscureText: true,
                       decoration: const InputDecoration(labelText: "Enter your password"),
                       validator: (String? value) {
                         if (value == null || value.isEmpty) {
@@ -55,6 +56,7 @@ class SignUpPage extends HookWidget {
                     ),
                     TextFormField(
                       controller: _passwordConfirmController,
+                      obscureText: true,
                       decoration: const InputDecoration(labelText: "Enter your password again"),
                       validator: (String? value) {
                         if (value == null || value.isEmpty) {
