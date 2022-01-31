@@ -5,6 +5,7 @@ class EditProfileController extends GetxController {
   static EditProfileController get to => Get.find();
 
   final isAgreementChecked = false.obs;
+  final nickname = "".obs;
 
   final PublishSubject<bool> _goToNext = PublishSubject();
   PublishSubject<bool> get goToNext => _goToNext;
@@ -15,7 +16,19 @@ class EditProfileController extends GetxController {
     isAgreementChecked.value = isChecked;
   }
 
+  void setNickname(String name) {
+    nickname.value = name;
+  }
+
+  void checkNickname() {
+
+  }
+
   void next() {
     _goToNext.add(true);
+  }
+
+  void updateProfile() {
+
   }
 }
