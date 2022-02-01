@@ -1,7 +1,7 @@
 import 'package:artitecture/src/core/utils/colors.dart';
 import 'package:artitecture/src/injector.dart';
 import 'package:artitecture/src/presentation/controller/main_controller.dart';
-import 'package:artitecture/src/presentation/view/main/community.dart';
+import 'package:artitecture/src/presentation/view/community/community.dart';
 import 'package:artitecture/src/presentation/view/main/tab_three.dart';
 import 'package:artitecture/src/presentation/view/main/tab_two.dart';
 import 'package:flutter/material.dart';
