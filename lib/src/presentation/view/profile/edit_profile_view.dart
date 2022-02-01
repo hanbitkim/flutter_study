@@ -33,17 +33,6 @@ class EditProfilePage extends HookWidget {
       return () => currentStep.removeListener(_callback);
     }, [currentStep]);
 
-    useEffect(() {
-      void _callback() {
-        final page = (_pageController.page?.toInt() ?? 0) + 1;
-        if (currentStep.value != page) {
-          currentStep.value = page;
-        }
-      }
-      _pageController.addListener(_callback);
-      return () => _pageController.removeListener(_callback);
-    }, [_pageController]);
-
     return WillPopScope(
       onWillPop: () async {
         final page = _pageController.page?.toInt() ?? 0;
@@ -64,6 +53,11 @@ class EditProfilePage extends HookWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   controller: _pageController,
                   children: steps,
+                  onPageChanged: (page) {
+                    if (currentStep.value != page + 1) {
+                      currentStep.value = page + 1;
+                    }
+                  },
                 ),
               )
             ],

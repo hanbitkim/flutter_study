@@ -23,7 +23,8 @@ class FirebaseApi {
   Future<ResultWrapper<User?>> getUser() async {
     try {
       final userDocument = await fireStore.collection(kUserCollectionKey).doc(auth.currentUser?.uid).get();
-      final user = userDocument.toUser();
+      final categories = await fireStore.collection(kUserCollectionKey).doc(auth.currentUser?.uid).collection('categories').get();
+      final user = userDocument.toUser(categories.docs.map((e) => e.toCategory()).toList());
       Logger().d("user = $user");
       return Success(user);
     } on FirebaseException catch (e) {

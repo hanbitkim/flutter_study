@@ -1,3 +1,4 @@
+import 'package:artitecture/src/core/global.dart';
 import 'package:artitecture/src/core/resources/error_code.dart';
 import 'package:artitecture/src/domain/usecase/get_user_usecase.dart';
 import 'package:artitecture/src/domain/usecase/google_sign_in_usecase.dart';
@@ -58,6 +59,7 @@ class AuthController extends GetxController {
   void _getUser() async {
     final userResponse = await _getUserUseCase();
     if (userResponse.isSuccess()) {
+      user.value = userResponse.data;
       if (userResponse.getData()?.isApproved == true) {
         Get.offAllNamed(mainRoute);
       } else {

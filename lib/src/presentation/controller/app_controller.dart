@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:artitecture/src/core/global.dart';
 import 'package:artitecture/src/core/storage/secure_storage.dart';
 import 'package:artitecture/src/core/storage/storage_key.dart';
 import 'package:artitecture/src/domain/usecase/check_app_version_usecase.dart';
@@ -64,9 +65,10 @@ class AppController extends GetxController {
     }
     final isSigned = await _isSignedUseCase();
     if (isSigned) {
-      final user = await _getUserUseCase();
-      if (user.isSuccess()) {
-        if (user.getData()?.isApproved == true) {
+      final userResponse = await _getUserUseCase();
+      if (userResponse.isSuccess()) {
+        user.value = userResponse.getData();
+        if (userResponse.getData()?.isApproved == true) {
           return mainRoute;
         } else {
           return editProfileRoute;

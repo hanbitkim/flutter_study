@@ -12,6 +12,9 @@ _$_User _$$_UserFromJson(Map<String, dynamic> json) => _$_User(
       email: json['email'] as String?,
       profileUrl: json['profileUrl'] as String?,
       isApproved: json['isApproved'] as bool?,
+      categories: (json['categories'] as List<dynamic>)
+          .map((e) => Category.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$_UserToJson(_$_User instance) => <String, dynamic>{
@@ -20,4 +23,5 @@ Map<String, dynamic> _$$_UserToJson(_$_User instance) => <String, dynamic>{
       'email': instance.email,
       'profileUrl': instance.profileUrl,
       'isApproved': instance.isApproved,
+      'categories': instance.categories,
     };

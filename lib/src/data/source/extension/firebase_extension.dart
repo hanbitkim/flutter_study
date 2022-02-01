@@ -21,13 +21,14 @@ extension FirebaseExtension on DocumentSnapshot {
     );
   }
 
-  User toUser() {
+  User toUser(List<Category> categories) {
     return User(
         id: getSafety('id'),
         nickname: getSafety('nickname'),
         email: getSafety('email'),
         profileUrl: getSafety('profile_url'),
-        isApproved: getSafety('is_approved')
+        isApproved: getSafety('is_approved'),
+        categories: categories
     );
   }
 

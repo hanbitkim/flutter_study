@@ -20,6 +20,7 @@ import 'package:artitecture/src/domain/usecase/update_profile_usecase.dart';
 import 'package:artitecture/src/presentation/controller/app_controller.dart';
 import 'package:artitecture/src/presentation/controller/auth_controller.dart';
 import 'package:artitecture/src/presentation/controller/edit_profile_controller.dart';
+import 'package:artitecture/src/presentation/controller/community_controller.dart';
 import 'package:artitecture/src/presentation/controller/main_controller.dart';
 import 'package:artitecture/src/presentation/controller/mypage_controller.dart';
 import 'package:artitecture/src/presentation/controller/reset_password_controller.dart';
@@ -66,6 +67,7 @@ Future<void> initializeDependencies() async {
   injector.registerFactory<ResetPasswordController>(() => ResetPasswordController(injector()));
   injector.registerFactory<EditProfileController>(() => EditProfileController(injector(), injector()));
   injector.registerFactory<MainController>(() => MainController());
+  injector.registerFactory<CommunityController>(() => CommunityController());
   injector.registerFactory<MyPageController>(() => MyPageController(injector(), injector()));
 
   // injector.registerFactory<AuthController>(() {

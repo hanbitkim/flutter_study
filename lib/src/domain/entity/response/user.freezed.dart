@@ -26,13 +26,15 @@ class _$UserTearOff {
       required String? nickname,
       required String? email,
       required String? profileUrl,
-      required bool? isApproved}) {
+      required bool? isApproved,
+      required List<Category> categories}) {
     return _User(
       id: id,
       nickname: nickname,
       email: email,
       profileUrl: profileUrl,
       isApproved: isApproved,
+      categories: categories,
     );
   }
 
@@ -51,6 +53,7 @@ mixin _$User {
   String? get email => throw _privateConstructorUsedError;
   String? get profileUrl => throw _privateConstructorUsedError;
   bool? get isApproved => throw _privateConstructorUsedError;
+  List<Category> get categories => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -66,7 +69,8 @@ abstract class $UserCopyWith<$Res> {
       String? nickname,
       String? email,
       String? profileUrl,
-      bool? isApproved});
+      bool? isApproved,
+      List<Category> categories});
 }
 
 /// @nodoc
@@ -84,6 +88,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
     Object? email = freezed,
     Object? profileUrl = freezed,
     Object? isApproved = freezed,
+    Object? categories = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -106,6 +111,10 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
           ? _value.isApproved
           : isApproved // ignore: cast_nullable_to_non_nullable
               as bool?,
+      categories: categories == freezed
+          ? _value.categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<Category>,
     ));
   }
 }
@@ -120,7 +129,8 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String? nickname,
       String? email,
       String? profileUrl,
-      bool? isApproved});
+      bool? isApproved,
+      List<Category> categories});
 }
 
 /// @nodoc
@@ -139,6 +149,7 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
     Object? email = freezed,
     Object? profileUrl = freezed,
     Object? isApproved = freezed,
+    Object? categories = freezed,
   }) {
     return _then(_User(
       id: id == freezed
@@ -161,6 +172,10 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
           ? _value.isApproved
           : isApproved // ignore: cast_nullable_to_non_nullable
               as bool?,
+      categories: categories == freezed
+          ? _value.categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<Category>,
     ));
   }
 }
@@ -173,7 +188,8 @@ class _$_User implements _User {
       required this.nickname,
       required this.email,
       required this.profileUrl,
-      required this.isApproved});
+      required this.isApproved,
+      required this.categories});
 
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
 
@@ -187,10 +203,12 @@ class _$_User implements _User {
   final String? profileUrl;
   @override
   final bool? isApproved;
+  @override
+  final List<Category> categories;
 
   @override
   String toString() {
-    return 'User(id: $id, nickname: $nickname, email: $email, profileUrl: $profileUrl, isApproved: $isApproved)';
+    return 'User(id: $id, nickname: $nickname, email: $email, profileUrl: $profileUrl, isApproved: $isApproved, categories: $categories)';
   }
 
   @override
@@ -204,7 +222,9 @@ class _$_User implements _User {
             const DeepCollectionEquality()
                 .equals(other.profileUrl, profileUrl) &&
             const DeepCollectionEquality()
-                .equals(other.isApproved, isApproved));
+                .equals(other.isApproved, isApproved) &&
+            const DeepCollectionEquality()
+                .equals(other.categories, categories));
   }
 
   @override
@@ -214,7 +234,8 @@ class _$_User implements _User {
       const DeepCollectionEquality().hash(nickname),
       const DeepCollectionEquality().hash(email),
       const DeepCollectionEquality().hash(profileUrl),
-      const DeepCollectionEquality().hash(isApproved));
+      const DeepCollectionEquality().hash(isApproved),
+      const DeepCollectionEquality().hash(categories));
 
   @JsonKey(ignore: true)
   @override
@@ -233,7 +254,8 @@ abstract class _User implements User {
       required String? nickname,
       required String? email,
       required String? profileUrl,
-      required bool? isApproved}) = _$_User;
+      required bool? isApproved,
+      required List<Category> categories}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
@@ -247,6 +269,8 @@ abstract class _User implements User {
   String? get profileUrl;
   @override
   bool? get isApproved;
+  @override
+  List<Category> get categories;
   @override
   @JsonKey(ignore: true)
   _$UserCopyWith<_User> get copyWith => throw _privateConstructorUsedError;
