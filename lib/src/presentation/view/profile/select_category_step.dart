@@ -1,3 +1,4 @@
+import 'package:artitecture/src/core/utils/colors.dart';
 import 'package:artitecture/src/presentation/controller/edit_profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -24,7 +25,10 @@ class SelectCategoryStep extends HookWidget {
           ),
           ElevatedButton(
             onPressed: () => EditProfileController.to.updateProfile(),
-            child: const Text('완료'))
+            child: EditProfileController.to.isLoading.value
+                ? const CircularProgressIndicator(color: primaryColor)
+                : const Text('완료',)
+          )
         ]),
     );
   }

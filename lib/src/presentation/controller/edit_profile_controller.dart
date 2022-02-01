@@ -18,6 +18,7 @@ class EditProfileController extends GetxController {
   final RxList<Category> categories = RxList();
   final RxList<Category> unSelectedCategories = RxList();
   final RxList<Category> selectedCategories = RxList();
+  final isLoading = RxBool(false);
 
   final PublishSubject<bool> _goToNext = PublishSubject();
   PublishSubject<bool> get goToNext => _goToNext;
@@ -65,6 +66,7 @@ class EditProfileController extends GetxController {
       Get.snackbar("카테고리가 비어있습니다", "최소 1개에서 최대 3개까지 선택 가능합니다");
       return;
     }
+    isLoading.value = true;
     final response = await _updateProfileUseCase(UpdateProfileParam(nickname.value, selectedCategories));
     if (response.isSuccess()) {
       Get.offAllNamed(mainRoute);
@@ -75,5 +77,6 @@ class EditProfileController extends GetxController {
         Get.snackbar("프로필 업데이트에 실패하였습니다", "네트워크 상태를 확인 후 다시 시도해주세요");
       }
     }
+    isLoading.value = false;
   }
 }
