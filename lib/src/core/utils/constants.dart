@@ -12,3 +12,4 @@ const String kDatabaseName = 'app_database.db';
 const String kAppVersionCollectionKey = "app_version";
 const String kUserCollectionKey = "user";
 const String kCategoryCollectionKey = "category";
+const String kUserCategoryCollectionKey = "user_category";

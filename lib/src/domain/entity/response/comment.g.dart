@@ -1,40 +1,32 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'article.dart';
+part of 'comment.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Article _$$_ArticleFromJson(Map<String, dynamic> json) => _$_Article(
+_$_Comment _$$_CommentFromJson(Map<String, dynamic> json) => _$_Comment(
       id: json['id'] as String?,
-      title: json['title'] as String?,
       contents: json['contents'] as String?,
       images: (json['images'] as List<dynamic>)
           .map((e) => Image.fromJson(e as Map<String, dynamic>))
           .toList(),
-      commentCount: json['commentCount'] as int,
       likeCount: json['likeCount'] as int,
       isReported: json['isReported'] as bool,
       createdDate: json['createdDate'] as int,
       updatedDate: json['updatedDate'] as int,
       author: Author.fromJson(json['author'] as Map<String, dynamic>),
-      comments: (json['comments'] as List<dynamic>)
-          .map((e) => Comment.fromJson(e as Map<String, dynamic>))
-          .toList(),
     );
 
-Map<String, dynamic> _$$_ArticleToJson(_$_Article instance) =>
+Map<String, dynamic> _$$_CommentToJson(_$_Comment instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'title': instance.title,
       'contents': instance.contents,
       'images': instance.images,
-      'commentCount': instance.commentCount,
       'likeCount': instance.likeCount,
       'isReported': instance.isReported,
       'createdDate': instance.createdDate,
       'updatedDate': instance.updatedDate,
       'author': instance.author,
-      'comments': instance.comments,
     };

@@ -1,7 +1,7 @@
 import 'package:artitecture/src/core/resources/data_error.dart';
 import 'package:artitecture/src/core/resources/error_code.dart';
 import 'package:artitecture/src/core/resources/result_wrapper.dart';
-import 'package:artitecture/src/data/source/remote/firebase_auth_api.dart';
+import 'package:artitecture/src/data/source/remote/firebase_api.dart';
 import 'package:artitecture/src/domain/entity/param/update_profile_param.dart';
 import 'package:artitecture/src/domain/entity/response/user.dart';
 import 'package:artitecture/src/domain/repository/auth_repository.dart';

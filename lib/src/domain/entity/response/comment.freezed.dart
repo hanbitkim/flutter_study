@@ -2,7 +2,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'article.dart';
+part of 'comment.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,118 +13,99 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-Article _$ArticleFromJson(Map<String, dynamic> json) {
-  return _Article.fromJson(json);
+Comment _$CommentFromJson(Map<String, dynamic> json) {
+  return _Comment.fromJson(json);
 }
 
 /// @nodoc
-class _$ArticleTearOff {
-  const _$ArticleTearOff();
+class _$CommentTearOff {
+  const _$CommentTearOff();
 
-  _Article call(
+  _Comment call(
       {required String? id,
-      required String? title,
       required String? contents,
       required List<Image> images,
-      required int commentCount,
       required int likeCount,
       required bool isReported,
       required int createdDate,
       required int updatedDate,
-      required Author author,
-      required List<Comment> comments}) {
-    return _Article(
+      required Author author}) {
+    return _Comment(
       id: id,
-      title: title,
       contents: contents,
       images: images,
-      commentCount: commentCount,
       likeCount: likeCount,
       isReported: isReported,
       createdDate: createdDate,
       updatedDate: updatedDate,
       author: author,
-      comments: comments,
     );
   }
 
-  Article fromJson(Map<String, Object?> json) {
-    return Article.fromJson(json);
+  Comment fromJson(Map<String, Object?> json) {
+    return Comment.fromJson(json);
   }
 }
 
 /// @nodoc
-const $Article = _$ArticleTearOff();
+const $Comment = _$CommentTearOff();
 
 /// @nodoc
-mixin _$Article {
+mixin _$Comment {
   String? get id => throw _privateConstructorUsedError;
-  String? get title => throw _privateConstructorUsedError;
   String? get contents => throw _privateConstructorUsedError;
   List<Image> get images => throw _privateConstructorUsedError;
-  int get commentCount => throw _privateConstructorUsedError;
   int get likeCount => throw _privateConstructorUsedError;
   bool get isReported => throw _privateConstructorUsedError;
   int get createdDate => throw _privateConstructorUsedError;
   int get updatedDate => throw _privateConstructorUsedError;
   Author get author => throw _privateConstructorUsedError;
-  List<Comment> get comments => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ArticleCopyWith<Article> get copyWith => throw _privateConstructorUsedError;
+  $CommentCopyWith<Comment> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ArticleCopyWith<$Res> {
-  factory $ArticleCopyWith(Article value, $Res Function(Article) then) =
-      _$ArticleCopyWithImpl<$Res>;
+abstract class $CommentCopyWith<$Res> {
+  factory $CommentCopyWith(Comment value, $Res Function(Comment) then) =
+      _$CommentCopyWithImpl<$Res>;
   $Res call(
       {String? id,
-      String? title,
       String? contents,
       List<Image> images,
-      int commentCount,
       int likeCount,
       bool isReported,
       int createdDate,
       int updatedDate,
-      Author author,
-      List<Comment> comments});
+      Author author});
 
   $AuthorCopyWith<$Res> get author;
 }
 
 /// @nodoc
-class _$ArticleCopyWithImpl<$Res> implements $ArticleCopyWith<$Res> {
-  _$ArticleCopyWithImpl(this._value, this._then);
+class _$CommentCopyWithImpl<$Res> implements $CommentCopyWith<$Res> {
+  _$CommentCopyWithImpl(this._value, this._then);
 
-  final Article _value;
+  final Comment _value;
   // ignore: unused_field
-  final $Res Function(Article) _then;
+  final $Res Function(Comment) _then;
 
   @override
   $Res call({
     Object? id = freezed,
-    Object? title = freezed,
     Object? contents = freezed,
     Object? images = freezed,
-    Object? commentCount = freezed,
     Object? likeCount = freezed,
     Object? isReported = freezed,
     Object? createdDate = freezed,
     Object? updatedDate = freezed,
     Object? author = freezed,
-    Object? comments = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      title: title == freezed
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
               as String?,
       contents: contents == freezed
           ? _value.contents
@@ -134,10 +115,6 @@ class _$ArticleCopyWithImpl<$Res> implements $ArticleCopyWith<$Res> {
           ? _value.images
           : images // ignore: cast_nullable_to_non_nullable
               as List<Image>,
-      commentCount: commentCount == freezed
-          ? _value.commentCount
-          : commentCount // ignore: cast_nullable_to_non_nullable
-              as int,
       likeCount: likeCount == freezed
           ? _value.likeCount
           : likeCount // ignore: cast_nullable_to_non_nullable
@@ -158,10 +135,6 @@ class _$ArticleCopyWithImpl<$Res> implements $ArticleCopyWith<$Res> {
           ? _value.author
           : author // ignore: cast_nullable_to_non_nullable
               as Author,
-      comments: comments == freezed
-          ? _value.comments
-          : comments // ignore: cast_nullable_to_non_nullable
-              as List<Comment>,
     ));
   }
 
@@ -174,58 +147,48 @@ class _$ArticleCopyWithImpl<$Res> implements $ArticleCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$ArticleCopyWith<$Res> implements $ArticleCopyWith<$Res> {
-  factory _$ArticleCopyWith(_Article value, $Res Function(_Article) then) =
-      __$ArticleCopyWithImpl<$Res>;
+abstract class _$CommentCopyWith<$Res> implements $CommentCopyWith<$Res> {
+  factory _$CommentCopyWith(_Comment value, $Res Function(_Comment) then) =
+      __$CommentCopyWithImpl<$Res>;
   @override
   $Res call(
       {String? id,
-      String? title,
       String? contents,
       List<Image> images,
-      int commentCount,
       int likeCount,
       bool isReported,
       int createdDate,
       int updatedDate,
-      Author author,
-      List<Comment> comments});
+      Author author});
 
   @override
   $AuthorCopyWith<$Res> get author;
 }
 
 /// @nodoc
-class __$ArticleCopyWithImpl<$Res> extends _$ArticleCopyWithImpl<$Res>
-    implements _$ArticleCopyWith<$Res> {
-  __$ArticleCopyWithImpl(_Article _value, $Res Function(_Article) _then)
-      : super(_value, (v) => _then(v as _Article));
+class __$CommentCopyWithImpl<$Res> extends _$CommentCopyWithImpl<$Res>
+    implements _$CommentCopyWith<$Res> {
+  __$CommentCopyWithImpl(_Comment _value, $Res Function(_Comment) _then)
+      : super(_value, (v) => _then(v as _Comment));
 
   @override
-  _Article get _value => super._value as _Article;
+  _Comment get _value => super._value as _Comment;
 
   @override
   $Res call({
     Object? id = freezed,
-    Object? title = freezed,
     Object? contents = freezed,
     Object? images = freezed,
-    Object? commentCount = freezed,
     Object? likeCount = freezed,
     Object? isReported = freezed,
     Object? createdDate = freezed,
     Object? updatedDate = freezed,
     Object? author = freezed,
-    Object? comments = freezed,
   }) {
-    return _then(_Article(
+    return _then(_Comment(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      title: title == freezed
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
               as String?,
       contents: contents == freezed
           ? _value.contents
@@ -235,10 +198,6 @@ class __$ArticleCopyWithImpl<$Res> extends _$ArticleCopyWithImpl<$Res>
           ? _value.images
           : images // ignore: cast_nullable_to_non_nullable
               as List<Image>,
-      commentCount: commentCount == freezed
-          ? _value.commentCount
-          : commentCount // ignore: cast_nullable_to_non_nullable
-              as int,
       likeCount: likeCount == freezed
           ? _value.likeCount
           : likeCount // ignore: cast_nullable_to_non_nullable
@@ -259,43 +218,32 @@ class __$ArticleCopyWithImpl<$Res> extends _$ArticleCopyWithImpl<$Res>
           ? _value.author
           : author // ignore: cast_nullable_to_non_nullable
               as Author,
-      comments: comments == freezed
-          ? _value.comments
-          : comments // ignore: cast_nullable_to_non_nullable
-              as List<Comment>,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_Article implements _Article {
-  _$_Article(
+class _$_Comment implements _Comment {
+  _$_Comment(
       {required this.id,
-      required this.title,
       required this.contents,
       required this.images,
-      required this.commentCount,
       required this.likeCount,
       required this.isReported,
       required this.createdDate,
       required this.updatedDate,
-      required this.author,
-      required this.comments});
+      required this.author});
 
-  factory _$_Article.fromJson(Map<String, dynamic> json) =>
-      _$$_ArticleFromJson(json);
+  factory _$_Comment.fromJson(Map<String, dynamic> json) =>
+      _$$_CommentFromJson(json);
 
   @override
   final String? id;
   @override
-  final String? title;
-  @override
   final String? contents;
   @override
   final List<Image> images;
-  @override
-  final int commentCount;
   @override
   final int likeCount;
   @override
@@ -306,25 +254,20 @@ class _$_Article implements _Article {
   final int updatedDate;
   @override
   final Author author;
-  @override
-  final List<Comment> comments;
 
   @override
   String toString() {
-    return 'Article(id: $id, title: $title, contents: $contents, images: $images, commentCount: $commentCount, likeCount: $likeCount, isReported: $isReported, createdDate: $createdDate, updatedDate: $updatedDate, author: $author, comments: $comments)';
+    return 'Comment(id: $id, contents: $contents, images: $images, likeCount: $likeCount, isReported: $isReported, createdDate: $createdDate, updatedDate: $updatedDate, author: $author)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Article &&
+            other is _Comment &&
             const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.title, title) &&
             const DeepCollectionEquality().equals(other.contents, contents) &&
             const DeepCollectionEquality().equals(other.images, images) &&
-            const DeepCollectionEquality()
-                .equals(other.commentCount, commentCount) &&
             const DeepCollectionEquality().equals(other.likeCount, likeCount) &&
             const DeepCollectionEquality()
                 .equals(other.isReported, isReported) &&
@@ -332,62 +275,51 @@ class _$_Article implements _Article {
                 .equals(other.createdDate, createdDate) &&
             const DeepCollectionEquality()
                 .equals(other.updatedDate, updatedDate) &&
-            const DeepCollectionEquality().equals(other.author, author) &&
-            const DeepCollectionEquality().equals(other.comments, comments));
+            const DeepCollectionEquality().equals(other.author, author));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(title),
       const DeepCollectionEquality().hash(contents),
       const DeepCollectionEquality().hash(images),
-      const DeepCollectionEquality().hash(commentCount),
       const DeepCollectionEquality().hash(likeCount),
       const DeepCollectionEquality().hash(isReported),
       const DeepCollectionEquality().hash(createdDate),
       const DeepCollectionEquality().hash(updatedDate),
-      const DeepCollectionEquality().hash(author),
-      const DeepCollectionEquality().hash(comments));
+      const DeepCollectionEquality().hash(author));
 
   @JsonKey(ignore: true)
   @override
-  _$ArticleCopyWith<_Article> get copyWith =>
-      __$ArticleCopyWithImpl<_Article>(this, _$identity);
+  _$CommentCopyWith<_Comment> get copyWith =>
+      __$CommentCopyWithImpl<_Comment>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ArticleToJson(this);
+    return _$$_CommentToJson(this);
   }
 }
 
-abstract class _Article implements Article {
-  factory _Article(
+abstract class _Comment implements Comment {
+  factory _Comment(
       {required String? id,
-      required String? title,
       required String? contents,
       required List<Image> images,
-      required int commentCount,
       required int likeCount,
       required bool isReported,
       required int createdDate,
       required int updatedDate,
-      required Author author,
-      required List<Comment> comments}) = _$_Article;
+      required Author author}) = _$_Comment;
 
-  factory _Article.fromJson(Map<String, dynamic> json) = _$_Article.fromJson;
+  factory _Comment.fromJson(Map<String, dynamic> json) = _$_Comment.fromJson;
 
   @override
   String? get id;
   @override
-  String? get title;
-  @override
   String? get contents;
   @override
   List<Image> get images;
-  @override
-  int get commentCount;
   @override
   int get likeCount;
   @override
@@ -399,9 +331,7 @@ abstract class _Article implements Article {
   @override
   Author get author;
   @override
-  List<Comment> get comments;
-  @override
   @JsonKey(ignore: true)
-  _$ArticleCopyWith<_Article> get copyWith =>
+  _$CommentCopyWith<_Comment> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -1,26 +1,22 @@
 import 'package:artitecture/src/domain/entity/response/author.dart';
-import 'package:artitecture/src/domain/entity/response/comment.dart';
 import 'package:artitecture/src/domain/entity/response/image.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'article.freezed.dart';
-part 'article.g.dart';
+part 'comment.freezed.dart';
+part 'comment.g.dart';
 
 @freezed
-class Article with _$Article {
-  factory Article({
+class Comment with _$Comment {
+  factory Comment({
     required String? id,
-    required String? title,
     required String? contents,
     required List<Image> images,
-    required int commentCount,
     required int likeCount,
     required bool isReported,
     required int createdDate,
     required int updatedDate,
     required Author author,
-    required List<Comment> comments
-  }) = _Article;
+  }) = _Comment;
 
-  factory Article.fromJson(Map<String, dynamic> json) => _$ArticleFromJson(json);
+  factory Comment.fromJson(Map<String, dynamic> json) => _$CommentFromJson(json);
 }

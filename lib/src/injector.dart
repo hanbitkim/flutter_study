@@ -2,7 +2,7 @@ import 'package:artitecture/src/core/storage/secure_storage.dart';
 import 'package:artitecture/src/data/repository/app_repository_impl.dart';
 import 'package:artitecture/src/data/repository/auth_repository_impl.dart';
 import 'package:artitecture/src/data/repository/category_repository_impl.dart';
-import 'package:artitecture/src/data/source/remote/firebase_auth_api.dart';
+import 'package:artitecture/src/data/source/remote/firebase_api.dart';
 import 'package:artitecture/src/domain/repository/app_repository.dart';
 import 'package:artitecture/src/domain/repository/auth_repository.dart';
 import 'package:artitecture/src/domain/repository/category_repository.dart';

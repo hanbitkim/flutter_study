@@ -1,3 +1,4 @@
+import 'package:artitecture/src/core/global.dart';
 import 'package:artitecture/src/core/resources/data_error.dart';
 import 'package:artitecture/src/core/resources/error_code.dart';
 import 'package:artitecture/src/core/resources/result_wrapper.dart';
@@ -18,19 +19,6 @@ class FirebaseApi {
 
   Future<bool> isSigned() async {
     return auth.currentUser?.uid != null;
-  }
-
-  Future<ResultWrapper<User?>> getUser() async {
-    try {
-      final userDocument = await fireStore.collection(kUserCollectionKey).doc(auth.currentUser?.uid).get();
-      final categories = await fireStore.collection(kUserCollectionKey).doc(auth.currentUser?.uid).collection('categories').get();
-      final user = userDocument.toUser(categories.docs.map((e) => e.toCategory()).toList());
-      Logger().d("user = $user");
-      return Success(user);
-    } on FirebaseException catch (e) {
-      Logger().d("getUser exception = ${e.code}");
-      return Failure(DataError(error, e.code));
-    }
   }
 
   Future<ResultWrapper> signUp(String email, String password) async {
@@ -105,6 +93,19 @@ class FirebaseApi {
     }
   }
 
+  Future<ResultWrapper<User?>> getUser() async {
+    try {
+      final userDocument = await fireStore.collection(kUserCollectionKey).doc(auth.currentUser?.uid).get();
+      final categories = await fireStore.collection(kUserCategoryCollectionKey).where('user_id', isEqualTo: auth.currentUser?.uid).get();
+      final user = userDocument.toUser(auth.currentUser?.uid, categories.docs.map((e) => e.toCategory()).toList());
+      Logger().d("user = $user");
+      return Success(user);
+    } on FirebaseException catch (e) {
+      Logger().d("getUser exception = ${e.code}");
+      return Failure(DataError(error, e.code));
+    }
+  }
+
   Future<ResultWrapper> updateProfile(UpdateProfileParam param) async {
     try {
       final checkNickname = await fireStore.collection(kUserCollectionKey).where('nickname', isEqualTo: param.nickname).get();
@@ -116,8 +117,13 @@ class FirebaseApi {
         "nickname": param.nickname,
         "is_approved": true
       }, SetOptions(merge: true));
-      for (var element in param.categories) {
-        await fireStore.collection(kUserCollectionKey).doc(auth.currentUser?.uid).collection('categories').add(element.toJson());
+      for (var category in param.categories) {
+        await fireStore.collection(kUserCategoryCollectionKey).add({
+          "user_id": auth.currentUser?.uid,
+          "category_id": category.id,
+          "category_name": category.name
+        });
+        user.value = user.value?.copyWith(categories: param.categories);
       }
       return const Success(null);
     } on FirebaseException catch (e) {

@@ -21,9 +21,9 @@ extension FirebaseExtension on DocumentSnapshot {
     );
   }
 
-  User toUser(List<Category> categories) {
+  User toUser(String? userId, List<Category> categories) {
     return User(
-        id: getSafety('id'),
+        id: userId,
         nickname: getSafety('nickname'),
         email: getSafety('email'),
         profileUrl: getSafety('profile_url'),
@@ -34,8 +34,8 @@ extension FirebaseExtension on DocumentSnapshot {
 
   Category toCategory() {
     return Category(
-        id: getSafety('id'),
-        name: getSafety('name')
+        id: getSafety('category_id'),
+        name: getSafety('category_name')
     );
   }
 }
