@@ -10,3 +10,5 @@ const String kDatabaseName = 'app_database.db';
 
 // Firestore
 const String kAppVersionCollectionKey = "app_version";
+const String kUserCollectionKey = "user";
+const String kCategoryCollectionKey = "category";

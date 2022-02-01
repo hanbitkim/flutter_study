@@ -53,7 +53,7 @@ class NickNameStep extends HookWidget {
             onTap: () {
               if (_formKey.currentState?.validate() == true) {
                 FocusManager.instance.primaryFocus?.unfocus();
-                EditProfileController.to.updateProfile();
+                EditProfileController.to.next();
               }
             },
           ),

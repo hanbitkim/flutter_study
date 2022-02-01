@@ -13,21 +13,31 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+User _$UserFromJson(Map<String, dynamic> json) {
+  return _User.fromJson(json);
+}
+
 /// @nodoc
 class _$UserTearOff {
   const _$UserTearOff();
 
   _User call(
-      {required String? nickname,
+      {required String? id,
+      required String? nickname,
       required String? email,
       required String? profileUrl,
       required bool? isApproved}) {
     return _User(
+      id: id,
       nickname: nickname,
       email: email,
       profileUrl: profileUrl,
       isApproved: isApproved,
     );
+  }
+
+  User fromJson(Map<String, Object?> json) {
+    return User.fromJson(json);
   }
 }
 
@@ -36,11 +46,13 @@ const $User = _$UserTearOff();
 
 /// @nodoc
 mixin _$User {
+  String? get id => throw _privateConstructorUsedError;
   String? get nickname => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   String? get profileUrl => throw _privateConstructorUsedError;
   bool? get isApproved => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $UserCopyWith<User> get copyWith => throw _privateConstructorUsedError;
 }
@@ -50,7 +62,11 @@ abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res>;
   $Res call(
-      {String? nickname, String? email, String? profileUrl, bool? isApproved});
+      {String? id,
+      String? nickname,
+      String? email,
+      String? profileUrl,
+      bool? isApproved});
 }
 
 /// @nodoc
@@ -63,12 +79,17 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? nickname = freezed,
     Object? email = freezed,
     Object? profileUrl = freezed,
     Object? isApproved = freezed,
   }) {
     return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       nickname: nickname == freezed
           ? _value.nickname
           : nickname // ignore: cast_nullable_to_non_nullable
@@ -95,7 +116,11 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       __$UserCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String? nickname, String? email, String? profileUrl, bool? isApproved});
+      {String? id,
+      String? nickname,
+      String? email,
+      String? profileUrl,
+      bool? isApproved});
 }
 
 /// @nodoc
@@ -109,12 +134,17 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? nickname = freezed,
     Object? email = freezed,
     Object? profileUrl = freezed,
     Object? isApproved = freezed,
   }) {
     return _then(_User(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       nickname: nickname == freezed
           ? _value.nickname
           : nickname // ignore: cast_nullable_to_non_nullable
@@ -136,14 +166,19 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$_User implements _User {
   _$_User(
-      {required this.nickname,
+      {required this.id,
+      required this.nickname,
       required this.email,
       required this.profileUrl,
       required this.isApproved});
 
+  factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
+
+  @override
+  final String? id;
   @override
   final String? nickname;
   @override
@@ -155,7 +190,7 @@ class _$_User implements _User {
 
   @override
   String toString() {
-    return 'User(nickname: $nickname, email: $email, profileUrl: $profileUrl, isApproved: $isApproved)';
+    return 'User(id: $id, nickname: $nickname, email: $email, profileUrl: $profileUrl, isApproved: $isApproved)';
   }
 
   @override
@@ -163,6 +198,7 @@ class _$_User implements _User {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _User &&
+            const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.nickname, nickname) &&
             const DeepCollectionEquality().equals(other.email, email) &&
             const DeepCollectionEquality()
@@ -174,6 +210,7 @@ class _$_User implements _User {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(nickname),
       const DeepCollectionEquality().hash(email),
       const DeepCollectionEquality().hash(profileUrl),
@@ -183,15 +220,25 @@ class _$_User implements _User {
   @override
   _$UserCopyWith<_User> get copyWith =>
       __$UserCopyWithImpl<_User>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_UserToJson(this);
+  }
 }
 
 abstract class _User implements User {
   factory _User(
-      {required String? nickname,
+      {required String? id,
+      required String? nickname,
       required String? email,
       required String? profileUrl,
       required bool? isApproved}) = _$_User;
 
+  factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
+
+  @override
+  String? get id;
   @override
   String? get nickname;
   @override

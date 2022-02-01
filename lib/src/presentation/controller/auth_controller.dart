@@ -1,3 +1,4 @@
+import 'package:artitecture/src/core/resources/error_code.dart';
 import 'package:artitecture/src/domain/usecase/get_user_usecase.dart';
 import 'package:artitecture/src/domain/usecase/google_sign_in_usecase.dart';
 import 'package:artitecture/src/domain/usecase/sign_in_usecase.dart';
@@ -34,7 +35,13 @@ class AuthController extends GetxController {
     if (response.isSuccess()) {
       Get.offAllNamed(editProfileRoute);
     } else {
-      Get.snackbar("가입에 실패하였습니다", "이메일과 비밀번호를 확인해주세요");
+      if (response.error?.code == weekPasswordError) {
+        Get.snackbar("가입에 실패하였습니다", "비밀번호가 취약합니다");
+      } else if (response.error?.code == emailAlreadyInUseError) {
+        Get.snackbar("가입에 실패하였습니다", "이미 가입된 이메일입니다");
+      } else {
+        Get.snackbar("가입에 실패하였습니다", "이메일과 비밀번호를 확인해주세요");
+      }
     }
     isLoading.value = false;
   }

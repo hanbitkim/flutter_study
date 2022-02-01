@@ -1,10 +1,13 @@
 import 'package:artitecture/src/core/storage/secure_storage.dart';
 import 'package:artitecture/src/data/repository/app_repository_impl.dart';
 import 'package:artitecture/src/data/repository/auth_repository_impl.dart';
+import 'package:artitecture/src/data/repository/category_repository_impl.dart';
 import 'package:artitecture/src/data/source/remote/firebase_auth_api.dart';
 import 'package:artitecture/src/domain/repository/app_repository.dart';
 import 'package:artitecture/src/domain/repository/auth_repository.dart';
+import 'package:artitecture/src/domain/repository/category_repository.dart';
 import 'package:artitecture/src/domain/usecase/check_app_version_usecase.dart';
+import 'package:artitecture/src/domain/usecase/get_category_usecase.dart';
 import 'package:artitecture/src/domain/usecase/get_user_usecase.dart';
 import 'package:artitecture/src/domain/usecase/google_sign_in_usecase.dart';
 import 'package:artitecture/src/domain/usecase/is_sign_in_usecase.dart';
@@ -37,11 +40,12 @@ Future<void> initializeDependencies() async {
   injector.registerSingleton(SecureStorage());
 
   // Sources
-  injector.registerSingleton(FirebaseAuthApi());
+  injector.registerSingleton(FirebaseApi());
 
   // Repositories
   injector.registerSingleton<AuthRepository>(AuthRepositoryImpl(injector()));
   injector.registerSingleton<AppRepository>(AppRepositoryImpl(injector()));
+  injector.registerSingleton<CategoryRepository>(CategoryRepositoryImpl(injector()));
 
   // UseCases
   injector.registerLazySingleton<IsSignedUseCase>(() => IsSignedUseCase(injector()));
@@ -54,12 +58,13 @@ Future<void> initializeDependencies() async {
   injector.registerLazySingleton<SignOutUseCase>(() => SignOutUseCase(injector()));
   injector.registerLazySingleton<SecessionUseCase>(() => SecessionUseCase(injector()));
   injector.registerLazySingleton<CheckAppVersionUseCase>(() => CheckAppVersionUseCase(injector()));
+  injector.registerLazySingleton<GetCategoryUseCase>(() => GetCategoryUseCase(injector()));
 
   // Controllers
   injector.registerFactory<AppController>(() => AppController(injector(), injector(), injector(), injector()));
   injector.registerFactory<AuthController>(() => AuthController(injector(), injector(), injector(), injector()));
   injector.registerFactory<ResetPasswordController>(() => ResetPasswordController(injector()));
-  injector.registerFactory<EditProfileController>(() => EditProfileController(injector()));
+  injector.registerFactory<EditProfileController>(() => EditProfileController(injector(), injector()));
   injector.registerFactory<MainController>(() => MainController());
   injector.registerFactory<MyPageController>(() => MyPageController(injector(), injector()));
 

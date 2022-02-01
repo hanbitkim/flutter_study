@@ -3,15 +3,16 @@ import 'package:artitecture/src/core/resources/error_code.dart';
 import 'package:artitecture/src/core/resources/result_wrapper.dart';
 import 'package:artitecture/src/core/utils/constants.dart';
 import 'package:artitecture/src/core/utils/platforms.dart';
-import 'package:artitecture/src/data/source/extension/app_version_extension.dart';
-import 'package:artitecture/src/data/source/extension/user_extension.dart';
+import 'package:artitecture/src/data/source/extension/firebase_extension.dart';
+import 'package:artitecture/src/domain/entity/param/update_profile_param.dart';
 import 'package:artitecture/src/domain/entity/response/app_version.dart';
+import 'package:artitecture/src/domain/entity/response/category.dart';
 import 'package:artitecture/src/domain/entity/response/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as Auth;
 import 'package:logger/logger.dart';
 
-class FirebaseAuthApi {
+class FirebaseApi {
   final Auth.FirebaseAuth auth = Auth.FirebaseAuth.instance;
   final FirebaseFirestore fireStore = FirebaseFirestore.instance;
 
@@ -21,7 +22,7 @@ class FirebaseAuthApi {
 
   Future<ResultWrapper<User?>> getUser() async {
     try {
-      final userDocument = await fireStore.collection('user').doc(auth.currentUser?.uid).get();
+      final userDocument = await fireStore.collection(kUserCollectionKey).doc(auth.currentUser?.uid).get();
       final user = userDocument.toUser();
       Logger().d("user = $user");
       return Success(user);
@@ -38,7 +39,7 @@ class FirebaseAuthApi {
           password: password
       );
       Logger().d("signUp success = ${userCredential.toString()}");
-      await fireStore.collection('user').doc(userCredential.user?.uid).set({
+      await fireStore.collection(kUserCollectionKey).doc(userCredential.user?.uid).set({
         "email": userCredential.user?.email,
         "profile_url": userCredential.user?.photoURL
       });
@@ -103,16 +104,20 @@ class FirebaseAuthApi {
     }
   }
 
-  Future<ResultWrapper> updateProfile(String nickname) async {
+  Future<ResultWrapper> updateProfile(UpdateProfileParam param) async {
     try {
-      final checkNickname = await fireStore.collection('user').where('nickname', isEqualTo: nickname).get();
+      final checkNickname = await fireStore.collection(kUserCollectionKey).where('nickname', isEqualTo: param.nickname).get();
       if (checkNickname.docs.isNotEmpty) {
         return Failure(DataError(nicknameAlreadyInUseError, 'nickname is already in use'));
       }
-      await fireStore.collection('user').doc(auth.currentUser?.uid).set({
-        "nickname": nickname,
+
+      await fireStore.collection(kUserCollectionKey).doc(auth.currentUser?.uid).set({
+        "nickname": param.nickname,
         "is_approved": true
       }, SetOptions(merge: true));
+      for (var element in param.categories) {
+        await fireStore.collection(kUserCollectionKey).doc(auth.currentUser?.uid).collection('categories').add(element.toJson());
+      }
       return const Success(null);
     } on FirebaseException catch (e) {
       Logger().d("updateProfile exception = ${e.code}");
@@ -142,10 +147,20 @@ class FirebaseAuthApi {
 
   Future<ResultWrapper<AppVersion>> getAppVersion() async {
     try {
-      var document = await FirebaseFirestore.instance.collection(kAppVersionCollectionKey).doc(PlatformUtil.getPlatformName()).get();
+      var document = await fireStore.collection(kAppVersionCollectionKey).doc(PlatformUtil.getPlatformName()).get();
       return Success(document.toAppVersion());
     } on Auth.FirebaseAuthException catch (e) {
       Logger().d("getAppVersion exception = ${e.code}");
+      return Failure(DataError(error, e.code));
+    }
+  }
+
+  Future<ResultWrapper<List<Category>>> getCategories() async {
+    try {
+      var document = await fireStore.collection(kCategoryCollectionKey).get();
+      return Success(document.docs.map((e) => e.toCategory()).toList());
+    } on Auth.FirebaseAuthException catch (e) {
+      Logger().d("getCategories exception = ${e.code}");
       return Failure(DataError(error, e.code));
     }
   }

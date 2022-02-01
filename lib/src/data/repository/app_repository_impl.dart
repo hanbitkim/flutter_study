@@ -4,7 +4,7 @@ import 'package:artitecture/src/domain/entity/response/app_version.dart';
 import 'package:artitecture/src/domain/repository/app_repository.dart';
 
 class AppRepositoryImpl extends AppRepository {
-  final FirebaseAuthApi firebaseAuthApi;
+  final FirebaseApi firebaseAuthApi;
 
   AppRepositoryImpl(this.firebaseAuthApi);
 

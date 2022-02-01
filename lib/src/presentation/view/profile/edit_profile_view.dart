@@ -2,6 +2,7 @@ import 'package:artitecture/src/injector.dart';
 import 'package:artitecture/src/presentation/controller/edit_profile_controller.dart';
 import 'package:artitecture/src/presentation/view/profile/agreement_step.dart';
 import 'package:artitecture/src/presentation/view/profile/nickname_step.dart';
+import 'package:artitecture/src/presentation/view/profile/select_category_step.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -94,5 +95,6 @@ class EditProfilePage extends HookWidget {
 
 final steps = [
   const AgreementStep(),
-  const NickNameStep()
+  const NickNameStep(),
+  const SelectCategoryStep()
 ];

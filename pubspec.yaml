@@ -36,6 +36,7 @@ dependencies:
   flutter_share: ^2.0.0
   flutter_secure_storage: ^5.0.2
   fluttertoast: ^8.0.8
+  multi_select_flutter: ^4.0.0
   get_it: ^7.2.0
   retrofit: ^2.0.1
   logger: ^1.1.0

@@ -8,7 +8,7 @@ import 'package:artitecture/src/domain/repository/auth_repository.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
-  final FirebaseAuthApi firebaseAuthApi;
+  final FirebaseApi firebaseAuthApi;
 
   AuthRepositoryImpl(this.firebaseAuthApi);
 
@@ -50,7 +50,7 @@ class AuthRepositoryImpl extends AuthRepository {
 
   @override
   Future<ResultWrapper> updateProfile(UpdateProfileParam param) {
-    return firebaseAuthApi.updateProfile(param.nickname);
+    return firebaseAuthApi.updateProfile(param);
   }
 
   @override
