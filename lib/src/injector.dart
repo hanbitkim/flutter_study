@@ -7,6 +7,7 @@ import 'package:artitecture/src/domain/repository/app_repository.dart';
 import 'package:artitecture/src/domain/repository/auth_repository.dart';
 import 'package:artitecture/src/domain/repository/category_repository.dart';
 import 'package:artitecture/src/domain/usecase/check_app_version_usecase.dart';
+import 'package:artitecture/src/domain/usecase/get_articles_usecase.dart';
 import 'package:artitecture/src/domain/usecase/get_category_usecase.dart';
 import 'package:artitecture/src/domain/usecase/get_user_usecase.dart';
 import 'package:artitecture/src/domain/usecase/google_sign_in_usecase.dart';
@@ -59,7 +60,8 @@ Future<void> initializeDependencies() async {
   injector.registerLazySingleton<SignOutUseCase>(() => SignOutUseCase(injector()));
   injector.registerLazySingleton<SecessionUseCase>(() => SecessionUseCase(injector()));
   injector.registerLazySingleton<CheckAppVersionUseCase>(() => CheckAppVersionUseCase(injector()));
-  injector.registerLazySingleton<GetCategoryUseCase>(() => GetCategoryUseCase(injector()));
+  injector.registerLazySingleton<GetCategoriesUseCase>(() => GetCategoriesUseCase(injector()));
+  injector.registerLazySingleton<GetArticlesUseCase>(() => GetArticlesUseCase(injector()));
 
   // Controllers
   injector.registerFactory<AppController>(() => AppController(injector(), injector(), injector(), injector()));
@@ -67,7 +69,7 @@ Future<void> initializeDependencies() async {
   injector.registerFactory<ResetPasswordController>(() => ResetPasswordController(injector()));
   injector.registerFactory<EditProfileController>(() => EditProfileController(injector(), injector()));
   injector.registerFactory<MainController>(() => MainController());
-  injector.registerFactory<CommunityController>(() => CommunityController());
+  injector.registerFactory<BoardController>(() => BoardController(injector()));
   injector.registerFactory<MyPageController>(() => MyPageController(injector(), injector()));
 
   // injector.registerFactory<AuthController>(() {

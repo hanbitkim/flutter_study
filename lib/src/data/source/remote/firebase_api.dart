@@ -7,6 +7,7 @@ import 'package:artitecture/src/core/utils/platforms.dart';
 import 'package:artitecture/src/data/source/extension/firebase_extension.dart';
 import 'package:artitecture/src/domain/entity/param/update_profile_param.dart';
 import 'package:artitecture/src/domain/entity/response/app_version.dart';
+import 'package:artitecture/src/domain/entity/response/article.dart';
 import 'package:artitecture/src/domain/entity/response/category.dart';
 import 'package:artitecture/src/domain/entity/response/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -23,15 +24,9 @@ class FirebaseApi {
 
   Future<ResultWrapper> signUp(String email, String password) async {
     try {
-      Auth.UserCredential userCredential = await auth.createUserWithEmailAndPassword(
-          email: email,
-          password: password
-      );
+      Auth.UserCredential userCredential = await auth.createUserWithEmailAndPassword(email: email, password: password);
       Logger().d("signUp success = ${userCredential.toString()}");
-      await fireStore.collection(kUserCollectionKey).doc(userCredential.user?.uid).set({
-        "email": userCredential.user?.email,
-        "profile_url": userCredential.user?.photoURL
-      });
+      await fireStore.collection(kUserCollectionKey).doc(userCredential.user?.uid).set({"email": userCredential.user?.email, "profile_url": userCredential.user?.photoURL});
       return const Success(null);
     } on FirebaseException catch (e) {
       Logger().d("signUp exception = ${e.code}");
@@ -46,10 +41,7 @@ class FirebaseApi {
 
   Future<ResultWrapper> signIn(String email, String password) async {
     try {
-      Auth.UserCredential userCredential = await auth.signInWithEmailAndPassword(
-          email: email,
-          password: password
-      );
+      Auth.UserCredential userCredential = await auth.signInWithEmailAndPassword(email: email, password: password);
       Logger().d("signIn success = ${userCredential.toString()}");
       return const Success(null);
     } on Auth.FirebaseAuthException catch (e) {
@@ -113,16 +105,9 @@ class FirebaseApi {
         return Failure(DataError(nicknameAlreadyInUseError, 'nickname is already in use'));
       }
 
-      await fireStore.collection(kUserCollectionKey).doc(auth.currentUser?.uid).set({
-        "nickname": param.nickname,
-        "is_approved": true
-      }, SetOptions(merge: true));
+      await fireStore.collection(kUserCollectionKey).doc(auth.currentUser?.uid).set({"nickname": param.nickname, "is_approved": true}, SetOptions(merge: true));
       for (var category in param.categories) {
-        await fireStore.collection(kUserCategoryCollectionKey).add({
-          "user_id": auth.currentUser?.uid,
-          "category_id": category.id,
-          "category_name": category.name
-        });
+        await fireStore.collection(kUserCategoryCollectionKey).add({"user_id": auth.currentUser?.uid, "category_id": category.id, "category_name": category.name});
         user.value = user.value?.copyWith(categories: param.categories);
       }
       return const Success(null);
@@ -164,8 +149,24 @@ class FirebaseApi {
 
   Future<ResultWrapper<List<Category>>> getCategories() async {
     try {
-      var document = await fireStore.collection(kCategoryCollectionKey).get();
+      final document = await fireStore.collection(kCategoryCollectionKey).get();
       return Success(document.docs.map((e) => e.toCategory()).toList());
+    } on Auth.FirebaseAuthException catch (e) {
+      Logger().d("getCategories exception = ${e.code}");
+      return Failure(DataError(error, e.code));
+    }
+  }
+
+  Future<ResultWrapper<List<Article>>> getArticles(String? categoryId, int? lastArticleDate) async {
+    try {
+      List<Article> articles = List.empty(growable: true);
+      final document = await fireStore.collection(kArticleCollectionKey).where('category_id', isEqualTo: categoryId).where('created_date', isLessThan: lastArticleDate).limit(kPageSize).get();
+      for (DocumentSnapshot articleDocument in document.docs) {
+        final imageCollection = await articleDocument.reference.collection('image').get();
+        final authorDocument = await fireStore.collection(kUserCollectionKey).doc(articleDocument.getSafety('author_id')).get();
+        articles.add(articleDocument.toArticle(imageCollection.docs.map((e) => e.toImage()).toList(), authorDocument.toAuthor()));
+      }
+      return Success(articles);
     } on Auth.FirebaseAuthException catch (e) {
       Logger().d("getCategories exception = ${e.code}");
       return Failure(DataError(error, e.code));

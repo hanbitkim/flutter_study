@@ -10,7 +10,7 @@ import 'package:rxdart/rxdart.dart';
 class EditProfileController extends GetxController {
   static EditProfileController get to => Get.find();
 
-  final GetCategoryUseCase _getCategoryUseCase;
+  final GetCategoriesUseCase _getCategoryUseCase;
   final UpdateProfileUseCase _updateProfileUseCase;
 
   final isAgreementChecked = false.obs;

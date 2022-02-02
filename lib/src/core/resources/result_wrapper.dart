@@ -20,8 +20,18 @@ abstract class ResultWrapper<T> {
 
 class Success<T> extends ResultWrapper<T> {
   const Success(T? data) : super(data: data);
+
+  @override
+  String toString() {
+    return data.toString();
+  }
 }
 
 class Failure<T> extends ResultWrapper<T> {
   const Failure(DataError error) : super(error: error);
+
+  @override
+  String toString() {
+    return error.toString();
+  }
 }
