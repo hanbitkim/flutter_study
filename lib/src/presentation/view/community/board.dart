@@ -1,6 +1,6 @@
 import 'package:artitecture/src/domain/entity/response/category.dart';
 import 'package:artitecture/src/injector.dart';
-import 'package:artitecture/src/presentation/controller/community_controller.dart';
+import 'package:artitecture/src/presentation/controller/board_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -31,7 +31,7 @@ class _BoardViewState extends State<BoardView> with AutomaticKeepAliveClientMixi
       slivers: [
         SliverList(
             delegate:
-            SliverChildBuilderDelegate((context, index) => ListTile(title: Text(BoardController.get(widget._category.name).articles[index].title ?? "")),
+            SliverChildBuilderDelegate((context, index) => ListTile(title: Text(BoardController.get(widget._category.name).articles[index].title)),
                 childCount: BoardController.get(widget._category.name).articles.length
             )
         )],

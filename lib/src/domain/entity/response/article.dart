@@ -9,9 +9,9 @@ part 'article.g.dart';
 @freezed
 class Article with _$Article {
   factory Article({
-    required String? id,
-    required String? title,
-    required String? contents,
+    required String id,
+    required String title,
+    required String contents,
     required List<Image> images,
     required int commentCount,
     required int likeCount,

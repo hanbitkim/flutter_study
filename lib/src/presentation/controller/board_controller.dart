@@ -8,6 +8,7 @@ import 'package:logger/logger.dart';
 
 class BoardController extends GetxController {
   static BoardController get(String? tag) => Get.find(tag: tag);
+  static const loadingBuffer = 500;
 
   final GetArticlesUseCase _getArticlesUseCase;
 
@@ -25,7 +26,7 @@ class BoardController extends GetxController {
       if (_isLoading || !_hasMore) {
         return;
       }
-      if (scrollController.value.position.pixels == scrollController.value.position.maxScrollExtent) {
+      if (scrollController.value.position.maxScrollExtent - scrollController.value.position.pixels <= loadingBuffer) {
         getArticles(_category.id, articles.last.createdDate);
       }
     });

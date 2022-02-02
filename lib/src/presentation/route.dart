@@ -1,5 +1,6 @@
 import 'package:artitecture/src/presentation/view/auth/reset_password_view.dart';
 import 'package:artitecture/src/presentation/view/auth/sign_in_view.dart';
+import 'package:artitecture/src/presentation/view/community/article_write.dart';
 import 'package:artitecture/src/presentation/view/main/main_view.dart';
 import 'package:artitecture/src/presentation/view/auth/sign_up_view.dart';
 import 'package:artitecture/src/presentation/view/profile/edit_profile_view.dart';
@@ -11,6 +12,7 @@ const String signUpRoute = "/signUp";
 const String findPasswordRoute = "/findPassword";
 const String editProfileRoute = "/editProfile";
 const String mainRoute = "/main";
+const String articleWriteRoute = "/articleWrite";
 
 class AppRoutes {
   static List<GetPage> get routes {
@@ -19,7 +21,8 @@ class AppRoutes {
       GetPage(name: signUpRoute, page: () => const SignUpPage()),
       GetPage(name: findPasswordRoute, page: () => const ResetPasswordPage()),
       GetPage(name: editProfileRoute, page: () => const EditProfilePage()),
-      GetPage(name: mainRoute, page: () => const MainPage())
+      GetPage(name: mainRoute, page: () => const MainPage()),
+      GetPage(name: articleWriteRoute, page: () => const ArticleWritePage())
     ];
   }
 

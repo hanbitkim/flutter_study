@@ -21,7 +21,7 @@ Category _$CategoryFromJson(Map<String, dynamic> json) {
 class _$CategoryTearOff {
   const _$CategoryTearOff();
 
-  _Category call({required String? id, required String? name}) {
+  _Category call({required String id, required String name}) {
     return _Category(
       id: id,
       name: name,
@@ -38,8 +38,8 @@ const $Category = _$CategoryTearOff();
 
 /// @nodoc
 mixin _$Category {
-  String? get id => throw _privateConstructorUsedError;
-  String? get name => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -51,7 +51,7 @@ mixin _$Category {
 abstract class $CategoryCopyWith<$Res> {
   factory $CategoryCopyWith(Category value, $Res Function(Category) then) =
       _$CategoryCopyWithImpl<$Res>;
-  $Res call({String? id, String? name});
+  $Res call({String id, String name});
 }
 
 /// @nodoc
@@ -71,11 +71,11 @@ class _$CategoryCopyWithImpl<$Res> implements $CategoryCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ));
   }
 }
@@ -85,7 +85,7 @@ abstract class _$CategoryCopyWith<$Res> implements $CategoryCopyWith<$Res> {
   factory _$CategoryCopyWith(_Category value, $Res Function(_Category) then) =
       __$CategoryCopyWithImpl<$Res>;
   @override
-  $Res call({String? id, String? name});
+  $Res call({String id, String name});
 }
 
 /// @nodoc
@@ -106,11 +106,11 @@ class __$CategoryCopyWithImpl<$Res> extends _$CategoryCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ));
   }
 }
@@ -124,9 +124,9 @@ class _$_Category implements _Category {
       _$$_CategoryFromJson(json);
 
   @override
-  final String? id;
+  final String id;
   @override
-  final String? name;
+  final String name;
 
   @override
   String toString() {
@@ -160,14 +160,14 @@ class _$_Category implements _Category {
 }
 
 abstract class _Category implements Category {
-  factory _Category({required String? id, required String? name}) = _$_Category;
+  factory _Category({required String id, required String name}) = _$_Category;
 
   factory _Category.fromJson(Map<String, dynamic> json) = _$_Category.fromJson;
 
   @override
-  String? get id;
+  String get id;
   @override
-  String? get name;
+  String get name;
   @override
   @JsonKey(ignore: true)
   _$CategoryCopyWith<_Category> get copyWith =>

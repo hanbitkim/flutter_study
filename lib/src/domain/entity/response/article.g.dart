@@ -7,9 +7,9 @@ part of 'article.dart';
 // **************************************************************************
 
 _$_Article _$$_ArticleFromJson(Map<String, dynamic> json) => _$_Article(
-      id: json['id'] as String?,
-      title: json['title'] as String?,
-      contents: json['contents'] as String?,
+      id: json['id'] as String,
+      title: json['title'] as String,
+      contents: json['contents'] as String,
       images: (json['images'] as List<dynamic>)
           .map((e) => Image.fromJson(e as Map<String, dynamic>))
           .toList(),

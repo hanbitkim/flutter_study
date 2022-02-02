@@ -22,9 +22,9 @@ class _$ArticleTearOff {
   const _$ArticleTearOff();
 
   _Article call(
-      {required String? id,
-      required String? title,
-      required String? contents,
+      {required String id,
+      required String title,
+      required String contents,
       required List<Image> images,
       required int commentCount,
       required int likeCount,
@@ -58,9 +58,9 @@ const $Article = _$ArticleTearOff();
 
 /// @nodoc
 mixin _$Article {
-  String? get id => throw _privateConstructorUsedError;
-  String? get title => throw _privateConstructorUsedError;
-  String? get contents => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+  String get contents => throw _privateConstructorUsedError;
   List<Image> get images => throw _privateConstructorUsedError;
   int get commentCount => throw _privateConstructorUsedError;
   int get likeCount => throw _privateConstructorUsedError;
@@ -80,9 +80,9 @@ abstract class $ArticleCopyWith<$Res> {
   factory $ArticleCopyWith(Article value, $Res Function(Article) then) =
       _$ArticleCopyWithImpl<$Res>;
   $Res call(
-      {String? id,
-      String? title,
-      String? contents,
+      {String id,
+      String title,
+      String contents,
       List<Image> images,
       int commentCount,
       int likeCount,
@@ -121,15 +121,15 @@ class _$ArticleCopyWithImpl<$Res> implements $ArticleCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       contents: contents == freezed
           ? _value.contents
           : contents // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       images: images == freezed
           ? _value.images
           : images // ignore: cast_nullable_to_non_nullable
@@ -179,9 +179,9 @@ abstract class _$ArticleCopyWith<$Res> implements $ArticleCopyWith<$Res> {
       __$ArticleCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String? id,
-      String? title,
-      String? contents,
+      {String id,
+      String title,
+      String contents,
       List<Image> images,
       int commentCount,
       int likeCount,
@@ -222,15 +222,15 @@ class __$ArticleCopyWithImpl<$Res> extends _$ArticleCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       contents: contents == freezed
           ? _value.contents
           : contents // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       images: images == freezed
           ? _value.images
           : images // ignore: cast_nullable_to_non_nullable
@@ -287,11 +287,11 @@ class _$_Article implements _Article {
       _$$_ArticleFromJson(json);
 
   @override
-  final String? id;
+  final String id;
   @override
-  final String? title;
+  final String title;
   @override
-  final String? contents;
+  final String contents;
   @override
   final List<Image> images;
   @override
@@ -364,9 +364,9 @@ class _$_Article implements _Article {
 
 abstract class _Article implements Article {
   factory _Article(
-      {required String? id,
-      required String? title,
-      required String? contents,
+      {required String id,
+      required String title,
+      required String contents,
       required List<Image> images,
       required int commentCount,
       required int likeCount,
@@ -379,11 +379,11 @@ abstract class _Article implements Article {
   factory _Article.fromJson(Map<String, dynamic> json) = _$_Article.fromJson;
 
   @override
-  String? get id;
+  String get id;
   @override
-  String? get title;
+  String get title;
   @override
-  String? get contents;
+  String get contents;
   @override
   List<Image> get images;
   @override

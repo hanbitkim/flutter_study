@@ -6,8 +6,8 @@ part 'category.g.dart';
 @freezed
 class Category with _$Category {
   factory Category({
-    required String? id,
-    required String? name
+    required String id,
+    required String name
   }) = _Category;
 
   factory Category.fromJson(Map<String, dynamic> json) => _$CategoryFromJson(json);

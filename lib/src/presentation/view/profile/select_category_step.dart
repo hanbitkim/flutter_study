@@ -15,12 +15,12 @@ class SelectCategoryStep extends HookWidget {
         children: [
           const Text('선택된 카테고리'),
           MultiSelectChipDisplay(
-            items: EditProfileController.to.selectedCategories.map((e) => MultiSelectItem(e.id, e.name ?? "")).toList(),
+            items: EditProfileController.to.selectedCategories.map((e) => MultiSelectItem(e.id, e.name)).toList(),
             onTap: (value) => EditProfileController.to.selectCategory(value as String),
           ),
           const Text('전체 카테고리'),
           MultiSelectChipDisplay(
-            items: EditProfileController.to.unSelectedCategories.map((e) => MultiSelectItem(e.id, e.name ?? "")).toList(),
+            items: EditProfileController.to.unSelectedCategories.map((e) => MultiSelectItem(e.id, e.name)).toList(),
             onTap: (value) => EditProfileController.to.selectCategory(value as String),
           ),
           ElevatedButton(

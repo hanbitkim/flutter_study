@@ -9,6 +9,6 @@ class TabView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Tab(child: Text(_category.name ?? '', style: const TextStyle(color: Colors.black)));
+    return Tab(child: Text(_category.name, style: const TextStyle(color: Colors.black)));
   }
 }
