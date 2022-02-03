@@ -17,7 +17,6 @@ _$_Article _$$_ArticleFromJson(Map<String, dynamic> json) => _$_Article(
       likeCount: json['likeCount'] as int,
       isReported: json['isReported'] as bool,
       createdDate: json['createdDate'] as int,
-      updatedDate: json['updatedDate'] as int,
       author: Author.fromJson(json['author'] as Map<String, dynamic>),
       comments: (json['comments'] as List<dynamic>)
           .map((e) => Comment.fromJson(e as Map<String, dynamic>))
@@ -34,7 +33,6 @@ Map<String, dynamic> _$$_ArticleToJson(_$_Article instance) =>
       'likeCount': instance.likeCount,
       'isReported': instance.isReported,
       'createdDate': instance.createdDate,
-      'updatedDate': instance.updatedDate,
       'author': instance.author,
       'comments': instance.comments,
     };

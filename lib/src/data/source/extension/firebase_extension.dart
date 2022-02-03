@@ -48,12 +48,11 @@ extension FirebaseExtension on DocumentSnapshot {
         id: getSafety('article_id'),
         title: getSafety('title'),
         contents: getSafety('contents'),
-        images: images,
-        commentCount: getSafety('comment_count'),
-        likeCount: getSafety('like_count'),
-        isReported: getSafety('is_reported'),
+        commentCount: getSafety('comment_count') ?? 0,
+        likeCount: getSafety('like_count') ?? 0,
+        isReported: getSafety('is_reported') ?? false,
         createdDate: getSafety('created_date'),
-        updatedDate: getSafety('updated_date'),
+        images: images,
         author: author,
         comments: List.empty());
   }

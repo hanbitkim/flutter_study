@@ -17,7 +17,6 @@ class Article with _$Article {
     required int likeCount,
     required bool isReported,
     required int createdDate,
-    required int updatedDate,
     required Author author,
     required List<Comment> comments
   }) = _Article;

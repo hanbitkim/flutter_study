@@ -30,7 +30,6 @@ class _$ArticleTearOff {
       required int likeCount,
       required bool isReported,
       required int createdDate,
-      required int updatedDate,
       required Author author,
       required List<Comment> comments}) {
     return _Article(
@@ -42,7 +41,6 @@ class _$ArticleTearOff {
       likeCount: likeCount,
       isReported: isReported,
       createdDate: createdDate,
-      updatedDate: updatedDate,
       author: author,
       comments: comments,
     );
@@ -66,7 +64,6 @@ mixin _$Article {
   int get likeCount => throw _privateConstructorUsedError;
   bool get isReported => throw _privateConstructorUsedError;
   int get createdDate => throw _privateConstructorUsedError;
-  int get updatedDate => throw _privateConstructorUsedError;
   Author get author => throw _privateConstructorUsedError;
   List<Comment> get comments => throw _privateConstructorUsedError;
 
@@ -88,7 +85,6 @@ abstract class $ArticleCopyWith<$Res> {
       int likeCount,
       bool isReported,
       int createdDate,
-      int updatedDate,
       Author author,
       List<Comment> comments});
 
@@ -113,7 +109,6 @@ class _$ArticleCopyWithImpl<$Res> implements $ArticleCopyWith<$Res> {
     Object? likeCount = freezed,
     Object? isReported = freezed,
     Object? createdDate = freezed,
-    Object? updatedDate = freezed,
     Object? author = freezed,
     Object? comments = freezed,
   }) {
@@ -150,10 +145,6 @@ class _$ArticleCopyWithImpl<$Res> implements $ArticleCopyWith<$Res> {
           ? _value.createdDate
           : createdDate // ignore: cast_nullable_to_non_nullable
               as int,
-      updatedDate: updatedDate == freezed
-          ? _value.updatedDate
-          : updatedDate // ignore: cast_nullable_to_non_nullable
-              as int,
       author: author == freezed
           ? _value.author
           : author // ignore: cast_nullable_to_non_nullable
@@ -187,7 +178,6 @@ abstract class _$ArticleCopyWith<$Res> implements $ArticleCopyWith<$Res> {
       int likeCount,
       bool isReported,
       int createdDate,
-      int updatedDate,
       Author author,
       List<Comment> comments});
 
@@ -214,7 +204,6 @@ class __$ArticleCopyWithImpl<$Res> extends _$ArticleCopyWithImpl<$Res>
     Object? likeCount = freezed,
     Object? isReported = freezed,
     Object? createdDate = freezed,
-    Object? updatedDate = freezed,
     Object? author = freezed,
     Object? comments = freezed,
   }) {
@@ -251,10 +240,6 @@ class __$ArticleCopyWithImpl<$Res> extends _$ArticleCopyWithImpl<$Res>
           ? _value.createdDate
           : createdDate // ignore: cast_nullable_to_non_nullable
               as int,
-      updatedDate: updatedDate == freezed
-          ? _value.updatedDate
-          : updatedDate // ignore: cast_nullable_to_non_nullable
-              as int,
       author: author == freezed
           ? _value.author
           : author // ignore: cast_nullable_to_non_nullable
@@ -279,7 +264,6 @@ class _$_Article implements _Article {
       required this.likeCount,
       required this.isReported,
       required this.createdDate,
-      required this.updatedDate,
       required this.author,
       required this.comments});
 
@@ -303,15 +287,13 @@ class _$_Article implements _Article {
   @override
   final int createdDate;
   @override
-  final int updatedDate;
-  @override
   final Author author;
   @override
   final List<Comment> comments;
 
   @override
   String toString() {
-    return 'Article(id: $id, title: $title, contents: $contents, images: $images, commentCount: $commentCount, likeCount: $likeCount, isReported: $isReported, createdDate: $createdDate, updatedDate: $updatedDate, author: $author, comments: $comments)';
+    return 'Article(id: $id, title: $title, contents: $contents, images: $images, commentCount: $commentCount, likeCount: $likeCount, isReported: $isReported, createdDate: $createdDate, author: $author, comments: $comments)';
   }
 
   @override
@@ -330,8 +312,6 @@ class _$_Article implements _Article {
                 .equals(other.isReported, isReported) &&
             const DeepCollectionEquality()
                 .equals(other.createdDate, createdDate) &&
-            const DeepCollectionEquality()
-                .equals(other.updatedDate, updatedDate) &&
             const DeepCollectionEquality().equals(other.author, author) &&
             const DeepCollectionEquality().equals(other.comments, comments));
   }
@@ -347,7 +327,6 @@ class _$_Article implements _Article {
       const DeepCollectionEquality().hash(likeCount),
       const DeepCollectionEquality().hash(isReported),
       const DeepCollectionEquality().hash(createdDate),
-      const DeepCollectionEquality().hash(updatedDate),
       const DeepCollectionEquality().hash(author),
       const DeepCollectionEquality().hash(comments));
 
@@ -372,7 +351,6 @@ abstract class _Article implements Article {
       required int likeCount,
       required bool isReported,
       required int createdDate,
-      required int updatedDate,
       required Author author,
       required List<Comment> comments}) = _$_Article;
 
@@ -394,8 +372,6 @@ abstract class _Article implements Article {
   bool get isReported;
   @override
   int get createdDate;
-  @override
-  int get updatedDate;
   @override
   Author get author;
   @override

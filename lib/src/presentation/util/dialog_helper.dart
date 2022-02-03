@@ -21,7 +21,7 @@ class DialogHelper {
                         onPressed: () async {
                           Navigator.of(context).pop();
                           final ImagePicker _picker = ImagePicker();
-                          final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+                          final XFile? image = await _picker.pickImage(source: ImageSource.gallery, maxWidth: 1000, maxHeight: 1000);
                           Logger().d('image selected = ${image?.path}');
                           callback.call(image?.path);
                         },
@@ -34,7 +34,7 @@ class DialogHelper {
                         onPressed: () async {
                           Navigator.of(context).pop();
                           final ImagePicker _picker = ImagePicker();
-                          final XFile? image = await _picker.pickImage(source: ImageSource.camera);
+                          final XFile? image = await _picker.pickImage(source: ImageSource.camera, maxWidth: 1000, maxHeight: 1000);
                           Logger().d('image captured = ${image?.path}');
                           callback.call(image?.path);
                         },

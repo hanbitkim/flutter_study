@@ -1,11 +1,11 @@
 import 'package:artitecture/src/core/storage/secure_storage.dart';
 import 'package:artitecture/src/data/repository/app_repository_impl.dart';
 import 'package:artitecture/src/data/repository/auth_repository_impl.dart';
-import 'package:artitecture/src/data/repository/category_repository_impl.dart';
+import 'package:artitecture/src/data/repository/community_repository_impl.dart';
 import 'package:artitecture/src/data/source/remote/firebase_api.dart';
 import 'package:artitecture/src/domain/repository/app_repository.dart';
 import 'package:artitecture/src/domain/repository/auth_repository.dart';
-import 'package:artitecture/src/domain/repository/category_repository.dart';
+import 'package:artitecture/src/domain/repository/community_repository.dart';
 import 'package:artitecture/src/domain/usecase/check_app_version_usecase.dart';
 import 'package:artitecture/src/domain/usecase/get_articles_usecase.dart';
 import 'package:artitecture/src/domain/usecase/get_category_usecase.dart';
@@ -18,6 +18,7 @@ import 'package:artitecture/src/domain/usecase/sign_in_usecase.dart';
 import 'package:artitecture/src/domain/usecase/sign_out_usecase.dart';
 import 'package:artitecture/src/domain/usecase/sign_up_usecase.dart';
 import 'package:artitecture/src/domain/usecase/update_profile_usecase.dart';
+import 'package:artitecture/src/domain/usecase/upload_article_usecase.dart';
 import 'package:artitecture/src/presentation/controller/app_controller.dart';
 import 'package:artitecture/src/presentation/controller/article_write_controller.dart';
 import 'package:artitecture/src/presentation/controller/auth_controller.dart';
@@ -48,7 +49,7 @@ Future<void> initializeDependencies() async {
   // Repositories
   injector.registerSingleton<AuthRepository>(AuthRepositoryImpl(injector()));
   injector.registerSingleton<AppRepository>(AppRepositoryImpl(injector()));
-  injector.registerSingleton<CategoryRepository>(CategoryRepositoryImpl(injector()));
+  injector.registerSingleton<CommunityRepository>(CommunityRepositoryImpl(injector()));
 
   // UseCases
   injector.registerLazySingleton<IsSignedUseCase>(() => IsSignedUseCase(injector()));
@@ -63,6 +64,7 @@ Future<void> initializeDependencies() async {
   injector.registerLazySingleton<CheckAppVersionUseCase>(() => CheckAppVersionUseCase(injector()));
   injector.registerLazySingleton<GetCategoriesUseCase>(() => GetCategoriesUseCase(injector()));
   injector.registerLazySingleton<GetArticlesUseCase>(() => GetArticlesUseCase(injector()));
+  injector.registerLazySingleton<UploadArticleUseCase>(() => UploadArticleUseCase(injector()));
 
   // Controllers
   injector.registerFactory<AppController>(() => AppController(injector(), injector(), injector(), injector()));
@@ -72,7 +74,7 @@ Future<void> initializeDependencies() async {
   injector.registerFactory<MainController>(() => MainController());
   injector.registerFactory<BoardController>(() => BoardController(injector()));
   injector.registerFactory<MyPageController>(() => MyPageController(injector(), injector()));
-  injector.registerFactory<ArticleWriteController>(() => ArticleWriteController());
+  injector.registerFactory<ArticleWriteController>(() => ArticleWriteController(injector()));
 
   // injector.registerFactory<AuthController>(() {
   //   final autoController = AuthController(injector(), injector());

@@ -1,9 +1,9 @@
 import 'package:artitecture/src/core/resources/result_wrapper.dart';
 import 'package:artitecture/src/domain/entity/response/article.dart';
-import 'package:artitecture/src/domain/repository/category_repository.dart';
+import 'package:artitecture/src/domain/repository/community_repository.dart';
 
 class GetArticlesUseCase {
-  final CategoryRepository _categoryRepository;
+  final CommunityRepository _categoryRepository;
 
   GetArticlesUseCase(this._categoryRepository);
 

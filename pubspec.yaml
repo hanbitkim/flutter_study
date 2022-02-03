@@ -53,6 +53,7 @@ dependencies:
   firebase_messaging: ^11.2.5
   firebase_crashlytics: ^2.4.5
   firebase_analytics: ^9.0.5
+  firebase_storage: ^10.2.6
   cloud_firestore: ^3.1.6
   google_sign_in: ^5.2.3
   version: ^2.0.0

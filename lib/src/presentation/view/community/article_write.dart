@@ -2,7 +2,7 @@ import 'package:artitecture/src/core/global.dart';
 import 'package:artitecture/src/injector.dart';
 import 'package:artitecture/src/presentation/controller/article_write_controller.dart';
 import 'package:artitecture/src/presentation/util/dialog_helper.dart';
-import 'package:artitecture/src/presentation/util/image_helper.dart';
+import 'package:artitecture/src/presentation/util/widget_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
@@ -54,7 +54,7 @@ class ArticleWritePage extends HookWidget {
                       labelText: '제목을 입력해주세요',
                     ),
                     onChanged: (value) => _articleWriteController.setTitle(value),
-                    validator: (value) => value == null || value.length < 3 ? '제목을 3자 이상 입력해주세요' : null,
+                    validator: (value) => value == null || value.trim().isEmpty ? '제목을 입력해주세요' : null,
                     maxLines: 1,
                   ),
                   Expanded(
@@ -65,7 +65,7 @@ class ArticleWritePage extends HookWidget {
                         labelText: '내용을 입력해주세요',
                       ),
                       onChanged: (value) => _articleWriteController.setContents(value),
-                      validator: (value) => value == null || value.length < 10 ? '내용을 10자 이상 입력해주세요' : null,
+                      validator: (value) => value == null || value.trim().isEmpty ? '내용을 입력해주세요' : null,
                     ),
                   ),
                   _articleWriteController.images.isNotEmpty
@@ -81,7 +81,7 @@ class ArticleWritePage extends HookWidget {
                                   child: Stack(
                                     children: [
                                       Center(
-                                        child:  ImageHelper.getImageWidget(_articleWriteController.images[index], BoxFit.contain)
+                                        child:  WidgetHelper.getImageWidget(_articleWriteController.images[index], BoxFit.contain)
                                       ),
                                       Align(
                                         alignment: Alignment.topRight,
