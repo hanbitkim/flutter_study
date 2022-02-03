@@ -1,6 +1,7 @@
 import 'package:artitecture/src/core/global.dart';
 import 'package:artitecture/src/injector.dart';
 import 'package:artitecture/src/presentation/controller/article_write_controller.dart';
+import 'package:artitecture/src/presentation/util/dialog_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
@@ -21,6 +22,14 @@ class ArticleWritePage extends HookWidget {
         actions: [
           TextButton(
               onPressed: () {
+                DialogHelper.showImagePickerDialog(context, (path) {
+                  _articleWriteController.addImage(path);
+                });
+              },
+              child: const Text('사진추가', style: TextStyle(color: Colors.white))
+          ),
+          TextButton(
+              onPressed: () {
                 if (_formKey.currentState?.validate() == true) {
                   FocusManager.instance.primaryFocus?.unfocus();
                 }
@@ -35,10 +44,8 @@ class ArticleWritePage extends HookWidget {
           child: Column(
             children: [
               DropdownButton<String>(
-                items: getItems(),
-                onChanged: (value) {
-                  _articleWriteController.categoryId.value = value;
-                },
+                items: _getItems(),
+                onChanged: (value) => _articleWriteController.setCategoryId(value),
                 value: _articleWriteController.categoryId.value,
                 hint: const Text("카테고리를 선택해주세요")
               ),
@@ -48,9 +55,7 @@ class ArticleWritePage extends HookWidget {
                   border: UnderlineInputBorder(),
                   labelText: '제목을 입력해주세요',
                 ),
-                onChanged: (value) {
-                  _articleWriteController.title.value = value;
-                },
+                onChanged: (value) => _articleWriteController.setTitle(value),
                 validator: (value) {
                   if (value == null || value.length < 3) {
                     return '제목을 3자 이상 입력해주세요';
@@ -64,9 +69,7 @@ class ArticleWritePage extends HookWidget {
                   border: InputBorder.none,
                   labelText: '내용을 입력해주세요',
                 ),
-                onChanged: (value) {
-                  _articleWriteController.contents.value = value;
-                },
+                onChanged: (value) => _articleWriteController.setContents(value),
                 validator: (value) {
                   if (value == null || value.length < 10) {
                     return '내용을 10자 이상 입력해주세요';
@@ -81,7 +84,7 @@ class ArticleWritePage extends HookWidget {
     );
   }
 
-  List<DropdownMenuItem<String>>? getItems() {
+  List<DropdownMenuItem<String>>? _getItems() {
     return user.value?.categories.map((e) => DropdownMenuItem(child: Text(e.name), value: e.id)).toList();
   }
 }
