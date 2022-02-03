@@ -21,8 +21,16 @@ class ArticleWriteController extends GetxController {
   }
 
   void addImage(String? path) {
-    if (path != null && path.isNotEmpty) {
+    if (path != null) {
       images.add(path);
     }
+  }
+
+  void removeImage(String? path) {
+    images.remove(path);
+  }
+
+  void upload() {
+
   }
 }
