@@ -10,6 +10,6 @@ abstract class AuthRepository {
   Future<ResultWrapper> googleSignIn();
   Future<ResultWrapper<User?>> getUser();
   Future<ResultWrapper> updateProfile(UpdateProfileParam param);
-  Future<bool> signOut();
+  Future<ResultWrapper<bool>> signOut();
   Future<ResultWrapper> secession();
 }

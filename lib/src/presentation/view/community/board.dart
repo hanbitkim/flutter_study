@@ -26,15 +26,16 @@ class _BoardViewState extends State<BoardView> with AutomaticKeepAliveClientMixi
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return CustomScrollView(
-      controller: BoardController.get(widget._category.name).scrollController.value,
-      slivers: [
-        SliverList(
-            delegate:
-            SliverChildBuilderDelegate((context, index) => ListTile(title: Text(BoardController.get(widget._category.name).articles[index].title)),
-                childCount: BoardController.get(widget._category.name).articles.length
-            )
-        )],
+    return Obx(() => CustomScrollView(
+        controller: BoardController.get(widget._category.name).scrollController.value,
+        slivers: [
+          SliverList(
+              delegate:
+              SliverChildBuilderDelegate((context, index) => ListTile(title: Text(BoardController.get(widget._category.name).articles[index].title)),
+                  childCount: BoardController.get(widget._category.name).articles.length
+              )
+          )],
+      ),
     );
   }
 

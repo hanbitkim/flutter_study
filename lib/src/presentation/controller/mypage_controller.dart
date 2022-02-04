@@ -13,7 +13,7 @@ class MyPageController extends GetxController {
 
   void signOut() async {
     var response = await _signOutUseCase();
-    if (response) {
+    if (response.isSuccess()) {
       Get.offNamed(signInRoute);
     } else {
       Get.snackbar("에러가 발생했습니다", "네트워크 상태를 확인 후 다시 시도해주세요");

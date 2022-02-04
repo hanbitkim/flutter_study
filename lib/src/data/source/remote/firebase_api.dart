@@ -7,6 +7,7 @@ import 'package:artitecture/src/core/resources/result_wrapper.dart';
 import 'package:artitecture/src/core/utils/constants.dart';
 import 'package:artitecture/src/core/utils/platforms.dart';
 import 'package:artitecture/src/data/source/extension/firebase_extension.dart';
+import 'package:artitecture/src/data/source/remote/error_handler.dart';
 import 'package:artitecture/src/domain/entity/param/update_profile_param.dart';
 import 'package:artitecture/src/domain/entity/param/upload_article_param.dart';
 import 'package:artitecture/src/domain/entity/response/app_version.dart';
@@ -92,79 +93,61 @@ class FirebaseApi {
   }
 
   Future<ResultWrapper<User?>> getUser() async {
-    try {
+    return ErrorHandler<User?>().invoke(() async {
       final userDocument = await _firestore.collection(kUserCollectionKey).doc(_auth.currentUser?.uid).get();
       final categories = await _firestore.collection(kUserCategoryCollectionKey).where('user_id', isEqualTo: _auth.currentUser?.uid).get();
-      final user = userDocument.toUser(_auth.currentUser?.uid, categories.docs.map((e) => e.toCategory()).toList());
-      Logger().d("user = $user");
-      return Success(user);
-    } on FirebaseException catch (e) {
-      Logger().d("getUser exception = ${e.code}");
-      return Failure(DataError(error, e.code));
-    }
+      return userDocument.toUser(categories.docs.map((e) => e.toCategory()).toList());
+    });
   }
 
   Future<ResultWrapper> updateProfile(UpdateProfileParam param) async {
-    try {
+    return ErrorHandler().invoke(() async {
       final checkNickname = await _firestore.collection(kUserCollectionKey).where('nickname', isEqualTo: param.nickname).get();
       if (checkNickname.docs.isNotEmpty) {
         return Failure(DataError(nicknameAlreadyInUseError, 'nickname is already in use'));
       }
-
-      await _firestore.collection(kUserCollectionKey).doc(_auth.currentUser?.uid).set({"nickname": param.nickname, "is_approved": true}, SetOptions(merge: true));
+      WriteBatch writeBatch = _firestore.batch();
+      writeBatch.set(_firestore.collection(kUserCollectionKey).doc(_auth.currentUser?.uid), {"nickname": param.nickname, "is_approved": true}, SetOptions(merge: true));
       for (var category in param.categories) {
-        await _firestore.collection(kUserCategoryCollectionKey).add({"user_id": _auth.currentUser?.uid, "category_id": category.id, "category_name": category.name});
-        user.value = user.value?.copyWith(categories: param.categories);
+        final categoryDocument = _firestore.collection(kUserCategoryCollectionKey).doc();
+        writeBatch.set(categoryDocument, {"user_id": _auth.currentUser?.uid, "category_id": category.id, "category_name": category.name});
       }
-      return const Success(null);
-    } on FirebaseException catch (e) {
-      Logger().d("updateProfile exception = ${e.code}");
-      return Failure(DataError(error, e.code));
-    }
+      await writeBatch.commit();
+      user.value = user.value?.copyWith(categories: param.categories);
+      return null;
+    });
   }
 
-  Future<bool> signOut() async {
-    try {
+  Future<ResultWrapper<bool>> signOut() async {
+    return ErrorHandler<bool>().invoke(() async {
       await _auth.signOut();
       return true;
-    } on Auth.FirebaseAuthException catch (e) {
-      Logger().d("signOut exception = ${e.code}");
-      return false;
-    }
+    });
   }
 
   Future<ResultWrapper> secession() async {
-    try {
+    return ErrorHandler().invoke(() async {
       await _auth.currentUser?.delete();
-      return const Success(null);
-    } on FirebaseException catch (e) {
-      Logger().d("signOut exception = ${e.code}");
-      return Failure(DataError(error, e.code));
-    }
+      return null;
+    });
   }
 
   Future<ResultWrapper<AppVersion>> getAppVersion() async {
-    try {
+    return ErrorHandler<AppVersion>().invoke(() async {
       var document = await _firestore.collection(kAppVersionCollectionKey).doc(PlatformUtil.getPlatformName()).get();
-      return Success(document.toAppVersion());
-    } on FirebaseException catch (e) {
-      Logger().d("getAppVersion exception = ${e.code}");
-      return Failure(DataError(error, e.code));
-    }
+      return document.toAppVersion();
+    });
   }
 
   Future<ResultWrapper<List<Category>>> getCategories() async {
-    try {
+    return ErrorHandler<List<Category>>().invoke(() async {
       final document = await _firestore.collection(kCategoryCollectionKey).get();
-      return Success(document.docs.map((e) => e.toCategory()).toList());
-    } on FirebaseException catch (e) {
-      Logger().d("getCategories exception = ${e.code}");
-      return Failure(DataError(error, e.code));
-    }
+      return document.docs.map((e) => e.toCategory()).toList();
+    });
   }
 
   Future<ResultWrapper<List<Article>>> getArticles(String? categoryId, int? lastArticleDate) async {
-    try {
+    return ErrorHandler<List<Article>>().invoke(() async {
       List<Article> articles = List.empty(growable: true);
       final document = await _firestore.collection(kArticleCollectionKey).where('category_id', isEqualTo: categoryId).where('created_date', isLessThan: lastArticleDate).limit(kPageSize).get();
       for (DocumentSnapshot articleDocument in document.docs) {
@@ -172,15 +155,12 @@ class FirebaseApi {
         final authorDocument = await _firestore.collection(kUserCollectionKey).doc(articleDocument.getSafety('author_id')).get();
         articles.add(articleDocument.toArticle(imageCollection.docs.map((e) => e.toImage()).toList(), authorDocument.toAuthor()));
       }
-      return Success(articles);
-    } on FirebaseException catch (e) {
-      Logger().d("getCategories exception = ${e.code}");
-      return Failure(DataError(error, e.code));
-    }
+      return articles;
+    });
   }
 
   Future<ResultWrapper> uploadArticle(UploadArticleParam param) async {
-    try {
+    return ErrorHandler().invoke(() async {
       List<String> images = List.empty(growable: true);
       for (String path in param.images) {
         File file = File(path);
@@ -192,24 +172,25 @@ class FirebaseApi {
         Logger().d('uploaded image = $url');
         images.add(url);
       }
-      DocumentReference articleRef = await _firestore.collection(kArticleCollectionKey).add({
+      final articleDocument = _firestore.collection(kArticleCollectionKey).doc();
+      WriteBatch writeBatch = _firestore.batch();
+      writeBatch.set(articleDocument, {
+        "article_id": articleDocument.id,
         "category_id": param.categoryId,
         "title": param.title,
         "contents": param.contents,
         "author_id": user.value?.id,
         "created_date": DateTime.now().millisecond
       });
-      await _firestore.collection(kArticleCollectionKey).doc(articleRef.id).set({"article_id": articleRef.id}, SetOptions(merge: true));
       for (String path in images) {
-        DocumentReference imageRef = await _firestore.collection(kArticleCollectionKey).doc(articleRef.id).collection('image').add({
+        final imageDocument = articleDocument.collection('image').doc();
+        writeBatch.set(imageDocument, {
+          "image_id": imageDocument.id,
           "image_url": path
         });
-        await _firestore.collection(kArticleCollectionKey).doc(articleRef.id).collection('image').doc(imageRef.id).set({"image_id": imageRef.id}, SetOptions(merge: true));
       }
-      return const Success(null);
-    } on FirebaseException catch (e) {
-      Logger().d("uploadArticle exception = ${e.code}");
-      return Failure(DataError(error, e.code));
-    }
+      await writeBatch.commit();
+      return null;
+    });
   }
 }

@@ -25,9 +25,9 @@ extension FirebaseExtension on DocumentSnapshot {
     );
   }
 
-  User toUser(String? userId, List<Category> categories) {
+  User toUser(List<Category> categories) {
     return User(
-        id: userId,
+        id: id,
         nickname: getSafety('nickname'),
         email: getSafety('email'),
         profileUrl: getSafety('profile_url'),
@@ -38,14 +38,14 @@ extension FirebaseExtension on DocumentSnapshot {
 
   Category toCategory() {
     return Category(
-        id: getSafety('category_id'),
+        id: id,
         name: getSafety('category_name')
     );
   }
 
   Article toArticle(List<Image> images, Author author) {
     return Article(
-        id: getSafety('article_id'),
+        id: id,
         title: getSafety('title'),
         contents: getSafety('contents'),
         commentCount: getSafety('comment_count') ?? 0,
@@ -59,7 +59,7 @@ extension FirebaseExtension on DocumentSnapshot {
 
   Comment toComment(List<Image> images, Author author) {
     return Comment(
-        id: getSafety('comment_id'),
+        id: id,
         contents: getSafety('contents'),
         images: images,
         likeCount: getSafety('like_count'),
@@ -80,7 +80,7 @@ extension FirebaseExtension on DocumentSnapshot {
 
   Image toImage() {
     return Image(
-        id: getSafety('image_id'),
+        id: id,
         thumbnailUrl: getSafety('thumbnail_url'),
         imageUrl: getSafety('image_url')
     );

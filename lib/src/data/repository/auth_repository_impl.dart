@@ -54,7 +54,7 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<bool> signOut() async {
+  Future<ResultWrapper<bool>> signOut() async {
     return firebaseAuthApi.signOut();
   }
 
