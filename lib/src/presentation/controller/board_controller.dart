@@ -40,6 +40,9 @@ class BoardController extends GetxController {
 
   void getArticles(String? categoryId, [int? lastArticleDate]) async {
     _isLoading = true;
+    if (lastArticleDate == null) {
+      articles.clear();
+    }
     final response = await _getArticlesUseCase(categoryId, lastArticleDate);
     Logger().d('getArticles] categoryId = $categoryId, lastArticleDate = $lastArticleDate, response = $response');
     if (response.isSuccess()) {
