@@ -1,7 +1,7 @@
 import 'package:artitecture/src/core/global.dart';
 import 'package:artitecture/src/presentation/route.dart';
 import 'package:artitecture/src/presentation/view/community/board.dart';
-import 'package:artitecture/src/presentation/view/community/tab.dart';
+import 'package:artitecture/src/presentation/view/community/tab_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
@@ -20,7 +20,7 @@ class CommunityTab extends HookWidget {
           children: [
             TabBar(
               controller: _tabController,
-              tabs: user.value?.categories.map((category) => TabView(category)).toList() ?? List.empty(),
+              tabs: user.value?.categories.map((category) => TabItemView(category)).toList() ?? List.empty(),
               onTap: (index) => _pageController.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.easeIn),
             ),
             Expanded(

@@ -16,6 +16,13 @@ extension FirebaseExtension on DocumentSnapshot {
     }
   }
 
+  DateTime parseTime(Timestamp? date) {
+    if (date == null) {
+      return DateTime.parse("1969-07-20 20:18:04Z");
+    }
+    return date.toDate();
+  }
+
   AppVersion toAppVersion() {
     return AppVersion(
         requiredVersion: get('required_version'),
@@ -51,7 +58,7 @@ extension FirebaseExtension on DocumentSnapshot {
         commentCount: getSafety('comment_count') ?? 0,
         likeCount: getSafety('like_count') ?? 0,
         isReported: getSafety('is_reported') ?? false,
-        createdDate: getSafety('created_date'),
+        createdDate: parseTime(getSafety('created_date')),
         images: images,
         author: author,
         comments: List.empty());

@@ -29,7 +29,7 @@ class _$ArticleTearOff {
       required int commentCount,
       required int likeCount,
       required bool isReported,
-      required int createdDate,
+      required DateTime createdDate,
       required Author author,
       required List<Comment> comments}) {
     return _Article(
@@ -63,7 +63,7 @@ mixin _$Article {
   int get commentCount => throw _privateConstructorUsedError;
   int get likeCount => throw _privateConstructorUsedError;
   bool get isReported => throw _privateConstructorUsedError;
-  int get createdDate => throw _privateConstructorUsedError;
+  DateTime get createdDate => throw _privateConstructorUsedError;
   Author get author => throw _privateConstructorUsedError;
   List<Comment> get comments => throw _privateConstructorUsedError;
 
@@ -84,7 +84,7 @@ abstract class $ArticleCopyWith<$Res> {
       int commentCount,
       int likeCount,
       bool isReported,
-      int createdDate,
+      DateTime createdDate,
       Author author,
       List<Comment> comments});
 
@@ -144,7 +144,7 @@ class _$ArticleCopyWithImpl<$Res> implements $ArticleCopyWith<$Res> {
       createdDate: createdDate == freezed
           ? _value.createdDate
           : createdDate // ignore: cast_nullable_to_non_nullable
-              as int,
+              as DateTime,
       author: author == freezed
           ? _value.author
           : author // ignore: cast_nullable_to_non_nullable
@@ -177,7 +177,7 @@ abstract class _$ArticleCopyWith<$Res> implements $ArticleCopyWith<$Res> {
       int commentCount,
       int likeCount,
       bool isReported,
-      int createdDate,
+      DateTime createdDate,
       Author author,
       List<Comment> comments});
 
@@ -239,7 +239,7 @@ class __$ArticleCopyWithImpl<$Res> extends _$ArticleCopyWithImpl<$Res>
       createdDate: createdDate == freezed
           ? _value.createdDate
           : createdDate // ignore: cast_nullable_to_non_nullable
-              as int,
+              as DateTime,
       author: author == freezed
           ? _value.author
           : author // ignore: cast_nullable_to_non_nullable
@@ -285,7 +285,7 @@ class _$_Article implements _Article {
   @override
   final bool isReported;
   @override
-  final int createdDate;
+  final DateTime createdDate;
   @override
   final Author author;
   @override
@@ -350,7 +350,7 @@ abstract class _Article implements Article {
       required int commentCount,
       required int likeCount,
       required bool isReported,
-      required int createdDate,
+      required DateTime createdDate,
       required Author author,
       required List<Comment> comments}) = _$_Article;
 
@@ -371,7 +371,7 @@ abstract class _Article implements Article {
   @override
   bool get isReported;
   @override
-  int get createdDate;
+  DateTime get createdDate;
   @override
   Author get author;
   @override

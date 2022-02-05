@@ -27,7 +27,7 @@ class BoardController extends GetxController {
         return;
       }
       if (scrollController.value.position.maxScrollExtent - scrollController.value.position.pixels <= loadingBuffer) {
-        getArticles(_category.id, articles.last.createdDate);
+        getArticles(_category.id, articles.last.createdDate.millisecond);
       }
     });
     super.onInit();

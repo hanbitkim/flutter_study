@@ -4,7 +4,7 @@ import 'package:artitecture/src/core/resources/result_wrapper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:logger/logger.dart';
 
-class ErrorHandler<T> {
+class ResultHandler<T> {
   Future<ResultWrapper<T>> invoke(Function function) async {
     try {
       final result = await function.call();

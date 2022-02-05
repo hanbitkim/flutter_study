@@ -1,5 +1,7 @@
 import 'package:artitecture/src/domain/entity/param/upload_article_param.dart';
 import 'package:artitecture/src/domain/usecase/upload_article_usecase.dart';
+import 'package:artitecture/src/presentation/event/article_uploaded_event.dart';
+import 'package:artitecture/src/presentation/event/eventbus.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -46,6 +48,7 @@ class ArticleWriteController extends GetxController {
     final param = UploadArticleParam(categoryId.value, title.value, contents.value, images);
     final response = await _uploadArticleUseCase(param);
     if (response.isSuccess()) {
+      eventBus.fire(ArticleUploadedEvent(categoryId.value));
       Get.back();
     } else {
       Get.snackbar("게시글 작성에 실패했습니다", "네트워크 상태를 확인 후 다시 시도해주세요");

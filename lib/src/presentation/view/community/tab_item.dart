@@ -2,10 +2,10 @@ import 'package:artitecture/src/domain/entity/response/category.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class TabView extends StatelessWidget {
+class TabItemView extends StatelessWidget {
   final Category _category;
 
-  const TabView(this._category, {Key? key}) : super(key: key);
+  const TabItemView(this._category, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
