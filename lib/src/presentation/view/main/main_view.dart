@@ -9,20 +9,34 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
-class MainPage extends HookWidget {
+class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final MainController _mainController = Get.put(injector());
-    final List<Widget> _children = [const CommunityTab(), const TabTwo(), const TabThree()];
-    final _prevPressedTime = useState(DateTime.now());
+  State<StatefulWidget> createState() {
+    return _MainPageState();
+  }
+}
 
+class _MainPageState extends State<MainPage> {
+  late final List<Widget> _children;
+  late DateTime _lastPressedTime;
+
+  @override
+  void initState() {
+    final MainController _mainController = Get.put(injector());
+    _children = [const CommunityTab(), const TabTwo(), const TabThree()];
+    _lastPressedTime = DateTime.now();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        final timeDiff = DateTime.now().difference(_prevPressedTime.value);
+        final timeDiff = DateTime.now().difference(_lastPressedTime);
         final isFirstClick = timeDiff >= const Duration(seconds: 2);
-        _prevPressedTime.value = DateTime.now();
+        _lastPressedTime = DateTime.now();
         if (isFirstClick) {
           await Fluttertoast.showToast(
               msg: "종료하시려면 한번 더 눌러주세요",
@@ -35,8 +49,9 @@ class MainPage extends HookWidget {
       },
       child: SafeArea(
         child: Obx(() => Scaffold(
-          body: Center(
-            child: _children[_mainController.tabIndex.value]
+          body: IndexedStack(
+            index: MainController.to.tabIndex.value,
+            children: _children,
           ),
           bottomNavigationBar: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
@@ -53,8 +68,8 @@ class MainPage extends HookWidget {
                 label: 'Chats',
               ),
             ],
-            onTap: (int index) => _mainController.selectTab(index),
-            currentIndex: _mainController.tabIndex.value,
+            onTap: (int index) => MainController.to.selectTab(index),
+            currentIndex: MainController.to.tabIndex.value,
             backgroundColor: primaryColor,
           ),
         )),
