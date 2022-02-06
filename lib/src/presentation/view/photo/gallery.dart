@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -52,11 +53,14 @@ class _GalleryPageState extends State<GalleryPage> {
   }
 
   PhotoViewGalleryPageOptions _buildItem(String path, int index) {
-    return PhotoViewGalleryPageOptions(
-      imageProvider: NetworkImage(path),
-      initialScale: PhotoViewComputedScale.contained,
-      minScale: PhotoViewComputedScale.contained * 1,
-      maxScale: PhotoViewComputedScale.contained * 5,
+    return PhotoViewGalleryPageOptions.customChild(
+      child: CachedNetworkImage(
+        imageUrl: path,
+        fit: BoxFit.contain,
+      ),
+      initialScale: PhotoViewComputedScale.covered,
+      minScale: PhotoViewComputedScale.covered * 1,
+      maxScale: PhotoViewComputedScale.covered * 3,
       heroAttributes: PhotoViewHeroAttributes(tag: path),
     );
   }
