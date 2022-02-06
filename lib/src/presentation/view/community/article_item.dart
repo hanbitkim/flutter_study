@@ -9,7 +9,7 @@ class ArticleItemView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Tab(child: Column(
+    return Column(
       children: [
         Row(
           children: [
@@ -23,8 +23,9 @@ class ArticleItemView extends StatelessWidget {
             Text(_article.title)
           ],
         ),
+
         Text(DateFormat.yMd().add_jm().format(_article.createdDate))
       ],
-    ));
+    );
   }
 }
