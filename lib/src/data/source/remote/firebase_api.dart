@@ -123,6 +123,15 @@ class FirebaseApi {
     });
   }
 
+  Future<ResultWrapper> updateProfileImage(String path) async {
+    return ResultHandler().invoke(() async {
+      String url = await uploadImage(path);
+      _firestore.collection(kUserCollectionKey).doc(_auth.currentUser?.uid).set({"profile_url": url}, SetOptions(merge: true));
+      user.value = user.value?.copyWith(profileUrl: url);
+      return null;
+    });
+  }
+
   Future<ResultWrapper<bool>> signOut() async {
     return ResultHandler<bool>().invoke(() async {
       await _auth.signOut();
@@ -168,12 +177,7 @@ class FirebaseApi {
     return ResultHandler().invoke(() async {
       List<String> images = List.empty(growable: true);
       for (String path in param.images) {
-        File file = File(path);
-        String fileName = basename(file.path);
-        Reference ref = _storage.ref().child('article_image').child(fileName);
-        UploadTask uploadTask = ref.putFile(file);
-        TaskSnapshot taskSnapshot = await uploadTask;
-        String url = await taskSnapshot.ref.getDownloadURL();
+        String url = await uploadImage(path);
         Logger().d('uploaded image = $url');
         images.add(url);
       }
@@ -205,5 +209,14 @@ class FirebaseApi {
       await _firestore.collection(kUserCollectionKey).doc(_auth.currentUser?.uid).set({"push_token": token}, SetOptions(merge: true));
       return null;
     });
+  }
+
+  Future<String> uploadImage(String path) async {
+    File file = File(path);
+    String fileName = basename(path);
+    Reference ref = _storage.ref().child('profile_image').child(fileName);
+    UploadTask uploadTask = ref.putFile(file);
+    TaskSnapshot taskSnapshot = await uploadTask;
+    return await taskSnapshot.ref.getDownloadURL();
   }
 }

@@ -2,10 +2,9 @@ import 'package:artitecture/src/core/utils/colors.dart';
 import 'package:artitecture/src/injector.dart';
 import 'package:artitecture/src/presentation/controller/main_controller.dart';
 import 'package:artitecture/src/presentation/view/community/community.dart';
-import 'package:artitecture/src/presentation/view/main/tab_three.dart';
+import 'package:artitecture/src/presentation/view/mypage/mypage_view.dart';
 import 'package:artitecture/src/presentation/view/main/tab_two.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
@@ -25,7 +24,7 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     final MainController _mainController = Get.put(injector());
-    _children = [const CommunityTab(), const TabTwo(), const TabThree()];
+    _children = [const CommunityTab(), const TabTwo(), const MyPageView()];
     _lastPressedTime = DateTime.now();
     super.initState();
   }
@@ -56,16 +55,16 @@ class _MainPageState extends State<MainPage> {
           bottomNavigationBar: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
+                icon: Icon(Icons.chat),
+                label: '커뮤니티',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.camera),
                 label: 'Camera',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.chat),
-                label: 'Chats',
+                icon: Icon(Icons.more_horiz),
+                label: '더보기',
               ),
             ],
             onTap: (int index) => MainController.to.selectTab(index),

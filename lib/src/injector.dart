@@ -17,6 +17,7 @@ import 'package:artitecture/src/domain/usecase/secession_usecase.dart';
 import 'package:artitecture/src/domain/usecase/sign_in_usecase.dart';
 import 'package:artitecture/src/domain/usecase/sign_out_usecase.dart';
 import 'package:artitecture/src/domain/usecase/sign_up_usecase.dart';
+import 'package:artitecture/src/domain/usecase/update_profile_image_usecase.dart';
 import 'package:artitecture/src/domain/usecase/update_profile_usecase.dart';
 import 'package:artitecture/src/domain/usecase/upload_article_usecase.dart';
 import 'package:artitecture/src/presentation/controller/app_controller.dart';
@@ -27,6 +28,7 @@ import 'package:artitecture/src/presentation/controller/board_controller.dart';
 import 'package:artitecture/src/presentation/controller/main_controller.dart';
 import 'package:artitecture/src/presentation/controller/mypage_controller.dart';
 import 'package:artitecture/src/presentation/controller/reset_password_controller.dart';
+import 'package:artitecture/src/presentation/controller/setting_controller.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
 
@@ -59,6 +61,7 @@ Future<void> initializeDependencies() async {
   injector.registerLazySingleton<GoogleSignInUseCase>(() => GoogleSignInUseCase(injector()));
   injector.registerLazySingleton<GetUserUseCase>(() => GetUserUseCase(injector()));
   injector.registerLazySingleton<UpdateProfileUseCase>(() => UpdateProfileUseCase(injector()));
+  injector.registerLazySingleton<UpdateProfileImageUseCase>(() => UpdateProfileImageUseCase(injector()));
   injector.registerLazySingleton<SignOutUseCase>(() => SignOutUseCase(injector()));
   injector.registerLazySingleton<SecessionUseCase>(() => SecessionUseCase(injector()));
   injector.registerLazySingleton<CheckAppVersionUseCase>(() => CheckAppVersionUseCase(injector()));
@@ -73,8 +76,9 @@ Future<void> initializeDependencies() async {
   injector.registerFactory<EditProfileController>(() => EditProfileController(injector(), injector()));
   injector.registerFactory<MainController>(() => MainController());
   injector.registerFactory<BoardController>(() => BoardController(injector()));
-  injector.registerFactory<MyPageController>(() => MyPageController(injector(), injector()));
+  injector.registerFactory<MyPageController>(() => MyPageController(injector()));
   injector.registerFactory<ArticleWriteController>(() => ArticleWriteController(injector()));
+  injector.registerFactory<SettingController>(() => SettingController(injector(), injector()));
 
   // injector.registerFactory<AuthController>(() {
   //   final autoController = AuthController(injector(), injector());

@@ -1,20 +1,21 @@
 import 'package:artitecture/src/injector.dart';
 import 'package:artitecture/src/presentation/controller/mypage_controller.dart';
+import 'package:artitecture/src/presentation/controller/setting_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class TabThree extends StatelessWidget {
-  const TabThree({Key? key}) : super(key: key);
+class SettingPage extends StatelessWidget {
+  const SettingPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final MyPageController _myPageController = Get.put(injector());
+    final SettingController _settingController = Get.put(injector());
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ElevatedButton(onPressed: () async {
-          _myPageController.signOut();
+          _settingController.signOut();
         }, child: const Text('로그아웃')),
         ElevatedButton(onPressed: () {
           showDialog(
@@ -26,7 +27,7 @@ class TabThree extends StatelessWidget {
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();
-                      _myPageController.secession();
+                      _settingController.secession();
                     },
                     child: const Text('확인'),
                   ),

@@ -62,4 +62,9 @@ class AuthRepositoryImpl extends AuthRepository {
   Future<ResultWrapper> secession() {
     return firebaseAuthApi.secession();
   }
+
+  @override
+  Future<ResultWrapper> updateProfileImage(String path) {
+  return firebaseAuthApi.updateProfileImage(path);
+  }
 }
