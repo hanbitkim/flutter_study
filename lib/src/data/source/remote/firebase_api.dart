@@ -16,6 +16,7 @@ import 'package:artitecture/src/domain/entity/response/category.dart';
 import 'package:artitecture/src/domain/entity/response/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as Auth;
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:path/path.dart';
@@ -24,6 +25,7 @@ class FirebaseApi {
   final Auth.FirebaseAuth _auth = Auth.FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
+  final FirebaseMessaging _messaging = FirebaseMessaging.instance;
 
   Future<bool> isSigned() async {
     return _auth.currentUser?.uid != null;
@@ -95,6 +97,8 @@ class FirebaseApi {
   Future<ResultWrapper<User?>> getUser() async {
     return ResultHandler<User?>().invoke(() async {
       final userDocument = await _firestore.collection(kUserCollectionKey).doc(_auth.currentUser?.uid).get();
+      final token = await _messaging.getToken();
+      userDocument.reference.set({"push_token": token}, SetOptions(merge: true));
       final categories = await _firestore.collection(kUserCategoryCollectionKey).where('user_id', isEqualTo: _auth.currentUser?.uid).get();
       return userDocument.toUser(categories.docs.map((e) => e.toCategory()).toList());
     });
@@ -106,8 +110,9 @@ class FirebaseApi {
       if (checkNickname.docs.isNotEmpty) {
         return Failure(DataError(nicknameAlreadyInUseError, 'nickname is already in use'));
       }
+      final token = await _messaging.getToken();
       WriteBatch writeBatch = _firestore.batch();
-      writeBatch.set(_firestore.collection(kUserCollectionKey).doc(_auth.currentUser?.uid), {"nickname": param.nickname, "is_approved": true}, SetOptions(merge: true));
+      writeBatch.set(_firestore.collection(kUserCollectionKey).doc(_auth.currentUser?.uid), {"nickname": param.nickname, "push_token": token, "is_approved": true}, SetOptions(merge: true));
       for (var category in param.categories) {
         final categoryDocument = _firestore.collection(kUserCategoryCollectionKey).doc();
         writeBatch.set(categoryDocument, {"user_id": _auth.currentUser?.uid, "category_id": category.id, "category_name": category.name});
@@ -191,6 +196,13 @@ class FirebaseApi {
         });
       }
       await writeBatch.commit();
+      return null;
+    });
+  }
+
+  Future<ResultWrapper> updatePushToken(String token) async {
+    return ResultHandler().invoke(() async {
+      await _firestore.collection(kUserCollectionKey).doc(_auth.currentUser?.uid).set({"push_token": token}, SetOptions(merge: true));
       return null;
     });
   }

@@ -62,7 +62,17 @@ class _GalleryPageState extends State<GalleryPage> {
       minScale: PhotoViewComputedScale.covered * 1,
       maxScale: PhotoViewComputedScale.covered * 3,
       heroAttributes: PhotoViewHeroAttributes(tag: path),
+      scaleStateCycle: myScaleStateCycle
     );
+  }
+
+  PhotoViewScaleState myScaleStateCycle(PhotoViewScaleState actual) {
+    switch (actual) {
+      case PhotoViewScaleState.initial:
+        return PhotoViewScaleState.zoomedIn;
+      default:
+        return PhotoViewScaleState.initial;
+    }
   }
 }
 
