@@ -8,6 +8,7 @@ import 'package:artitecture/src/presentation/view/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:logger/logger.dart';
 
 class MyApp extends HookWidget {
@@ -42,15 +43,20 @@ class MyApp extends HookWidget {
       return subscription.cancel;
     }, [_appController]);
 
-    return GetMaterialApp(
-        title: kMaterialAppTitle,
-        theme: Apptheme.light,
-        getPages: AppRoutes.routes,
-        home: snapshot.hasData == false
-            ? const SplashView()
-            : snapshot.hasError
-            ? const SignInPage()
-            : AppRoutes.getPage(snapshot.data)
+    return GlobalLoaderOverlay(
+      overlayColor: Colors.black,
+      overlayOpacity: 0.3,
+      child: GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: kMaterialAppTitle,
+          theme: Apptheme.light,
+          getPages: AppRoutes.routes,
+          home: snapshot.hasData == false
+              ? const SplashView()
+              : snapshot.hasError
+              ? const SignInPage()
+              : AppRoutes.getPage(snapshot.data)
+      ),
     );
   }
 

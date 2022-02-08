@@ -19,7 +19,7 @@ class SignUpPage extends HookWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Sign Up Page"),
+        title: const Text("회원가입"),
       ),
       body: SafeArea(
         child: Container(
@@ -35,10 +35,10 @@ class SignUpPage extends HookWidget {
                   children: [
                     TextFormField(
                       controller: _emailController,
-                      decoration: const InputDecoration(labelText: "Enter your email"),
+                      decoration: const InputDecoration(labelText: "이메일을 입력해주세요"),
                       validator: (String? value) {
                         if (!EmailValidator.validate(value ?? "")) {
-                          return "Please input correct email";
+                          return "이메일을 입력해주세요";
                         }
                         return null;
                       },
@@ -46,10 +46,10 @@ class SignUpPage extends HookWidget {
                     TextFormField(
                       controller: _passwordController,
                       obscureText: true,
-                      decoration: const InputDecoration(labelText: "Enter your password"),
+                      decoration: const InputDecoration(labelText: "비밀번호를 입력해주세요"),
                       validator: (String? value) {
                         if (value == null || value.isEmpty) {
-                          return "Please input password";
+                          return "비밀번호를 입력해주세요";
                         }
                         return null;
                       },
@@ -57,13 +57,13 @@ class SignUpPage extends HookWidget {
                     TextFormField(
                       controller: _passwordConfirmController,
                       obscureText: true,
-                      decoration: const InputDecoration(labelText: "Enter your password again"),
+                      decoration: const InputDecoration(labelText: "비밀번호를 다시 입력해주세요"),
                       validator: (String? value) {
                         if (value == null || value.isEmpty) {
-                          return "Please input password";
+                          return "비밀번호를 입력해주세요";
                         }
                         if (value != _passwordController.text) {
-                          return "Please input same password";
+                          return "같은 비밀번호를 입력해주세요";
                         }
                         return null;
                       },
@@ -76,11 +76,7 @@ class SignUpPage extends HookWidget {
               ),
               InkWell(
                 child: Container(
-                  child: Obx(() => _authController.isLoading.value
-                      ? const CircularProgressIndicator(color: primaryColor)
-                      : const Text(
-                          'Sign up',
-                        )),
+                  child: const Text('가입하기'),
                   width: double.infinity,
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 12),

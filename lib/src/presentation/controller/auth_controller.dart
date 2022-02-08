@@ -25,9 +25,9 @@ class AuthController extends GetxController {
     if (response.isSuccess()) {
       _getUser();
     } else {
+      isLoading.value = false;
       Get.snackbar("로그인에 실패하였습니다", "이메일과 비밀번호를 확인해주세요");
     }
-    isLoading.value = false;
   }
 
   void signUp(String email, String password) async {
@@ -48,10 +48,12 @@ class AuthController extends GetxController {
   }
 
   void signInWithGoogle() async {
+    isLoading.value = true;
     var response = await _googleSignInUseCase();
     if (response.isSuccess()) {
       _getUser();
     } else {
+      isLoading.value = false;
       Get.snackbar("구글 로그인에 실패하였습니다", "네트워크 상태를 확인 후 다시 시도해주세요");
     }
   }
@@ -68,5 +70,6 @@ class AuthController extends GetxController {
     } else {
       Get.snackbar("로그인에 실패하였습니다", "유저 정보가 없습니다");
     }
+    isLoading.value = false;
   }
 }

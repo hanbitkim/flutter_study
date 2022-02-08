@@ -6,6 +6,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 class SignInPage extends HookWidget {
   const SignInPage({Key? key}) : super(key: key);
@@ -16,6 +17,17 @@ class SignInPage extends HookWidget {
     final TextEditingController _emailController = useTextEditingController();
     final TextEditingController _passwordController = useTextEditingController();
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+    useEffect(() {
+      final subscription = _authController.isLoading.listen((value) {
+        if (value) {
+          context.loaderOverlay.show();
+        } else {
+          context.loaderOverlay.hide();
+        }
+      });
+      return subscription.cancel;
+    }, [_authController]);
 
     return Scaffold(
       body: SafeArea(
@@ -31,10 +43,10 @@ class SignInPage extends HookWidget {
                     children: [
                       TextFormField(
                         controller: _emailController,
-                        decoration: const InputDecoration(labelText: "Enter your email"),
+                        decoration: const InputDecoration(labelText: "이메일을 입력해주세요"),
                         validator: (String? value) {
                           if (!EmailValidator.validate(value ?? "")) {
-                            return "Please input correct email";
+                            return "이메일을 입력해주세요";
                           }
                           return null;
                         },
@@ -42,10 +54,10 @@ class SignInPage extends HookWidget {
                       TextFormField(
                         controller: _passwordController,
                         obscureText: true,
-                        decoration: const InputDecoration(labelText: "Enter your password"),
+                        decoration: const InputDecoration(labelText: "비밀번호를 입력해주세요"),
                         validator: (String? value) {
                           if (value == null || value.isEmpty) {
-                            return "Please input password";
+                            return "비밀번호를 입력해주세요";
                           }
                           return null;
                         },
@@ -57,13 +69,7 @@ class SignInPage extends HookWidget {
               ),
               InkWell(
                 child: Container(
-                  child: Obx(() => _authController.isLoading.value
-                      ? const CircularProgressIndicator(
-                          color: primaryColor,
-                        )
-                      : const Text(
-                          'Email login',
-                        )),
+                  child: const Text('이메일로 로그인'),
                   width: double.infinity,
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 12),
@@ -87,7 +93,7 @@ class SignInPage extends HookWidget {
               InkWell(
                 child: Container(
                   child: const Text(
-                    'Google login',
+                    '구글 계정으로 로그인',
                   ),
                   width: double.infinity,
                   alignment: Alignment.center,
@@ -112,7 +118,7 @@ class SignInPage extends HookWidget {
                 children: [
                   Container(
                     child: const Text(
-                      'Forget password?',
+                      '비밀번호를 잊으셨나요?',
                     ),
                     padding: const EdgeInsets.symmetric(vertical: 8),
                   ),
@@ -123,7 +129,7 @@ class SignInPage extends HookWidget {
                     },
                     child: Container(
                       child: const Text(
-                        ' Find password.',
+                        '비밀번호 찾기',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
@@ -138,7 +144,7 @@ class SignInPage extends HookWidget {
                 children: [
                   Container(
                     child: const Text(
-                      'Don\'t have an account?',
+                      '계정이 없으신가요?',
                     ),
                     padding: const EdgeInsets.symmetric(vertical: 8),
                   ),
@@ -149,7 +155,7 @@ class SignInPage extends HookWidget {
                     },
                     child: Container(
                       child: const Text(
-                        ' Signup.',
+                        '가입하기',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
