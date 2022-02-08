@@ -5,6 +5,7 @@ import 'package:artitecture/src/presentation/view/main/main_view.dart';
 import 'package:artitecture/src/presentation/view/auth/sign_up_view.dart';
 import 'package:artitecture/src/presentation/view/photo/gallery.dart';
 import 'package:artitecture/src/presentation/view/profile/edit_profile_view.dart';
+import 'package:artitecture/src/presentation/view/setting/setting_page.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
@@ -15,6 +16,7 @@ const String editProfileRoute = "/editProfile";
 const String mainRoute = "/main";
 const String articleWriteRoute = "/articleWrite";
 const String galleryRoute = "/gallery";
+const String settingRoute = "/setting";
 
 class AppRoutes {
   static List<GetPage> get routes {
@@ -25,7 +27,8 @@ class AppRoutes {
       GetPage(name: editProfileRoute, page: () => const EditProfilePage()),
       GetPage(name: mainRoute, page: () => const MainPage()),
       GetPage(name: articleWriteRoute, page: () => const ArticleWritePage()),
-      GetPage(name: galleryRoute, page: () => const GalleryPage())
+      GetPage(name: galleryRoute, page: () => const GalleryPage()),
+      GetPage(name: settingRoute, page: () => const SettingPage())
     ];
   }
 

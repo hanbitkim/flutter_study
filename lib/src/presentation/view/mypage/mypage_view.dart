@@ -1,6 +1,7 @@
 import 'package:artitecture/src/core/global.dart';
 import 'package:artitecture/src/injector.dart';
 import 'package:artitecture/src/presentation/controller/mypage_controller.dart';
+import 'package:artitecture/src/presentation/route.dart';
 import 'package:artitecture/src/presentation/util/dialog_helper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,13 @@ class MyPageView extends StatelessWidget {
 
     return Obx(() => Column(
         children: [
+          Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                  onPressed: () => Get.toNamed(settingRoute),
+                  icon: const Icon(Icons.settings, size: 30)
+              )
+          ),
           Row(
             children: [
               Stack(
@@ -37,7 +45,9 @@ class MyPageView extends StatelessWidget {
                       child: getCameraButton(context)
                   )
                 ],
-              )
+              ),
+              const SizedBox(width: 20),
+              Text(user.value?.nickname ?? '', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold))
             ],
           )
         ]
