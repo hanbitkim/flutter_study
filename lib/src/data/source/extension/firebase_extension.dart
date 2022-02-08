@@ -79,8 +79,8 @@ extension FirebaseExtension on DocumentSnapshot {
 
   Author toAuthor() {
     return Author(
-        id: getSafety('author_id'),
-        nickname: getSafety('nickname'),
+        id: getSafety('author_id') ?? '',
+        nickname: getSafety('nickname') ?? '',
         profileUrl: getSafety('profile_url')
     );
   }

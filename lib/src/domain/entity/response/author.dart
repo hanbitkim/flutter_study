@@ -6,8 +6,8 @@ part 'author.g.dart';
 @freezed
 class Author with _$Author {
   factory Author({
-    required String? id,
-    required String? nickname,
+    required String id,
+    required String nickname,
     required String? profileUrl
   }) = _Author;
 

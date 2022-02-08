@@ -7,8 +7,8 @@ part of 'author.dart';
 // **************************************************************************
 
 _$_Author _$$_AuthorFromJson(Map<String, dynamic> json) => _$_Author(
-      id: json['id'] as String?,
-      nickname: json['nickname'] as String?,
+      id: json['id'] as String,
+      nickname: json['nickname'] as String,
       profileUrl: json['profileUrl'] as String?,
     );
 

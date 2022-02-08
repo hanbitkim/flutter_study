@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:artitecture/src/domain/entity/response/category.dart';
 import 'package:artitecture/src/injector.dart';
@@ -56,8 +57,14 @@ class _BoardViewState extends State<BoardView> with AutomaticKeepAliveClientMixi
         controller: BoardController.get(widget._category.name).scrollController.value,
         slivers: [
           SliverList(
-              delegate: SliverChildBuilderDelegate((context, index) => ArticleItemView(BoardController.get(widget._category.name).articles[index]),
-                  childCount: BoardController.get(widget._category.name).articles.length
+              delegate: SliverChildBuilderDelegate((context, index) {
+                if (index.isEven) {
+                  final int itemIndex = index ~/ 2;
+                  return ArticleItemView(BoardController.get(widget._category.name).articles[itemIndex]);
+                }
+                return Container(height: 10, color: Colors.grey.shade200);
+                },
+                childCount: max(0, BoardController.get(widget._category.name).articles.length * 2 - 1),
               )
           )
         ]

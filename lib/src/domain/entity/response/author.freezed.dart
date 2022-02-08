@@ -22,8 +22,8 @@ class _$AuthorTearOff {
   const _$AuthorTearOff();
 
   _Author call(
-      {required String? id,
-      required String? nickname,
+      {required String id,
+      required String nickname,
       required String? profileUrl}) {
     return _Author(
       id: id,
@@ -42,8 +42,8 @@ const $Author = _$AuthorTearOff();
 
 /// @nodoc
 mixin _$Author {
-  String? get id => throw _privateConstructorUsedError;
-  String? get nickname => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  String get nickname => throw _privateConstructorUsedError;
   String? get profileUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -55,7 +55,7 @@ mixin _$Author {
 abstract class $AuthorCopyWith<$Res> {
   factory $AuthorCopyWith(Author value, $Res Function(Author) then) =
       _$AuthorCopyWithImpl<$Res>;
-  $Res call({String? id, String? nickname, String? profileUrl});
+  $Res call({String id, String nickname, String? profileUrl});
 }
 
 /// @nodoc
@@ -76,11 +76,11 @@ class _$AuthorCopyWithImpl<$Res> implements $AuthorCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       nickname: nickname == freezed
           ? _value.nickname
           : nickname // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       profileUrl: profileUrl == freezed
           ? _value.profileUrl
           : profileUrl // ignore: cast_nullable_to_non_nullable
@@ -94,7 +94,7 @@ abstract class _$AuthorCopyWith<$Res> implements $AuthorCopyWith<$Res> {
   factory _$AuthorCopyWith(_Author value, $Res Function(_Author) then) =
       __$AuthorCopyWithImpl<$Res>;
   @override
-  $Res call({String? id, String? nickname, String? profileUrl});
+  $Res call({String id, String nickname, String? profileUrl});
 }
 
 /// @nodoc
@@ -116,11 +116,11 @@ class __$AuthorCopyWithImpl<$Res> extends _$AuthorCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       nickname: nickname == freezed
           ? _value.nickname
           : nickname // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       profileUrl: profileUrl == freezed
           ? _value.profileUrl
           : profileUrl // ignore: cast_nullable_to_non_nullable
@@ -139,9 +139,9 @@ class _$_Author implements _Author {
       _$$_AuthorFromJson(json);
 
   @override
-  final String? id;
+  final String id;
   @override
-  final String? nickname;
+  final String nickname;
   @override
   final String? profileUrl;
 
@@ -181,16 +181,16 @@ class _$_Author implements _Author {
 
 abstract class _Author implements Author {
   factory _Author(
-      {required String? id,
-      required String? nickname,
+      {required String id,
+      required String nickname,
       required String? profileUrl}) = _$_Author;
 
   factory _Author.fromJson(Map<String, dynamic> json) = _$_Author.fromJson;
 
   @override
-  String? get id;
+  String get id;
   @override
-  String? get nickname;
+  String get nickname;
   @override
   String? get profileUrl;
   @override
