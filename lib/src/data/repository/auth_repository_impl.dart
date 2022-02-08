@@ -37,7 +37,7 @@ class AuthRepositoryImpl extends AuthRepository {
     final GoogleSignIn googleSignIn = GoogleSignIn();
     final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
     if (googleSignInAccount == null) {
-      return Failure(DataError(error, "failed to get google account"));
+      return Failure(DataError(cancelGoogleSignIn, "failed to get google account"));
     }
     final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
     return firebaseAuthApi.googleSignIn(googleSignInAuthentication.accessToken, googleSignInAuthentication.idToken);

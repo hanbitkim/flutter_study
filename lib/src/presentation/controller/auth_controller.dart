@@ -54,7 +54,9 @@ class AuthController extends GetxController {
       _getUser();
     } else {
       isLoading.value = false;
-      Get.snackbar("구글 로그인에 실패하였습니다", "네트워크 상태를 확인 후 다시 시도해주세요");
+      if (response.error?.code != cancelGoogleSignIn) {
+        Get.snackbar("구글 로그인에 실패하였습니다", "네트워크 상태를 확인 후 다시 시도해주세요");
+      }
     }
   }
 

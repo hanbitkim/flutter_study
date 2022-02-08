@@ -1,4 +1,4 @@
-import 'package:artitecture/src/presentation/view/auth/reset_password_view.dart';
+import 'package:artitecture/src/presentation/view/auth/find_password_view.dart';
 import 'package:artitecture/src/presentation/view/auth/sign_in_view.dart';
 import 'package:artitecture/src/presentation/view/community/article_write.dart';
 import 'package:artitecture/src/presentation/view/main/main_view.dart';
@@ -23,7 +23,7 @@ class AppRoutes {
     return [
       GetPage(name: signInRoute, page: () => const SignInPage()),
       GetPage(name: signUpRoute, page: () => const SignUpPage()),
-      GetPage(name: findPasswordRoute, page: () => const ResetPasswordPage()),
+      GetPage(name: findPasswordRoute, page: () => const FindPasswordPage()),
       GetPage(name: editProfileRoute, page: () => const EditProfilePage()),
       GetPage(name: mainRoute, page: () => const MainPage()),
       GetPage(name: articleWriteRoute, page: () => const ArticleWritePage()),

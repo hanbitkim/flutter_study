@@ -2,12 +2,12 @@ import 'package:artitecture/src/core/resources/error_code.dart';
 import 'package:artitecture/src/domain/usecase/reset_password_usecase.dart';
 import 'package:get/get.dart';
 
-class ResetPasswordController extends GetxController {
-  static ResetPasswordController get to => Get.find();
+class FindPasswordController extends GetxController {
+  static FindPasswordController get to => Get.find();
 
   final ResetPasswordUseCase resetPasswordUseCase;
 
-  ResetPasswordController(this.resetPasswordUseCase);
+  FindPasswordController(this.resetPasswordUseCase);
 
   void sendResetPasswordEmail(String email) async {
     var response = await resetPasswordUseCase(email);

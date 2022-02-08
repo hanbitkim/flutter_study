@@ -1,22 +1,22 @@
 import 'package:artitecture/src/core/utils/colors.dart';
 import 'package:artitecture/src/injector.dart';
-import 'package:artitecture/src/presentation/controller/reset_password_controller.dart';
+import 'package:artitecture/src/presentation/controller/find_password_controller.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 
-class ResetPasswordPage extends HookWidget {
-  const ResetPasswordPage({Key? key}) : super(key: key);
+class FindPasswordPage extends HookWidget {
+  const FindPasswordPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final ResetPasswordController _resetPasswordController = Get.put(injector());
+    final FindPasswordController _resetPasswordController = Get.put(injector());
     final TextEditingController _emailController = useTextEditingController();
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Reset password")),
+      appBar: AppBar(title: const Text("비밀번호 찾기")),
       body: SafeArea(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -30,10 +30,10 @@ class ResetPasswordPage extends HookWidget {
                     children: [
                       TextFormField(
                         controller: _emailController,
-                        decoration: const InputDecoration(labelText: "Enter your email"),
+                        decoration: const InputDecoration(labelText: "이메일을 입력해주세요"),
                         validator: (String? value) {
                           if (!EmailValidator.validate(value ?? "")) {
-                            return "Please input correct email";
+                            return "이메일을 입력해주세요";
                           }
                           return null;
                         },
@@ -45,9 +45,7 @@ class ResetPasswordPage extends HookWidget {
               ),
               InkWell(
                 child: Container(
-                  child: const Text(
-                    'Send an email to reset password',
-                  ),
+                  child: const Text('이메일로 비밀번호 받기'),
                   width: double.infinity,
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 12),

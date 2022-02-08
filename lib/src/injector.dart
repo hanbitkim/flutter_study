@@ -27,7 +27,7 @@ import 'package:artitecture/src/presentation/controller/edit_profile_controller.
 import 'package:artitecture/src/presentation/controller/board_controller.dart';
 import 'package:artitecture/src/presentation/controller/main_controller.dart';
 import 'package:artitecture/src/presentation/controller/mypage_controller.dart';
-import 'package:artitecture/src/presentation/controller/reset_password_controller.dart';
+import 'package:artitecture/src/presentation/controller/find_password_controller.dart';
 import 'package:artitecture/src/presentation/controller/setting_controller.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
@@ -72,7 +72,7 @@ Future<void> initializeDependencies() async {
   // Controllers
   injector.registerFactory<AppController>(() => AppController(injector(), injector(), injector(), injector()));
   injector.registerFactory<AuthController>(() => AuthController(injector(), injector(), injector(), injector()));
-  injector.registerFactory<ResetPasswordController>(() => ResetPasswordController(injector()));
+  injector.registerFactory<FindPasswordController>(() => FindPasswordController(injector()));
   injector.registerFactory<EditProfileController>(() => EditProfileController(injector(), injector()));
   injector.registerFactory<MainController>(() => MainController());
   injector.registerFactory<BoardController>(() => BoardController(injector()));
