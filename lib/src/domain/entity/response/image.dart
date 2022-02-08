@@ -6,9 +6,9 @@ part 'image.g.dart';
 @freezed
 class Image with _$Image {
   factory Image({
-    required String? id,
-    required String? thumbnailUrl,
-    required String? imageUrl,
+    required String id,
+    required String thumbnailUrl,
+    required String imageUrl,
   }) = _Image;
 
   factory Image.fromJson(Map<String, dynamic> json) => _$ImageFromJson(json);

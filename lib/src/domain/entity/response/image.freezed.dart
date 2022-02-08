@@ -22,9 +22,9 @@ class _$ImageTearOff {
   const _$ImageTearOff();
 
   _Image call(
-      {required String? id,
-      required String? thumbnailUrl,
-      required String? imageUrl}) {
+      {required String id,
+      required String thumbnailUrl,
+      required String imageUrl}) {
     return _Image(
       id: id,
       thumbnailUrl: thumbnailUrl,
@@ -42,9 +42,9 @@ const $Image = _$ImageTearOff();
 
 /// @nodoc
 mixin _$Image {
-  String? get id => throw _privateConstructorUsedError;
-  String? get thumbnailUrl => throw _privateConstructorUsedError;
-  String? get imageUrl => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  String get thumbnailUrl => throw _privateConstructorUsedError;
+  String get imageUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -55,7 +55,7 @@ mixin _$Image {
 abstract class $ImageCopyWith<$Res> {
   factory $ImageCopyWith(Image value, $Res Function(Image) then) =
       _$ImageCopyWithImpl<$Res>;
-  $Res call({String? id, String? thumbnailUrl, String? imageUrl});
+  $Res call({String id, String thumbnailUrl, String imageUrl});
 }
 
 /// @nodoc
@@ -76,15 +76,15 @@ class _$ImageCopyWithImpl<$Res> implements $ImageCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       thumbnailUrl: thumbnailUrl == freezed
           ? _value.thumbnailUrl
           : thumbnailUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       imageUrl: imageUrl == freezed
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ));
   }
 }
@@ -94,7 +94,7 @@ abstract class _$ImageCopyWith<$Res> implements $ImageCopyWith<$Res> {
   factory _$ImageCopyWith(_Image value, $Res Function(_Image) then) =
       __$ImageCopyWithImpl<$Res>;
   @override
-  $Res call({String? id, String? thumbnailUrl, String? imageUrl});
+  $Res call({String id, String thumbnailUrl, String imageUrl});
 }
 
 /// @nodoc
@@ -116,15 +116,15 @@ class __$ImageCopyWithImpl<$Res> extends _$ImageCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       thumbnailUrl: thumbnailUrl == freezed
           ? _value.thumbnailUrl
           : thumbnailUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       imageUrl: imageUrl == freezed
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ));
   }
 }
@@ -139,11 +139,11 @@ class _$_Image implements _Image {
       _$$_ImageFromJson(json);
 
   @override
-  final String? id;
+  final String id;
   @override
-  final String? thumbnailUrl;
+  final String thumbnailUrl;
   @override
-  final String? imageUrl;
+  final String imageUrl;
 
   @override
   String toString() {
@@ -181,18 +181,18 @@ class _$_Image implements _Image {
 
 abstract class _Image implements Image {
   factory _Image(
-      {required String? id,
-      required String? thumbnailUrl,
-      required String? imageUrl}) = _$_Image;
+      {required String id,
+      required String thumbnailUrl,
+      required String imageUrl}) = _$_Image;
 
   factory _Image.fromJson(Map<String, dynamic> json) = _$_Image.fromJson;
 
   @override
-  String? get id;
+  String get id;
   @override
-  String? get thumbnailUrl;
+  String get thumbnailUrl;
   @override
-  String? get imageUrl;
+  String get imageUrl;
   @override
   @JsonKey(ignore: true)
   _$ImageCopyWith<_Image> get copyWith => throw _privateConstructorUsedError;

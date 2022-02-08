@@ -1,9 +1,11 @@
 import 'package:artitecture/src/core/utils/text_utils.dart';
 import 'package:artitecture/src/domain/entity/response/article.dart';
 import 'package:artitecture/src/domain/entity/response/image.dart' as model;
+import 'package:artitecture/src/presentation/route.dart';
+import 'package:artitecture/src/presentation/view/photo/gallery.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:get/get.dart';
 
 class ArticleItemView extends StatelessWidget {
   final Article _article;
@@ -36,7 +38,7 @@ class ArticleItemView extends StatelessWidget {
               _article.images.isNotEmpty
                   ? Column(children: [
                     const SizedBox(height: 14),
-                    getImageView(_article.images)
+                    getImageView(_article.images.map((e) => e.imageUrl).toList())
                   ])
                   : Container()
               ,
@@ -92,25 +94,30 @@ class ArticleItemView extends StatelessWidget {
     );
   }
   
-  Widget getImageView(List<model.Image> images) {
-    return Stack(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(8.0),
-          child: AspectRatio(
-            aspectRatio: 16 / 9,
-            child: CachedNetworkImage(
-              placeholder: (context, url) => const Icon(Icons.photo),
-              errorWidget: (context, url, error) => const Icon(Icons.photo),
-              fit: BoxFit.cover,
-              imageUrl: images.first.imageUrl ?? ''
-            )
+  Widget getImageView(List<String> images) {
+    return InkWell(
+      child: Stack(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8.0),
+            child: AspectRatio(
+              aspectRatio: 16 / 9,
+              child: CachedNetworkImage(
+                placeholder: (context, url) => const Icon(Icons.photo),
+                errorWidget: (context, url, error) => const Icon(Icons.photo),
+                fit: BoxFit.cover,
+                imageUrl: images.first
+              )
+            ),
           ),
-        ),
-        images.length > 1
-            ? Text('+ ${images.length - 1}')
-            : Container()
-      ],
+          images.length > 1
+              ? Text('+ ${images.length - 1}')
+              : Container()
+        ],
+      ),
+      onTap: () {
+        Get.toNamed(galleryRoute, arguments: GalleryParams(images: images, index: 0));
+      },
     );
   }
 }

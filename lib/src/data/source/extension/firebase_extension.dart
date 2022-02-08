@@ -88,8 +88,8 @@ extension FirebaseExtension on DocumentSnapshot {
   Image toImage() {
     return Image(
         id: id,
-        thumbnailUrl: getSafety('thumbnail_url'),
-        imageUrl: getSafety('image_url')
+        thumbnailUrl: getSafety('thumbnail_url') ?? '',
+        imageUrl: getSafety('image_url') ?? ''
     );
   }
 }
