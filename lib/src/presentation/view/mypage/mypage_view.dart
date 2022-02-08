@@ -17,16 +17,19 @@ class MyPageView extends StatelessWidget {
         children: [
           Row(
             children: [
-              user.value?.profileUrl == null
-              ? const CircleAvatar(
-                  radius: 50,
-                  child: Icon(Icons.account_circle, size: 100),
-                  backgroundColor: Colors.transparent)
-              : Stack(
+              Stack(
                 children: [
-                  CircleAvatar(
-                    radius: 50.0,
-                    backgroundImage: CachedNetworkImageProvider(user.value?.profileUrl ?? ''),
+                  CachedNetworkImage(
+                    placeholder: (context, url) => const Icon(Icons.account_circle, size: 100),
+                    errorWidget: (context, url, error) => const Icon(Icons.account_circle, size: 100),
+                    fit: BoxFit.contain,
+                    imageUrl: user.value?.profileUrl ?? '',
+                    imageBuilder: (context, imageProvider) {
+                      return CircleAvatar(
+                        radius: 50,
+                        backgroundImage: imageProvider,
+                      );
+                    },
                   ),
                   Positioned(
                       top: 55,
@@ -34,7 +37,7 @@ class MyPageView extends StatelessWidget {
                       child: getCameraButton(context)
                   )
                 ],
-              ),
+              )
             ],
           )
         ]
