@@ -37,9 +37,9 @@ class ArticleItemView extends StatelessWidget {
               ),
               _article.images.isNotEmpty
                   ? Column(children: [
-                    const SizedBox(height: 14),
-                    getImageView(_article.images.map((e) => e.imageUrl).toList())
-                  ])
+                const SizedBox(height: 14),
+                getImageViews(_article.images.map((e) => e.imageUrl).toList())
+              ])
                   : Container()
               ,
               const SizedBox(
@@ -82,8 +82,8 @@ class ArticleItemView extends StatelessWidget {
                     const Icon(Icons.chat_bubble_outline),
                     const SizedBox(width: 8),
                     _article.commentCount == 0
-                    ? const Text('댓글쓰기')
-                    : Text('답변 ${_article.commentCount}')
+                        ? const Text('댓글쓰기')
+                        : Text('답변 ${_article.commentCount}')
                   ],
                 ),
               )
@@ -93,31 +93,67 @@ class ArticleItemView extends StatelessWidget {
       ],
     );
   }
-  
-  Widget getImageView(List<String> images) {
-    return InkWell(
-      child: Stack(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8.0),
-            child: AspectRatio(
-              aspectRatio: 16 / 9,
-              child: CachedNetworkImage(
-                placeholder: (context, url) => const Icon(Icons.photo),
-                errorWidget: (context, url, error) => const Icon(Icons.photo),
-                fit: BoxFit.cover,
-                imageUrl: images.first
-              )
+
+  Widget getImageViews(List<String> images) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8.0),
+      child: AspectRatio(
+          aspectRatio: 16 / 9,
+          child: images.length == 1
+              ? getImageView(images, 0)
+              : images.length == 2
+              ? Row(children: [
+            Flexible(
+                flex: 1,
+                fit: FlexFit.tight,
+                child: getImageView(images, 0)
             ),
-          ),
-          images.length > 1
-              ? Text('+ ${images.length - 1}')
-              : Container()
-        ],
+            const SizedBox(width: 4),
+            Flexible(
+                flex: 1,
+                fit: FlexFit.tight,
+                child: getImageView(images, 1)
+            )
+          ],
+          ) : Row(
+            children: [
+              Flexible(
+                  flex: 2,
+                  fit: FlexFit.tight,
+                  child: getImageView(images, 0)
+              ),
+              const SizedBox(width: 4),
+              Flexible(
+                  flex: 1,
+                  fit: FlexFit.tight,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Expanded(
+                          child: getImageView(images, 1)
+                      ),
+                      const SizedBox(height: 4),
+                      Expanded(
+                          child: getImageView(images, 2)
+                      )
+                    ],
+                  )
+              ),
+            ],
+          )
       ),
-      onTap: () {
-        Get.toNamed(galleryRoute, arguments: GalleryParams(images: images, index: 0));
-      },
+    );
+  }
+
+  Widget getImageView(List<String> images, int index) {
+    return InkWell(
+      child: CachedNetworkImage(
+          placeholder: (context, url) => const Icon(Icons.photo),
+          errorWidget: (context, url, error) => const Icon(Icons.photo),
+          fit: BoxFit.cover,
+          imageUrl: images[index]
+      ),
+      onTap: () => Get.toNamed(galleryRoute, arguments: GalleryParams(images: images, index: index)),
     );
   }
 }
