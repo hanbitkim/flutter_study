@@ -134,7 +134,27 @@ class ArticleItemView extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Expanded(
-                          child: getImageView(images, 2)
+                          child: images.length > 3 ?
+                          Stack(
+                              children: [
+                                Positioned.fill(
+                                    child: getImageView(images, 2)
+                                ),
+                                IgnorePointer(
+                                  child: Container(
+                                      color: Colors.black26
+                                  ),
+                                ),
+                                IgnorePointer(
+                                  child: Positioned.fill(
+                                      child: Align(
+                                          alignment: Alignment.center,
+                                          child: Text('+ ${images.length - 3}', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20))
+                                      )
+                                  ),
+                                )
+                              ]) :
+                          getImageView(images, 2)
                       )
                     ],
                   )
@@ -145,7 +165,7 @@ class ArticleItemView extends StatelessWidget {
     );
   }
 
-  Widget getImageView(List<String> images, int index, {bool hasMore = false}) {
+  Widget getImageView(List<String> images, int index) {
     return InkWell(
       child: CachedNetworkImage(
           placeholder: (context, url) => const Icon(Icons.photo),
