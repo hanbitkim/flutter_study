@@ -145,7 +145,7 @@ class ArticleItemView extends StatelessWidget {
     );
   }
 
-  Widget getImageView(List<String> images, int index) {
+  Widget getImageView(List<String> images, int index, {bool hasMore = false}) {
     return InkWell(
       child: CachedNetworkImage(
           placeholder: (context, url) => const Icon(Icons.photo),

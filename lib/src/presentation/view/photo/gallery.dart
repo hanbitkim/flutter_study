@@ -17,12 +17,16 @@ class GalleryPage extends StatefulWidget {
 class _GalleryPageState extends State<GalleryPage> {
   late List<String> _images;
   late int _index;
+  late PageController _pageController;
 
   @override
   void initState() {
     final _params = Get.arguments as GalleryParams;
     _images = _params.images;
     _index = _params.index;
+    _pageController = PageController(
+      initialPage: _params.index
+    );
     super.initState();
   }
 
@@ -35,6 +39,7 @@ class _GalleryPageState extends State<GalleryPage> {
             scrollPhysics: const BouncingScrollPhysics(),
             builder: (context, index) => _buildItem(_images[index], index),
             itemCount: _images.length,
+            pageController: _pageController,
             onPageChanged: (index) => setState(() {
               _index = index;
             }),
