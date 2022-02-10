@@ -6,6 +6,7 @@ import 'package:artitecture/src/domain/entity/response/comment.dart';
 import 'package:artitecture/src/domain/entity/response/image.dart';
 import 'package:artitecture/src/domain/entity/response/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:logger/logger.dart';
 
 extension FirebaseExtension on DocumentSnapshot {
   dynamic getSafety(String field) {
@@ -25,29 +26,35 @@ extension FirebaseExtension on DocumentSnapshot {
 
   AppVersion toAppVersion() {
     return AppVersion(
-        requiredVersion: get('required_version'),
-        requiredChanges: get('required_changes'),
-        latestVersion: get('latest_version'),
-        latestChanges: get('latest_changes')
+      requiredVersion: get('required_version'),
+      requiredChanges: get('required_changes'),
+      latestVersion: get('latest_version'),
+      latestChanges: get('latest_changes'),
     );
   }
 
-  User toUser(List<Category> categories) {
+  User toUser() {
+    final List<Category> categories = List.empty(growable: true);
+    final categoriesData = getSafety('categories');
+    Logger().d('category = ${categoriesData?.toString()}');
+    if (categoriesData != null) {
+      for (var element in List.from(categoriesData)) {
+        Logger().d('category element = ${element.toString()}');
+        categories.add(Category(id: element['category_id'] ?? '', name: element['category_name'] ?? ''));
+      }
+    }
     return User(
-        id: id,
-        nickname: getSafety('nickname'),
-        email: getSafety('email'),
-        profileUrl: getSafety('profile_url'),
-        isApproved: getSafety('is_approved'),
-        categories: categories
+      id: id,
+      nickname: getSafety('nickname'),
+      email: getSafety('email'),
+      profileUrl: getSafety('profile_url'),
+      isApproved: getSafety('is_approved'),
+      categories: categories,
     );
   }
 
   Category toCategory() {
-    return Category(
-        id: id,
-        name: getSafety('category_name')
-    );
+    return Category(id: id, name: getSafety('category_name'));
   }
 
   Article toArticle(List<Image> images, Author author) {
@@ -73,23 +80,22 @@ extension FirebaseExtension on DocumentSnapshot {
         isReported: getSafety('is_reported'),
         createdDate: getSafety('created_date'),
         updatedDate: getSafety('updated_date'),
-        author: author
-    );
+        author: author);
   }
 
   Author toAuthor() {
     return Author(
-        id: getSafety('author_id') ?? '',
-        nickname: getSafety('nickname') ?? '',
-        profileUrl: getSafety('profile_url')
+      id: getSafety('author_id') ?? '',
+      nickname: getSafety('nickname') ?? '',
+      profileUrl: getSafety('profile_url'),
     );
   }
 
   Image toImage() {
     return Image(
-        id: id,
-        thumbnailUrl: getSafety('thumbnail_url') ?? '',
-        imageUrl: getSafety('image_url') ?? ''
+      id: id,
+      thumbnailUrl: getSafety('thumbnail_url') ?? '',
+      imageUrl: getSafety('image_url') ?? '',
     );
   }
 }

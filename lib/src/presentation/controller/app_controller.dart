@@ -10,7 +10,6 @@ import 'package:artitecture/src/presentation/route.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:launch_review/launch_review.dart';
-import 'package:logger/logger.dart';
 import 'package:package_info/package_info.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:version/version.dart';
@@ -24,9 +23,11 @@ class AppController extends GetxController {
   final SecureStorage _secureStorage;
 
   final PublishSubject<Completer<bool?>> _showRequiredUpdateDialog = PublishSubject();
+
   PublishSubject<Completer<bool?>> get showRequiredUpdateDialog => _showRequiredUpdateDialog;
 
   final PublishSubject<Completer<bool?>> _showRecommendUpdateDialog = PublishSubject();
+
   PublishSubject<Completer<bool?>> get showRecommendUpdateDialog => _showRecommendUpdateDialog;
 
   late final Future<String> isInitialized = initialize();
@@ -37,7 +38,6 @@ class AppController extends GetxController {
     var response = await _checkAppVersionUseCase();
     if (response.isSuccess()) {
       var version = await PackageInfo.fromPlatform();
-      Logger().d("appVersion = ${response.getData()}, currentVersion = ${version.version}");
       var currentVersion = Version.parse(version.version);
       if (currentVersion < Version.parse(response.getData().requiredVersion)) {
         final completer = Completer<bool>();

@@ -35,7 +35,10 @@ class FirebaseApi {
     try {
       Auth.UserCredential userCredential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       Logger().d("signUp success = ${userCredential.toString()}");
-      await _firestore.collection(kUserCollectionKey).doc(userCredential.user?.uid).set({"email": userCredential.user?.email, "profile_url": userCredential.user?.photoURL, "created_date": FieldValue.serverTimestamp()});
+      await _firestore
+          .collection(kUserCollectionKey)
+          .doc(userCredential.user?.uid)
+          .set({"email": userCredential.user?.email, "profile_url": userCredential.user?.photoURL, "created_date": FieldValue.serverTimestamp()});
       return const Success(null);
     } on FirebaseException catch (e) {
       Logger().d("signUp exception = ${e.code}");
@@ -96,11 +99,10 @@ class FirebaseApi {
 
   Future<ResultWrapper<User?>> getUser() async {
     return ResultHandler<User?>().invoke(() async {
-      final userDocument = await _firestore.collection(kUserCollectionKey).doc(_auth.currentUser?.uid).get();
       final token = await _messaging.getToken();
-      userDocument.reference.set({"push_token": token}, SetOptions(merge: true));
-      final categories = await _firestore.collection(kUserCategoryCollectionKey).where('user_id', isEqualTo: _auth.currentUser?.uid).get();
-      return userDocument.toUser(categories.docs.map((e) => e.toCategory()).toList());
+      final userDocument = await _firestore.collection(kUserCollectionKey).doc(_auth.currentUser?.uid).get();
+      await userDocument.reference.set({"push_token": token}, SetOptions(merge: true));
+      return userDocument.toUser();
     });
   }
 
@@ -110,14 +112,10 @@ class FirebaseApi {
       if (checkNickname.docs.isNotEmpty) {
         return Failure(DataError(nicknameAlreadyInUseError, 'nickname is already in use'));
       }
-      final token = await _messaging.getToken();
-      WriteBatch writeBatch = _firestore.batch();
-      writeBatch.set(_firestore.collection(kUserCollectionKey).doc(_auth.currentUser?.uid), {"nickname": param.nickname, "push_token": token, "is_approved": true}, SetOptions(merge: true));
-      for (var category in param.categories) {
-        final categoryDocument = _firestore.collection(kUserCategoryCollectionKey).doc();
-        writeBatch.set(categoryDocument, {"user_id": _auth.currentUser?.uid, "category_id": category.id, "category_name": category.name});
-      }
-      await writeBatch.commit();
+      await _firestore.collection(kUserCollectionKey).doc(_auth.currentUser?.uid).set(
+        {"nickname": param.nickname, "categories": FieldValue.arrayUnion(param.categories.map((e) => e.toJson()).toList()), "is_approved": true},
+        SetOptions(merge: true),
+      );
       user.value = user.value?.copyWith(categories: param.categories);
       return null;
     });
@@ -163,7 +161,13 @@ class FirebaseApi {
   Future<ResultWrapper<List<Article>>> getArticles(String? categoryId, int? lastArticleDate) async {
     return ResultHandler<List<Article>>().invoke(() async {
       List<Article> articles = List.empty(growable: true);
-      final document = await _firestore.collection(kArticleCollectionKey).where('category_id', isEqualTo: categoryId).where('created_date', isLessThan: lastArticleDate).orderBy("created_date", descending: true).limit(kPageSize).get();
+      final document = await _firestore
+          .collection(kArticleCollectionKey)
+          .where('category_id', isEqualTo: categoryId)
+          .where('created_date', isLessThan: lastArticleDate)
+          .orderBy("created_date", descending: true)
+          .limit(kPageSize)
+          .get();
       for (DocumentSnapshot articleDocument in document.docs) {
         final imageCollection = await articleDocument.reference.collection('image').orderBy("index").get();
         final authorDocument = await _firestore.collection(kUserCollectionKey).doc(articleDocument.getSafety('author_id')).get();
@@ -193,11 +197,7 @@ class FirebaseApi {
       });
       for (int i = 0; i < images.length; i++) {
         final imageDocument = articleDocument.collection('image').doc();
-        writeBatch.set(imageDocument, {
-          "index": i,
-          "image_id": imageDocument.id,
-          "image_url": images[i]
-        });
+        writeBatch.set(imageDocument, {"index": i, "image_id": imageDocument.id, "image_url": images[i]});
       }
       await writeBatch.commit();
       return null;
