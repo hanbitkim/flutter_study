@@ -40,7 +40,7 @@ extension FirebaseExtension on DocumentSnapshot {
     if (categoriesData != null) {
       for (var element in List.from(categoriesData)) {
         Logger().d('category element = ${element.toString()}');
-        categories.add(Category(id: element['category_id'] ?? '', name: element['category_name'] ?? ''));
+        categories.add(Category(id: element['id'] ?? '', name: element['name'] ?? ''));
       }
     }
     return User(
