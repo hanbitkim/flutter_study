@@ -15,6 +15,7 @@ class ArticleWriteController extends GetxController {
   final Rxn<String?> title = Rxn();
   final Rxn<String?> contents = Rxn();
   final images = <String>[].obs;
+  final isLoading = false.obs;
 
   @override
   void onInit() async {
@@ -45,6 +46,7 @@ class ArticleWriteController extends GetxController {
   }
 
   void upload() async {
+    isLoading.value = true;
     final param = UploadArticleParam(categoryId.value, title.value, contents.value, images);
     final response = await _uploadArticleUseCase(param);
     if (response.isSuccess()) {
@@ -53,6 +55,7 @@ class ArticleWriteController extends GetxController {
     } else {
       Get.snackbar("게시글 작성에 실패했습니다", "네트워크 상태를 확인 후 다시 시도해주세요");
     }
+    isLoading.value = false;
   }
 
   Future<void> _retrieveLostData() async {

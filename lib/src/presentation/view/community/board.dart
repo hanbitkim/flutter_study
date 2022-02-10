@@ -46,30 +46,38 @@ class _BoardViewState extends State<BoardView> with AutomaticKeepAliveClientMixi
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Obx(() => RefreshIndicator(
-      key: _refreshKey,
-      onRefresh: () async {
-        _refreshKey.currentState?.show(atTop: false);
-        BoardController.get(widget._category.name).getArticles(widget._category.id);
-      },
-      child: CustomScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        controller: BoardController.get(widget._category.name).scrollController.value,
-        slivers: [
-          SliverList(
-              delegate: SliverChildBuilderDelegate((context, index) {
-                if (index.isEven) {
-                  final int itemIndex = index ~/ 2;
-                  return ArticleItemView(BoardController.get(widget._category.name).articles[itemIndex]);
-                }
-                return Container(height: 10, color: Colors.grey.shade200);
-                },
-                childCount: max(0, BoardController.get(widget._category.name).articles.length * 2 - 1),
+    final _boardController = BoardController.get(widget._category.name);
+    return Obx(
+      () => RefreshIndicator(
+        key: _refreshKey,
+        onRefresh: () async {
+          _refreshKey.currentState?.show(atTop: false);
+          _boardController.getArticles(widget._category.id);
+        },
+        child: _boardController.isLoading.isFalse && _boardController.articles.isEmpty
+            ? const Center(
+                child: Text('게시글이 없습니다'),
               )
-          )
-        ]
+            : CustomScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                controller: _boardController.scrollController.value,
+                slivers: [
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        if (index.isEven) {
+                          final int itemIndex = index ~/ 2;
+                          return ArticleItemView(_boardController.articles[itemIndex]);
+                        }
+                        return Container(height: 10, color: Colors.grey.shade200);
+                      },
+                      childCount: max(0, _boardController.articles.length * 2 - 1),
+                    ),
+                  ),
+                ],
+              ),
       ),
-    ));
+    );
   }
 
   @override

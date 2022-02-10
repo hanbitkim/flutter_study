@@ -16,14 +16,14 @@ class BoardController extends GetxController {
 
   final articles = <Article>[].obs;
   final scrollController = ScrollController().obs;
-  var _isLoading = false;
+  final isLoading = false.obs;
   var _hasMore = false;
   late Category _category;
 
   @override
   void onInit() {
     scrollController.value.addListener(() {
-      if (_isLoading || !_hasMore) {
+      if (isLoading.isTrue || !_hasMore) {
         return;
       }
       if (scrollController.value.position.maxScrollExtent - scrollController.value.position.pixels <= loadingBuffer) {
@@ -32,14 +32,14 @@ class BoardController extends GetxController {
     });
     super.onInit();
   }
-  
+
   void setCategory(Category category) {
     _category = category;
     getArticles(category.id);
   }
 
   void getArticles(String? categoryId, [int? lastArticleDate]) async {
-    _isLoading = true;
+    isLoading.value = true;
     if (lastArticleDate == null) {
       articles.clear();
     }
@@ -49,6 +49,6 @@ class BoardController extends GetxController {
       articles.addAll(response.data?.toList() ?? List.empty());
       _hasMore = response.data?.length == kPageSize;
     }
-    _isLoading = false;
+    isLoading.value = false;
   }
 }

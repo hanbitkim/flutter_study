@@ -6,6 +6,7 @@ import 'package:artitecture/src/presentation/util/widget_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 class ArticleWritePage extends HookWidget {
   const ArticleWritePage({Key? key}) : super(key: key);
@@ -16,6 +17,17 @@ class ArticleWritePage extends HookWidget {
     final TextEditingController _titleController = useTextEditingController();
     final TextEditingController _contentsController = useTextEditingController();
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+    useEffect(() {
+      final subscription = _articleWriteController.isLoading.listen((value) {
+        if (value) {
+          context.loaderOverlay.show();
+        } else {
+          context.loaderOverlay.hide();
+        }
+      });
+      return subscription.cancel;
+    }, [_articleWriteController]);
 
     return Scaffold(
         appBar: AppBar(title: const Text("게시글 작성"), actions: [
@@ -35,7 +47,8 @@ class ArticleWritePage extends HookWidget {
               },
               child: const Text('등록', style: TextStyle(color: Colors.white)))
         ]),
-        body: Obx(() => SafeArea(
+        body: Obx(
+          () => SafeArea(
             child: Form(
               key: _formKey,
               child: Column(
@@ -45,8 +58,7 @@ class ArticleWritePage extends HookWidget {
                       onChanged: (value) => _articleWriteController.setCategoryId(value),
                       value: _articleWriteController.categoryId.value,
                       validator: (value) => value == null ? '카테고리를 선택해주세요' : null,
-                      hint: const Text("카테고리를 선택해주세요")
-                  ),
+                      hint: const Text("카테고리를 선택해주세요")),
                   TextFormField(
                     controller: _titleController,
                     decoration: const InputDecoration(
@@ -71,35 +83,41 @@ class ArticleWritePage extends HookWidget {
                   _articleWriteController.images.isNotEmpty
                       ? SizedBox(
                           height: 100,
-                          child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: _articleWriteController.images.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return SizedBox(
-                                  width: 100,
-                                  height: 100,
-                                  child: Stack(
-                                    children: [
-                                      Center(
-                                        child:  WidgetHelper.getImageWidget(_articleWriteController.images[index], BoxFit.contain)
-                                      ),
-                                      Align(
-                                        alignment: Alignment.topRight,
-                                        child: ElevatedButton(
-                                          child: const Icon(Icons.close),
-                                          style: ElevatedButton.styleFrom(
-                                            shape: const CircleBorder(),
-                                            fixedSize: const Size(30, 30)
-                                          ),
-                                          onPressed: () {
-                                            _articleWriteController.removeImage(_articleWriteController.images[index]);
-                                          },
+                          child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: _articleWriteController.images.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return SizedBox(
+                                width: 100,
+                                height: 100,
+                                child: Stack(
+                                  children: [
+                                    Positioned.fill(
+                                      child: WidgetHelper.getImageWidget(_articleWriteController.images[index], BoxFit.cover),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.topRight,
+                                      child: ElevatedButton(
+                                        child: const Icon(Icons.close),
+                                        style: ElevatedButton.styleFrom(
+                                          shape: const CircleBorder(),
+                                          fixedSize: const Size(30, 30),
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                );
-                              }),
+                                        onPressed: () {
+                                          _articleWriteController.removeImage(_articleWriteController.images[index]);
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                            separatorBuilder: (BuildContext context, int index) {
+                              return const SizedBox(
+                                width: 10,
+                              );
+                            },
+                          ),
                         )
                       : Container()
                 ],
