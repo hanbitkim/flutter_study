@@ -80,46 +80,45 @@ class ArticleWritePage extends HookWidget {
                       validator: (value) => value == null || value.trim().isEmpty ? '내용을 입력해주세요' : null,
                     ),
                   ),
-                  _articleWriteController.images.isNotEmpty
-                      ? SizedBox(
-                          height: 100,
-                          child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: _articleWriteController.images.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return SizedBox(
-                                width: 100,
-                                height: 100,
-                                child: Stack(
-                                  children: [
-                                    Positioned.fill(
-                                      child: WidgetHelper.getImageWidget(_articleWriteController.images[index], BoxFit.cover),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.topRight,
-                                      child: ElevatedButton(
-                                        child: const Icon(Icons.close),
-                                        style: ElevatedButton.styleFrom(
-                                          shape: const CircleBorder(),
-                                          fixedSize: const Size(30, 30),
-                                        ),
-                                        onPressed: () {
-                                          _articleWriteController.removeImage(_articleWriteController.images[index]);
-                                        },
-                                      ),
-                                    ),
-                                  ],
+                  if (_articleWriteController.images.isNotEmpty)
+                    SizedBox(
+                      height: 100,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: _articleWriteController.images.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return SizedBox(
+                            width: 100,
+                            height: 100,
+                            child: Stack(
+                              children: [
+                                Positioned.fill(
+                                  child: WidgetHelper.getImageWidget(_articleWriteController.images[index], BoxFit.cover),
                                 ),
-                              );
-                            },
-                            separatorBuilder: (BuildContext context, int index) {
-                              return const SizedBox(
-                                width: 10,
-                              );
-                            },
-                          ),
-                        )
-                      : Container()
+                                Align(
+                                  alignment: Alignment.topRight,
+                                  child: ElevatedButton(
+                                    child: const Icon(Icons.close),
+                                    style: ElevatedButton.styleFrom(
+                                      shape: const CircleBorder(),
+                                      fixedSize: const Size(30, 30),
+                                    ),
+                                    onPressed: () {
+                                      _articleWriteController.removeImage(_articleWriteController.images[index]);
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return const SizedBox(
+                            width: 10,
+                          );
+                        },
+                      ),
+                    )
                 ],
               ),
             ),

@@ -32,14 +32,13 @@ class ArticleItemView extends StatelessWidget {
                 _article.contents,
                 style: const TextStyle(fontSize: 16),
               ),
-              _article.images.isNotEmpty
-                  ? Column(
-                      children: [
-                        const SizedBox(height: 14),
-                        getImageViews(_article.images.map((e) => e.imageUrl).toList()),
-                      ],
-                    )
-                  : Container(),
+              if (_article.images.isNotEmpty)
+                Column(
+                  children: [
+                    const SizedBox(height: 14),
+                    getImageViews(_article.images.map((e) => e.imageUrl).toList()),
+                  ],
+                ),
               const SizedBox(height: 15),
               Row(
                 children: [
@@ -95,20 +94,20 @@ class ArticleItemView extends StatelessWidget {
       child: AspectRatio(
         aspectRatio: 16 / 9,
         child: images.length == 1
-            ? getImageView(images, 0)
+            ? _getImageView(images, 0)
             : images.length == 2
                 ? Row(
                     children: [
                       Flexible(
                         flex: 1,
                         fit: FlexFit.tight,
-                        child: getImageView(images, 0),
+                        child: _getImageView(images, 0),
                       ),
                       const SizedBox(width: 4),
                       Flexible(
                         flex: 1,
                         fit: FlexFit.tight,
-                        child: getImageView(images, 1),
+                        child: _getImageView(images, 1),
                       ),
                     ],
                   )
@@ -117,7 +116,7 @@ class ArticleItemView extends StatelessWidget {
                       Flexible(
                         flex: 2,
                         fit: FlexFit.tight,
-                        child: getImageView(images, 0),
+                        child: _getImageView(images, 0),
                       ),
                       const SizedBox(width: 4),
                       Flexible(
@@ -126,13 +125,13 @@ class ArticleItemView extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Expanded(child: getImageView(images, 1)),
+                            Expanded(child: _getImageView(images, 1)),
                             const SizedBox(height: 4),
                             Expanded(
                               child: images.length > 3
                                   ? Stack(
                                       children: [
-                                        Positioned.fill(child: getImageView(images, 2)),
+                                        Positioned.fill(child: _getImageView(images, 2)),
                                         IgnorePointer(child: Container(color: Colors.black26)),
                                         IgnorePointer(
                                           child: Positioned.fill(
@@ -151,7 +150,7 @@ class ArticleItemView extends StatelessWidget {
                                         ),
                                       ],
                                     )
-                                  : getImageView(images, 2),
+                                  : _getImageView(images, 2),
                             ),
                           ],
                         ),
@@ -162,11 +161,11 @@ class ArticleItemView extends StatelessWidget {
     );
   }
 
-  Widget getImageView(List<String> images, int index) {
+  Widget _getImageView(List<String> images, int index) {
     return InkWell(
       child: CachedNetworkImage(
-        placeholder: (context, url) => const Icon(Icons.photo),
-        errorWidget: (context, url, error) => const Icon(Icons.photo),
+        placeholder: (context, url) => _getImageHolder(Icons.photo),
+        errorWidget: (context, url, error) => _getImageHolder(Icons.error),
         fit: BoxFit.cover,
         imageUrl: images[index],
       ),
@@ -176,6 +175,22 @@ class ArticleItemView extends StatelessWidget {
           images: images,
           index: index,
         ),
+      ),
+    );
+  }
+
+  Widget _getImageHolder(IconData? iconData) {
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey, style: BorderStyle.solid, width: 1),
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: Icon(
+        iconData,
+        size: 50,
+        color: Colors.grey,
       ),
     );
   }

@@ -15,12 +15,13 @@ class EditProfileController extends GetxController {
 
   final isAgreementChecked = false.obs;
   final nickname = "".obs;
-  final RxList<Category> categories = RxList();
-  final RxList<Category> unSelectedCategories = RxList();
-  final RxList<Category> selectedCategories = RxList();
-  final isLoading = RxBool(false);
+  final categories = <Category>[].obs;
+  final unSelectedCategories = <Category>[].obs;
+  final selectedCategories = <Category>[].obs;
+  final isLoading = false.obs;
 
   final PublishSubject<bool> _goToNext = PublishSubject();
+
   PublishSubject<bool> get goToNext => _goToNext;
 
   EditProfileController(this._updateProfileUseCase, this._getCategoryUseCase);

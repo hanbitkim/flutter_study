@@ -23,7 +23,11 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     final MainController _mainController = Get.put(injector());
-    _children = [const CommunityTab(), const TabTwo(), const MyPageView()];
+    _children = [
+      const CommunityTab(),
+      const TabTwo(),
+      const MyPageView(),
+    ];
     _lastPressedTime = DateTime.now();
     super.initState();
   }
@@ -43,30 +47,32 @@ class _MainPageState extends State<MainPage> {
         }
       },
       child: SafeArea(
-        child: Obx(() => Scaffold(
-              body: IndexedStack(
-                index: MainController.to.tabIndex.value,
-                children: _children,
-              ),
-              bottomNavigationBar: BottomNavigationBar(
-                items: const <BottomNavigationBarItem>[
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.chat),
-                    label: '커뮤니티',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.camera),
-                    label: 'Camera',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.more_horiz),
-                    label: '더보기',
-                  ),
-                ],
-                onTap: (int index) => MainController.to.selectTab(index),
-                currentIndex: MainController.to.tabIndex.value,
-              ),
-            )),
+        child: Obx(
+          () => Scaffold(
+            body: IndexedStack(
+              index: MainController.to.tabIndex.value,
+              children: _children,
+            ),
+            bottomNavigationBar: BottomNavigationBar(
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.chat),
+                  label: '커뮤니티',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.camera),
+                  label: 'Camera',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.more_horiz),
+                  label: '더보기',
+                ),
+              ],
+              onTap: (int index) => MainController.to.selectTab(index),
+              currentIndex: MainController.to.tabIndex.value,
+            ),
+          ),
+        ),
       ),
     );
   }
