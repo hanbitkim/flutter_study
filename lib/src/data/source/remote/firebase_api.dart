@@ -13,6 +13,7 @@ import 'package:artitecture/src/domain/entity/param/upload_article_param.dart';
 import 'package:artitecture/src/domain/entity/response/app_version.dart';
 import 'package:artitecture/src/domain/entity/response/article.dart';
 import 'package:artitecture/src/domain/entity/response/category.dart';
+import 'package:artitecture/src/domain/entity/response/comment.dart';
 import 'package:artitecture/src/domain/entity/response/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as Auth;
@@ -169,9 +170,8 @@ class FirebaseApi {
           .limit(kPageSize)
           .get();
       for (DocumentSnapshot articleDocument in document.docs) {
-        final imageCollection = await articleDocument.reference.collection('image').orderBy("index").get();
         final authorDocument = await _firestore.collection(kUserCollectionKey).doc(articleDocument.getSafety('author_id')).get();
-        articles.add(articleDocument.toArticle(imageCollection.docs.map((e) => e.toImage()).toList(), authorDocument.toAuthor()));
+        articles.add(articleDocument.toArticle(authorDocument.toAuthor()));
       }
       return articles;
     });
@@ -201,6 +201,19 @@ class FirebaseApi {
       }
       await writeBatch.commit();
       return null;
+    });
+  }
+
+  Future<ResultWrapper<Article>> getArticle(String? articleId) {
+    return ResultHandler<Article>().invoke(() async {
+      return await _firestore.collection(kArticleCollectionKey).doc(articleId).get();
+    });
+  }
+
+  Future<ResultWrapper<List<Comment>>> getComments(String? articleId, int? lastCommentDate) {
+    return ResultHandler<List<Comment>>().invoke(() async {
+      final document = await _firestore.collection(kArticleCommentCollectionKey).doc(articleId).get();
+      return document.toUser();
     });
   }
 

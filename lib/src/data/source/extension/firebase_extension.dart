@@ -57,7 +57,16 @@ extension FirebaseExtension on DocumentSnapshot {
     return Category(id: id, name: getSafety('category_name'));
   }
 
-  Article toArticle(List<Image> images, Author author) {
+  Article toArticle(Author author) {
+    final List<Image> images = List.empty(growable: true);
+    final imageData = getSafety('images');
+    Logger().d('imageData = ${imageData?.toString()}');
+    if (imageData != null) {
+      for (var element in List.from(imageData)) {
+        Logger().d('image element = ${element.toString()}');
+        images.add(Image(id: element['id'] ?? '', imageUrl: element['image_url'] ?? '', thumbnailUrl: element['thumbnail_url'] ?? ''));
+      }
+    }
     return Article(
         id: id,
         title: getSafety('title'),
@@ -78,8 +87,7 @@ extension FirebaseExtension on DocumentSnapshot {
         images: images,
         likeCount: getSafety('like_count'),
         isReported: getSafety('is_reported'),
-        createdDate: getSafety('created_date'),
-        updatedDate: getSafety('updated_date'),
+        createdDate: parseTime(getSafety('created_date')),
         author: author);
   }
 

@@ -27,8 +27,7 @@ class _$CommentTearOff {
       required List<Image> images,
       required int likeCount,
       required bool isReported,
-      required int createdDate,
-      required int updatedDate,
+      required DateTime createdDate,
       required Author author}) {
     return _Comment(
       id: id,
@@ -37,7 +36,6 @@ class _$CommentTearOff {
       likeCount: likeCount,
       isReported: isReported,
       createdDate: createdDate,
-      updatedDate: updatedDate,
       author: author,
     );
   }
@@ -57,8 +55,7 @@ mixin _$Comment {
   List<Image> get images => throw _privateConstructorUsedError;
   int get likeCount => throw _privateConstructorUsedError;
   bool get isReported => throw _privateConstructorUsedError;
-  int get createdDate => throw _privateConstructorUsedError;
-  int get updatedDate => throw _privateConstructorUsedError;
+  DateTime get createdDate => throw _privateConstructorUsedError;
   Author get author => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -76,8 +73,7 @@ abstract class $CommentCopyWith<$Res> {
       List<Image> images,
       int likeCount,
       bool isReported,
-      int createdDate,
-      int updatedDate,
+      DateTime createdDate,
       Author author});
 
   $AuthorCopyWith<$Res> get author;
@@ -99,7 +95,6 @@ class _$CommentCopyWithImpl<$Res> implements $CommentCopyWith<$Res> {
     Object? likeCount = freezed,
     Object? isReported = freezed,
     Object? createdDate = freezed,
-    Object? updatedDate = freezed,
     Object? author = freezed,
   }) {
     return _then(_value.copyWith(
@@ -126,11 +121,7 @@ class _$CommentCopyWithImpl<$Res> implements $CommentCopyWith<$Res> {
       createdDate: createdDate == freezed
           ? _value.createdDate
           : createdDate // ignore: cast_nullable_to_non_nullable
-              as int,
-      updatedDate: updatedDate == freezed
-          ? _value.updatedDate
-          : updatedDate // ignore: cast_nullable_to_non_nullable
-              as int,
+              as DateTime,
       author: author == freezed
           ? _value.author
           : author // ignore: cast_nullable_to_non_nullable
@@ -157,8 +148,7 @@ abstract class _$CommentCopyWith<$Res> implements $CommentCopyWith<$Res> {
       List<Image> images,
       int likeCount,
       bool isReported,
-      int createdDate,
-      int updatedDate,
+      DateTime createdDate,
       Author author});
 
   @override
@@ -182,7 +172,6 @@ class __$CommentCopyWithImpl<$Res> extends _$CommentCopyWithImpl<$Res>
     Object? likeCount = freezed,
     Object? isReported = freezed,
     Object? createdDate = freezed,
-    Object? updatedDate = freezed,
     Object? author = freezed,
   }) {
     return _then(_Comment(
@@ -209,11 +198,7 @@ class __$CommentCopyWithImpl<$Res> extends _$CommentCopyWithImpl<$Res>
       createdDate: createdDate == freezed
           ? _value.createdDate
           : createdDate // ignore: cast_nullable_to_non_nullable
-              as int,
-      updatedDate: updatedDate == freezed
-          ? _value.updatedDate
-          : updatedDate // ignore: cast_nullable_to_non_nullable
-              as int,
+              as DateTime,
       author: author == freezed
           ? _value.author
           : author // ignore: cast_nullable_to_non_nullable
@@ -232,7 +217,6 @@ class _$_Comment implements _Comment {
       required this.likeCount,
       required this.isReported,
       required this.createdDate,
-      required this.updatedDate,
       required this.author});
 
   factory _$_Comment.fromJson(Map<String, dynamic> json) =>
@@ -249,15 +233,13 @@ class _$_Comment implements _Comment {
   @override
   final bool isReported;
   @override
-  final int createdDate;
-  @override
-  final int updatedDate;
+  final DateTime createdDate;
   @override
   final Author author;
 
   @override
   String toString() {
-    return 'Comment(id: $id, contents: $contents, images: $images, likeCount: $likeCount, isReported: $isReported, createdDate: $createdDate, updatedDate: $updatedDate, author: $author)';
+    return 'Comment(id: $id, contents: $contents, images: $images, likeCount: $likeCount, isReported: $isReported, createdDate: $createdDate, author: $author)';
   }
 
   @override
@@ -273,8 +255,6 @@ class _$_Comment implements _Comment {
                 .equals(other.isReported, isReported) &&
             const DeepCollectionEquality()
                 .equals(other.createdDate, createdDate) &&
-            const DeepCollectionEquality()
-                .equals(other.updatedDate, updatedDate) &&
             const DeepCollectionEquality().equals(other.author, author));
   }
 
@@ -287,7 +267,6 @@ class _$_Comment implements _Comment {
       const DeepCollectionEquality().hash(likeCount),
       const DeepCollectionEquality().hash(isReported),
       const DeepCollectionEquality().hash(createdDate),
-      const DeepCollectionEquality().hash(updatedDate),
       const DeepCollectionEquality().hash(author));
 
   @JsonKey(ignore: true)
@@ -308,8 +287,7 @@ abstract class _Comment implements Comment {
       required List<Image> images,
       required int likeCount,
       required bool isReported,
-      required int createdDate,
-      required int updatedDate,
+      required DateTime createdDate,
       required Author author}) = _$_Comment;
 
   factory _Comment.fromJson(Map<String, dynamic> json) = _$_Comment.fromJson;
@@ -325,9 +303,7 @@ abstract class _Comment implements Comment {
   @override
   bool get isReported;
   @override
-  int get createdDate;
-  @override
-  int get updatedDate;
+  DateTime get createdDate;
   @override
   Author get author;
   @override

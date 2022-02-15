@@ -14,8 +14,7 @@ _$_Comment _$$_CommentFromJson(Map<String, dynamic> json) => _$_Comment(
           .toList(),
       likeCount: json['likeCount'] as int,
       isReported: json['isReported'] as bool,
-      createdDate: json['createdDate'] as int,
-      updatedDate: json['updatedDate'] as int,
+      createdDate: DateTime.parse(json['createdDate'] as String),
       author: Author.fromJson(json['author'] as Map<String, dynamic>),
     );
 
@@ -26,7 +25,6 @@ Map<String, dynamic> _$$_CommentToJson(_$_Comment instance) =>
       'images': instance.images,
       'likeCount': instance.likeCount,
       'isReported': instance.isReported,
-      'createdDate': instance.createdDate,
-      'updatedDate': instance.updatedDate,
+      'createdDate': instance.createdDate.toIso8601String(),
       'author': instance.author,
     };

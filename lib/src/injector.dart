@@ -7,8 +7,10 @@ import 'package:artitecture/src/domain/repository/app_repository.dart';
 import 'package:artitecture/src/domain/repository/auth_repository.dart';
 import 'package:artitecture/src/domain/repository/community_repository.dart';
 import 'package:artitecture/src/domain/usecase/check_app_version_usecase.dart';
+import 'package:artitecture/src/domain/usecase/get_article_usecase.dart';
 import 'package:artitecture/src/domain/usecase/get_articles_usecase.dart';
 import 'package:artitecture/src/domain/usecase/get_category_usecase.dart';
+import 'package:artitecture/src/domain/usecase/get_comments_usecase.dart';
 import 'package:artitecture/src/domain/usecase/get_user_usecase.dart';
 import 'package:artitecture/src/domain/usecase/google_sign_in_usecase.dart';
 import 'package:artitecture/src/domain/usecase/is_sign_in_usecase.dart';
@@ -21,13 +23,14 @@ import 'package:artitecture/src/domain/usecase/update_profile_image_usecase.dart
 import 'package:artitecture/src/domain/usecase/update_profile_usecase.dart';
 import 'package:artitecture/src/domain/usecase/upload_article_usecase.dart';
 import 'package:artitecture/src/presentation/controller/app_controller.dart';
+import 'package:artitecture/src/presentation/controller/article_detail_controller.dart';
 import 'package:artitecture/src/presentation/controller/article_write_controller.dart';
 import 'package:artitecture/src/presentation/controller/auth_controller.dart';
-import 'package:artitecture/src/presentation/controller/edit_profile_controller.dart';
 import 'package:artitecture/src/presentation/controller/board_controller.dart';
+import 'package:artitecture/src/presentation/controller/edit_profile_controller.dart';
+import 'package:artitecture/src/presentation/controller/find_password_controller.dart';
 import 'package:artitecture/src/presentation/controller/main_controller.dart';
 import 'package:artitecture/src/presentation/controller/mypage_controller.dart';
-import 'package:artitecture/src/presentation/controller/find_password_controller.dart';
 import 'package:artitecture/src/presentation/controller/setting_controller.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
@@ -68,6 +71,8 @@ Future<void> initializeDependencies() async {
   injector.registerLazySingleton<GetCategoriesUseCase>(() => GetCategoriesUseCase(injector()));
   injector.registerLazySingleton<GetArticlesUseCase>(() => GetArticlesUseCase(injector()));
   injector.registerLazySingleton<UploadArticleUseCase>(() => UploadArticleUseCase(injector()));
+  injector.registerLazySingleton<GetCommentsUseCase>(() => GetCommentsUseCase(injector()));
+  injector.registerLazySingleton<GetArticleUseCase>(() => GetArticleUseCase(injector()));
 
   // Controllers
   injector.registerFactory<AppController>(() => AppController(injector(), injector(), injector(), injector()));
@@ -79,6 +84,7 @@ Future<void> initializeDependencies() async {
   injector.registerFactory<MyPageController>(() => MyPageController(injector()));
   injector.registerFactory<ArticleWriteController>(() => ArticleWriteController(injector()));
   injector.registerFactory<SettingController>(() => SettingController(injector(), injector()));
+  injector.registerFactory<ArticleDetailController>(() => ArticleDetailController(injector(), injector()));
 
   // injector.registerFactory<AuthController>(() {
   //   final autoController = AuthController(injector(), injector());

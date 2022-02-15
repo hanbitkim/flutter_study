@@ -13,8 +13,7 @@ class Comment with _$Comment {
     required List<Image> images,
     required int likeCount,
     required bool isReported,
-    required int createdDate,
-    required int updatedDate,
+    required DateTime createdDate,
     required Author author,
   }) = _Comment;
 

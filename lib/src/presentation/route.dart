@@ -1,8 +1,9 @@
 import 'package:artitecture/src/presentation/view/auth/find_password_view.dart';
 import 'package:artitecture/src/presentation/view/auth/sign_in_view.dart';
+import 'package:artitecture/src/presentation/view/auth/sign_up_view.dart';
+import 'package:artitecture/src/presentation/view/community/article_detail.dart';
 import 'package:artitecture/src/presentation/view/community/article_write.dart';
 import 'package:artitecture/src/presentation/view/main/main_view.dart';
-import 'package:artitecture/src/presentation/view/auth/sign_up_view.dart';
 import 'package:artitecture/src/presentation/view/photo/gallery.dart';
 import 'package:artitecture/src/presentation/view/profile/edit_profile_view.dart';
 import 'package:artitecture/src/presentation/view/setting/setting_page.dart';
@@ -15,6 +16,7 @@ const String findPasswordRoute = "/findPassword";
 const String editProfileRoute = "/editProfile";
 const String mainRoute = "/main";
 const String articleWriteRoute = "/articleWrite";
+const String articleDetailRoute = "/articleDetail";
 const String galleryRoute = "/gallery";
 const String settingRoute = "/setting";
 
@@ -27,6 +29,7 @@ class AppRoutes {
       GetPage(name: editProfileRoute, page: () => const EditProfilePage()),
       GetPage(name: mainRoute, page: () => const MainPage()),
       GetPage(name: articleWriteRoute, page: () => const ArticleWritePage()),
+      GetPage(name: articleDetailRoute, page: () => const ArticleDetailPage()),
       GetPage(name: galleryRoute, page: () => const GalleryPage()),
       GetPage(name: settingRoute, page: () => const SettingPage())
     ];
