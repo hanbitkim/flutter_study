@@ -84,7 +84,6 @@ class SignUpPage extends HookWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(4)),
                     ),
-                    color: blueColor,
                   ),
                 ),
                 onTap: () {

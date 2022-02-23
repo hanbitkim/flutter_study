@@ -1,4 +1,4 @@
-import 'package:artitecture/src/config/theme/AppTheme.dart';
+import 'package:artitecture/src/config/app_theme.dart';
 import 'package:artitecture/src/core/utils/constants.dart';
 import 'package:artitecture/src/injector.dart';
 import 'package:artitecture/src/presentation/controller/app_controller.dart';
@@ -49,7 +49,7 @@ class MyApp extends HookWidget {
       child: GetMaterialApp(
           debugShowCheckedModeBanner: false,
           title: kMaterialAppTitle,
-          theme: Apptheme.light,
+          theme: AppTheme.light,
           getPages: AppRoutes.routes,
           home: snapshot.hasData == false
               ? const SplashView()

@@ -1,3 +1,6 @@
+import 'dart:ui';
+import 'package:flutter/material.dart';
+
 const String kMaterialAppTitle = 'Architecture';
 
 // API
@@ -17,3 +20,6 @@ const String kArticleCommentCollectionKey = "article_comment";
 
 // Etc
 const int kPageSize = 10;
+
+const kPrimaryColor = Color(0xFFEA3A29);
+const kSecondaryColor = Colors.lightGreen;

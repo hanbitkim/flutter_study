@@ -77,7 +77,6 @@ class SignInPage extends HookWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(4)),
                     ),
-                    color: blueColor,
                   ),
                 ),
                 onTap: () {
@@ -102,7 +101,6 @@ class SignInPage extends HookWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(4)),
                     ),
-                    color: blueColor,
                   ),
                 ),
                 onTap: () {
